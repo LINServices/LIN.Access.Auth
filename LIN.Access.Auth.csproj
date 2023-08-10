@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Tipos\LIN.Auth.Types\LIN.Types.Auth.csproj" />
     <ProjectReference Include="..\..\Tipos\LIN.Modules\LIN.Modules.csproj" />
+    <ProjectReference Include="..\..\Tipos\LIN.Types.Auth\LIN.Types.Auth.csproj" />
     <ProjectReference Include="..\..\Tipos\LIN.Types\LIN.Types.csproj" />
   </ItemGroup>
 
