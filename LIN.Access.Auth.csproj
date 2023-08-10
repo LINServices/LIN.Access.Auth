@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Tipos\LIN.Auth.Types\LIN.Types.Auth.csproj" />
+    <ProjectReference Include="..\..\Tipos\LIN.Modules\LIN.Modules.csproj" />
+    <ProjectReference Include="..\..\Tipos\LIN.Types\LIN.Types.csproj" />
+  </ItemGroup>
+
 </Project>
