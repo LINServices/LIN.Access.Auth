@@ -397,9 +397,7 @@ public static class Account
 
 
 
-    /// <summary>
-    /// Actualiza la informacion de un usuario
-    /// </summary>
+
     public async static Task<ResponseBase> ResetPassword(string key, UpdatePasswordModel modelo)
     {
 
@@ -407,7 +405,7 @@ public static class Account
         var client = new HttpClient();
         client.DefaultRequestHeaders.Add("key", key);
 
-        string url = ApiServer.PathURL("account/security/password/reset");
+        string url = ApiServer.PathURL("security/password/reset");
         string json = JsonConvert.SerializeObject(modelo);
 
         try
@@ -447,7 +445,7 @@ public static class Account
         // Variables
         var client = new HttpClient();
 
-        string url = ApiServer.PathURL("account/security/password/forget");
+        string url = ApiServer.PathURL("security/password/forget");
 
         url = Web.AddParameters(url, new()
         {
@@ -496,7 +494,7 @@ public static class Account
         var client = new HttpClient();
         client.DefaultRequestHeaders.Add("key", key);
 
-        string url = ApiServer.PathURL("account/security/email/verify");
+        string url = ApiServer.PathURL("security/mails/verify");
 
         try
         {

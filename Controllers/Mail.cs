@@ -12,7 +12,7 @@ public  class Mail
         var client = new HttpClient();
         client.DefaultRequestHeaders.Add("password", password);
 
-        string url = ApiServer.PathURL("account/security/email/add");
+        string url = ApiServer.PathURL("security/mails/add");
         string json = JsonConvert.SerializeObject(modelo);
 
         try
@@ -89,8 +89,6 @@ public  class Mail
 
 
 
-
-
     public async static Task<ResponseBase> ResendMail(int mail, string token)
     {
 
@@ -99,7 +97,7 @@ public  class Mail
         client.DefaultRequestHeaders.Add("mailID", mail.ToString());
         client.DefaultRequestHeaders.Add("token", token);
 
-        string url = ApiServer.PathURL("account/security/email/resend");
+        string url = ApiServer.PathURL("security/mails/resend");
 
 
 
