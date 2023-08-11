@@ -317,6 +317,44 @@ public static class Account
 
 
 
+    /// <summary>
+    /// Actualiza la visibilidad de una cuenta
+    /// </summary>
+    /// <param name="token">Token de acceso</param>
+    /// <param name="visibility">Nueva visibilidad</param>
+    public async static Task<ResponseBase> UpdateVisibility(string token, AccountVisibility visibility)
+    {
+
+        // Variables
+        var client = new HttpClient();
+        client.DefaultRequestHeaders.Add("token", $"{token}");
+        client.DefaultRequestHeaders.Add("visibility", $"{(int)visibility}");
+
+        string url = ApiServer.PathURL("account/update/visibility");
+
+        try
+        {
+            // Contenido
+            StringContent content = new("", Encoding.UTF8, "application/json");
+
+            // Envía la solicitud
+            HttpResponseMessage response = await client.PatchAsync(url, content);
+
+            // Lee la respuesta del servidor
+            string responseContent = await response.Content.ReadAsStringAsync();
+
+            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+
+            return obj ?? new();
+
+        }
+        catch
+        {
+        }
+
+        return new();
+
+    }
 
 
 
@@ -339,7 +377,10 @@ public static class Account
 
 
 
-   
+
+
+
+
 
 
 

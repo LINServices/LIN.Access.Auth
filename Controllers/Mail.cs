@@ -1,11 +1,16 @@
 ﻿namespace LIN.Access.Auth.Controllers;
 
 
-public  class Mail
+public class Mail
 {
 
 
-    public async static Task<ResponseBase> AddEmail(string password, EmailModel modelo)
+    /// <summary>
+    /// Agrega un nuevo email a una cuenta
+    /// </summary>
+    /// <param name="password">Contraseña actual de la cuenta</param>
+    /// <param name="modelo">Modelo del email</param>
+    public async static Task<ResponseBase> Aggregate(string password, EmailModel modelo)
     {
 
         // Variables
@@ -88,7 +93,11 @@ public  class Mail
 
 
 
-
+    /// <summary>
+    /// Reenviar el correo de verificación de mail
+    /// </summary>
+    /// <param name="mail">ID del mail</param>
+    /// <param name="token">Token de acceso</param>
     public async static Task<ResponseBase> ResendMail(int mail, string token)
     {
 
@@ -123,10 +132,6 @@ public  class Mail
         return new();
 
     }
-
-
-
-
 
 
 
