@@ -9,30 +9,30 @@ public sealed class AccountHub
 
 
     /// <summary>
-    /// Evento Recibir una tarea
+    /// Evento: Cuando se recibe un comando
     /// </summary>
-    public event EventHandler<string>? OnReceiveCommand;
+    public event EventHandler<string>? OnReceivingCommand;
 
 
 
     /// <summary>
-    /// Leave Event
+    /// Evento: Cuando un dispositivo se va
     /// </summary>
-    public event EventHandler<string>? OnSomeoneLeave;
+    public event EventHandler<string>? OnDeviceLeaves;
 
 
 
     /// <summary>
-    /// Evento Recibir un dispositivo
+    /// Evento: Cuando un dispositivo se une
     /// </summary>
-    public event EventHandler<DeviceModel>? OnReceiveDevice;
+    public event EventHandler<DeviceModel>? OnDeviceJoins;
 
 
 
     /// <summary>
     /// Evento cuando la lista de dispositivos cambio
     /// </summary>
-    public event EventHandler<string>? OnChange;
+    public event EventHandler<string>? OnDeviceChange;
 
 
 
@@ -142,7 +142,7 @@ public sealed class AccountHub
 
 
             // Evento alguien salio del
-            HubConnection.On<string>("leaveevent", (id) => { OnSomeoneLeave?.Invoke(null, id); });
+            HubConnection.On<string>("leaveevent", (id) => { OnDeviceLeaves?.Invoke(null, id); });
 
 
             // Evento ccuando se reciba una tarea
@@ -374,14 +374,14 @@ public sealed class AccountHub
     /// <summary>
     /// Envía el evento de tarea
     /// </summary>
-    private void SendTaskEvent(string contenido) => OnReceiveCommand?.Invoke(null, contenido);
+    private void SendTaskEvent(string contenido) => OnReceivingCommand?.Invoke(null, contenido);
 
 
 
     /// <summary>
     /// Envía el evento de tarea
     /// </summary>
-    private void SendNewDeviceEvent(DeviceModel modelo) => OnReceiveDevice?.Invoke(null, modelo);
+    private void SendNewDeviceEvent(DeviceModel modelo) => OnDeviceJoins?.Invoke(null, modelo);
 
 
 
