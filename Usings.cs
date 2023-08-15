@@ -9,3 +9,4 @@ global using System.Net.Http;
 global using System.Text;
 global using System.Threading.Tasks;
 global using LIN.Types.Enumerations;
+global using Microsoft.AspNetCore.SignalR.Client;
