@@ -1,7 +1,7 @@
 ﻿namespace LIN.Access.Auth;
 
 
-public sealed class Session
+public sealed class SessionAuth
 {
 
 
@@ -28,7 +28,7 @@ public sealed class Session
     /// <summary>
     /// Recarga o inicia una sesión
     /// </summary>
-    public static async Task<(Session? Sesion, Responses Response)> LoginWith(string user, string password)
+    public static async Task<(SessionAuth? Sesion, Responses Response)> LoginWith(string user, string password)
     {
 
         // Cierra la sesión Actual
@@ -56,7 +56,7 @@ public sealed class Session
     /// <summary>
     /// Recarga o inicia una sesión
     /// </summary>
-    public static async Task<(Session? Sesion, Responses Response)> LoginWith(string token)
+    public static async Task<(SessionAuth? Sesion, Responses Response)> LoginWith(string token)
     {
 
         // Cierra la sesión Actual
@@ -100,13 +100,13 @@ public sealed class Session
     //==================== Singleton ====================//
 
 
-    private readonly static Session _instance = new();
+    private readonly static SessionAuth _instance = new();
 
-    private Session()
+    private SessionAuth()
     {
         Account = new();
     }
 
 
-    public static Session Instance => _instance;
+    public static SessionAuth Instance => _instance;
 }
