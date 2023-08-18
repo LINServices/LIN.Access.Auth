@@ -105,7 +105,7 @@ public sealed class PassKeyHub
         {
             // Crea la conexion al HUB
             HubConnection = new HubConnectionBuilder()
-                 .WithUrl(ApiServer.PathURL("realtime/passkey"))
+                 .WithUrl(ApiServer.PathURL("realtime/auth/passkey"))
                  .WithAutomaticReconnect()
                  .Build();
 
