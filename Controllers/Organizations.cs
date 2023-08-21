@@ -18,7 +18,7 @@ public static class Organizations
 
         httpClient.DefaultRequestHeaders.Add("token", $"{token}");
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("org/members");
+        string url = ApiServer.PathURL("orgs/members");
 
 
         try
