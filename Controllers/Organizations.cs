@@ -93,13 +93,14 @@ public static class Organizations
 
 
 
-    public async static Task<CreateResponse> Create(AccountModel modelo, string token)
+    public async static Task<CreateResponse> Create(AccountModel modelo, string token, OrgRoles rol)
     {
 
         // Variables
         var client = new HttpClient();
 
         client.DefaultRequestHeaders.Add("token", token);
+        client.DefaultRequestHeaders.Add("rol", $"{(int)rol}");
 
         string url = ApiServer.PathURL("orgs/create/member");
         string json = JsonConvert.SerializeObject(modelo);
