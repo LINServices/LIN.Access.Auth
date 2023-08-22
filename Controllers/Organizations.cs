@@ -92,4 +92,42 @@ public static class Organizations
 
 
 
+
+    public async static Task<CreateResponse> Create(AccountModel modelo, string token)
+    {
+
+        // Variables
+        var client = new HttpClient();
+
+        client.DefaultRequestHeaders.Add("token", token);
+
+        string url = ApiServer.PathURL("orgs/create/member");
+        string json = JsonConvert.SerializeObject(modelo);
+
+        try
+        {
+            // Contenido
+            StringContent content = new(json, Encoding.UTF8, "application/json");
+
+            // Envía la solicitud
+            HttpResponseMessage response = await client.PostAsync(url, content);
+
+            // Lee la respuesta del servidor
+            string responseContent = await response.Content.ReadAsStringAsync();
+
+            var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
+
+            return obj ?? new();
+
+        }
+        catch
+        {
+        }
+
+        return new();
+
+    }
+
+
+
 }
