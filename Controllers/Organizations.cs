@@ -131,4 +131,93 @@ public static class Organizations
 
 
 
+
+
+
+
+
+
+    public async static Task<ResponseBase> UpdateWhiteListState(string token, bool estado)
+    {
+
+        // Variables
+        var client = new HttpClient();
+
+        client.DefaultRequestHeaders.Add("token", token);
+
+        string url = ApiServer.PathURL("orgs/update/whitelist");
+
+
+        url = Web.AddParameters(url, new()
+        {
+            {"haveWhite",$"{estado}" }
+        });
+
+        try
+        {
+            // Contenido
+            StringContent content = new("", Encoding.UTF8, "application/json");
+
+            // Envía la solicitud
+            HttpResponseMessage response = await client.PatchAsync(url, content);
+
+            // Lee la respuesta del servidor
+            string responseContent = await response.Content.ReadAsStringAsync();
+
+            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+
+            return obj ?? new();
+
+        }
+        catch
+        {
+        }
+
+        return new();
+
+    }
+
+
+    public async static Task<ResponseBase> UpdateAccessState(string token, bool estado)
+    {
+
+        // Variables
+        var client = new HttpClient();
+
+        client.DefaultRequestHeaders.Add("token", token);
+
+        string url = ApiServer.PathURL("orgs/update/access");
+
+
+        url = Web.AddParameters(url, new()
+        {
+            {"state",$"{estado}" }
+        });
+
+        try
+        {
+            // Contenido
+            StringContent content = new("", Encoding.UTF8, "application/json");
+
+            // Envía la solicitud
+            HttpResponseMessage response = await client.PatchAsync(url, content);
+
+            // Lee la respuesta del servidor
+            string responseContent = await response.Content.ReadAsStringAsync();
+
+            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+
+            return obj ?? new();
+
+        }
+        catch
+        {
+        }
+
+        return new();
+
+    }
+
+
+
 }
