@@ -56,14 +56,17 @@ public sealed class PassKeyHub
     public bool IsAdmin { get; set; }
 
 
+    private string AppKey = "";
+
 
     /// <summary>
     /// Constructor de un HUB
     /// </summary>
-    public PassKeyHub(string account, bool isAdmin = false)
+    public PassKeyHub(string account, string appKey,  bool isAdmin = false)
     {
         this.Account = account;
         this.IsAdmin = isAdmin;
+        this.AppKey = appKey;
     }
 
 
@@ -152,6 +155,7 @@ public sealed class PassKeyHub
     {
         try
         {
+            intent.ApplicationKey = AppKey;
             await HubConnection!.InvokeAsync("JoinIntent", intent);
         }
         catch
