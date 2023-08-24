@@ -155,7 +155,8 @@ public sealed class PassKeyHub
     {
         try
         {
-            intent.ApplicationKey = AppKey;
+            intent.Application ??= new();
+            intent.Application.Key = AppKey;
             await HubConnection!.InvokeAsync("JoinIntent", intent);
         }
         catch
