@@ -199,19 +199,31 @@ public static class Account
     /// </summary>
     /// <param name="pattern">Patron</param>
     /// <param name="id">ID de context</param>
-    public async static Task<ReadAllResponse<AccountModel>> SearchByPattern(string pattern, int id)
+    public async static Task<ReadAllResponse<AccountModel>> Search(string pattern, string token, bool isAdmin)
     {
 
         // Crear HttpClient
         using var httpClient = new HttpClient();
 
-        // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("account/searchByPattern");
+        string url;
+        if (isAdmin)
+        {
+            url = ApiServer.PathURL("account/admin/search");
+        }
+        else
+        {
+            url = ApiServer.PathURL("account/search");
+        }
 
         // Crear HttpRequestMessage y agregar el encabezado
         var request = new HttpRequestMessage(HttpMethod.Get, url);
-        request.Headers.Add("pattern", $"{pattern}");
-        request.Headers.Add("id", $"{id}");
+        request.Headers.Add("token", $"{token}");
+
+
+        url = Web.AddParameters(url, new()
+        {
+            {"pattern", pattern }
+        });
 
         try
         {
@@ -247,11 +259,13 @@ public static class Account
     /// Actualizar la contraseña de una cuenta
     /// </summary>
     /// <param name="modelo">Modelo de actualización</param>
-    public async static Task<ResponseBase> UpdatePassword(UpdatePasswordModel modelo)
+    public async static Task<ResponseBase> UpdatePassword(UpdatePasswordModel modelo, string token)
     {
 
         // Variables
         var client = new HttpClient();
+
+        client.DefaultRequestHeaders.Add("token", token);
 
         string url = ApiServer.PathURL("account/update/password");
         string json = JsonConvert.SerializeObject(modelo);
@@ -293,7 +307,7 @@ public static class Account
         // Variables
         var client = new HttpClient();
 
-        string url = ApiServer.PathURL("account/disable/account");
+        string url = ApiServer.PathURL("account/disable");
         string json = JsonConvert.SerializeObject(new AccountModel()
         {
             ID = id,
@@ -435,59 +449,6 @@ public static class Account
 
 
 
-    public async static Task<ReadAllResponse<AccountModel>> GetAll(string pattern, string token)
-    {
-
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
-
-        // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("account/findAllUsers");
-
-        // Crear HttpRequestMessage y agregar el encabezado
-        var request = new HttpRequestMessage(HttpMethod.Get, url);
-        request.Headers.Add("pattern", $"{pattern}");
-        request.Headers.Add("token", $"{token}");
-
-        try
-        {
-            // Hacer la solicitud GET
-            var response = await httpClient.SendAsync(request);
-
-            // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<AccountModel>>(responseBody) ?? new();
-
-
-            return obj ?? new();
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
-        }
-
-
-        return new();
-
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
 
     public async static Task<ResponseBase> ResetPassword(string key, UpdatePasswordModel modelo)
     {
@@ -569,7 +530,7 @@ public static class Account
 
 
 
-  
+
 
 
 
@@ -618,7 +579,7 @@ public static class Account
 
 
 
-  
+
 
 
 
