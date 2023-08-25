@@ -127,7 +127,7 @@ public sealed class PassKeyHub
             });
 
 
-            // Inicia la conexion
+            // Inicia la conexión
             await HubConnection.StartAsync();
 
 
@@ -161,7 +161,6 @@ public sealed class PassKeyHub
         }
         catch
         {
-
         }
     }
 

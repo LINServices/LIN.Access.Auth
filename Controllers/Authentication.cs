@@ -61,8 +61,6 @@ public class Authentication
         // Crear HttpClient
         using var httpClient = new HttpClient();
 
-        httpClient.DefaultRequestHeaders.Add("application", $"{Build.Application}");
-
         // ApiServer de la solicitud GET
         string url = ApiServer.PathURL("authentication/LoginWithToken");
 
