@@ -316,13 +316,13 @@ public static class Organizations
 
         // Variables
         var client = new HttpClient();
-		client.DefaultRequestHeaders.Add("appUid", uId);
+		client.DefaultRequestHeaders.Add("token", token);
 
         string url = ApiServer.PathURL("orgs/insert/app");
 
         url = Web.AddParameters(url, new()
         {
-            {"token", token }
+            {"appUid", uId }
         });
 
 
