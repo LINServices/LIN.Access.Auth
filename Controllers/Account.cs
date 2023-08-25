@@ -592,6 +592,49 @@ public static class Account
 
 
 
+    public async static Task<ReadAllResponse<LoginLogModel>> LoginLogs(string token)
+    {
+
+        // Crear HttpClient
+        using var httpClient = new HttpClient();
+
+
+        httpClient.DefaultRequestHeaders.Add("token", token);
+
+        // ApiServer de la solicitud GET
+        string url = ApiServer.PathURL("account/logs/real/all");
+
+        // Crear HttpRequestMessage y agregar el encabezado
+        var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+
+
+        try
+        {
+
+            // Hacer la solicitud GET
+            HttpResponseMessage response = await httpClient.SendAsync(request);
+
+            // Leer la respuesta como una cadena
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+
+            var obj = JsonConvert.DeserializeObject<ReadAllResponse<LoginLogModel>>(responseBody);
+
+            return obj ?? new();
+
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
+        }
+
+
+        return new();
+    }
+
+
 
 
 
