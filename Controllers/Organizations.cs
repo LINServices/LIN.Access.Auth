@@ -264,4 +264,52 @@ public static class Organizations
 
 
 
+
+
+	/// <summary>
+	/// Obtiene los datos de una cuenta especifica
+	/// </summary>
+	/// <param name="id">ID de la cuenta</param>
+	public async static Task<ReadAllResponse<ApplicationModel>> SearchApps(string app)
+	{
+
+		// Crear HttpClient
+		using var httpClient = new HttpClient();
+
+
+		// ApiServer de la solicitud GET
+		string url = ApiServer.PathURL("orgs/search/apps");
+
+
+		url = Web.AddParameters(url, new()
+		{
+			{"param", app }
+		});
+
+		try
+		{
+
+			// Hacer la solicitud GET
+			HttpResponseMessage response = await httpClient.GetAsync(url);
+
+			// Leer la respuesta como una cadena
+			string responseBody = await response.Content.ReadAsStringAsync();
+
+
+			var obj = JsonConvert.DeserializeObject<ReadAllResponse<ApplicationModel>>(responseBody);
+
+			return obj ?? new();
+
+
+		}
+		catch (Exception e)
+		{
+			Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
+		}
+
+
+		return new();
+	}
+
+
 }
