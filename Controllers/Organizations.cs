@@ -5,218 +5,262 @@ public static class Organizations
 {
 
 
-    /// <summary>
-    /// Obtiene los datos de una cuenta especifica
-    /// </summary>
-    /// <param name="id">ID de la cuenta</param>
-    public async static Task<ReadAllResponse<AccountModel>> ReadMembers(string token)
-    {
+	/// <summary>
+	/// Obtiene los datos de una cuenta especifica
+	/// </summary>
+	/// <param name="id">ID de la cuenta</param>
+	public async static Task<ReadAllResponse<AccountModel>> ReadMembers(string token)
+	{
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
+		// Crear HttpClient
+		using var httpClient = new HttpClient();
 
 
-        httpClient.DefaultRequestHeaders.Add("token", $"{token}");
-        // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("orgs/members");
+		httpClient.DefaultRequestHeaders.Add("token", $"{token}");
+		// ApiServer de la solicitud GET
+		string url = ApiServer.PathURL("orgs/members");
 
 
-        try
-        {
+		try
+		{
 
-            // Hacer la solicitud GET
-            HttpResponseMessage response = await httpClient.GetAsync(url);
+			// Hacer la solicitud GET
+			HttpResponseMessage response = await httpClient.GetAsync(url);
 
-            // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+			// Leer la respuesta como una cadena
+			string responseBody = await response.Content.ReadAsStringAsync();
 
 
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<AccountModel>>(responseBody);
+			var obj = JsonConvert.DeserializeObject<ReadAllResponse<AccountModel>>(responseBody);
 
-            return obj ?? new();
+			return obj ?? new();
 
 
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
-        }
+		}
+		catch (Exception e)
+		{
+			Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
+		}
 
 
-        return new();
-    }
+		return new();
+	}
 
 
 
-    /// <summary>
-    /// Obtiene los datos de una cuenta especifica
-    /// </summary>
-    /// <param name="id">ID de la cuenta</param>
-    public async static Task<ReadAllResponse<ApplicationModel>> ReadApps(string token)
-    {
+	/// <summary>
+	/// Obtiene los datos de una cuenta especifica
+	/// </summary>
+	/// <param name="id">ID de la cuenta</param>
+	public async static Task<ReadAllResponse<ApplicationModel>> ReadApps(string token)
+	{
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
+		// Crear HttpClient
+		using var httpClient = new HttpClient();
 
 
-        httpClient.DefaultRequestHeaders.Add("token", $"{token}");
-        // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("orgs/apps");
+		httpClient.DefaultRequestHeaders.Add("token", $"{token}");
+		// ApiServer de la solicitud GET
+		string url = ApiServer.PathURL("orgs/apps");
 
 
-        try
-        {
+		try
+		{
 
-            // Hacer la solicitud GET
-            HttpResponseMessage response = await httpClient.GetAsync(url);
+			// Hacer la solicitud GET
+			HttpResponseMessage response = await httpClient.GetAsync(url);
 
-            // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+			// Leer la respuesta como una cadena
+			string responseBody = await response.Content.ReadAsStringAsync();
 
 
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<ApplicationModel>>(responseBody);
+			var obj = JsonConvert.DeserializeObject<ReadAllResponse<ApplicationModel>>(responseBody);
 
-            return obj ?? new();
+			return obj ?? new();
 
 
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
-        }
+		}
+		catch (Exception e)
+		{
+			Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
+		}
 
 
-        return new();
-    }
+		return new();
+	}
 
 
 
 
 
-    public async static Task<CreateResponse> Create(AccountModel modelo, string token, OrgRoles rol)
-    {
+	public async static Task<CreateResponse> Create(AccountModel modelo, string token, OrgRoles rol)
+	{
 
-        // Variables
-        var client = new HttpClient();
+		// Variables
+		var client = new HttpClient();
 
-        client.DefaultRequestHeaders.Add("token", token);
-        client.DefaultRequestHeaders.Add("rol", $"{(int)rol}");
+		client.DefaultRequestHeaders.Add("token", token);
+		client.DefaultRequestHeaders.Add("rol", $"{(int)rol}");
 
-        string url = ApiServer.PathURL("orgs/create/member");
-        string json = JsonConvert.SerializeObject(modelo);
+		string url = ApiServer.PathURL("orgs/create/member");
+		string json = JsonConvert.SerializeObject(modelo);
 
-        try
-        {
-            // Contenido
-            StringContent content = new(json, Encoding.UTF8, "application/json");
+		try
+		{
+			// Contenido
+			StringContent content = new(json, Encoding.UTF8, "application/json");
 
-            // Envía la solicitud
-            HttpResponseMessage response = await client.PostAsync(url, content);
+			// Envía la solicitud
+			HttpResponseMessage response = await client.PostAsync(url, content);
 
-            // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+			// Lee la respuesta del servidor
+			string responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
+			var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
 
-            return obj ?? new();
+			return obj ?? new();
 
-        }
-        catch
-        {
-        }
+		}
+		catch
+		{
+		}
 
-        return new();
+		return new();
 
-    }
+	}
 
 
 
 
+	public async static Task<CreateResponse> Create(OrganizationModel organization, AccountModel admin)
+	{
 
+		// Variables
+		var client = new HttpClient();
 
 
+		organization.AppList = new();
+		organization.Members = new() { new(){
+			Member = admin,
+			Rol = OrgRoles.SuperManager
+		} };
+		admin.OrganizationAccess = null;
 
+		string url = ApiServer.PathURL("orgs/create");
+		string json = JsonConvert.SerializeObject(organization);
 
-    public async static Task<ResponseBase> UpdateWhiteListState(string token, bool estado)
-    {
+		try
+		{
+			// Contenido
+			StringContent content = new(json, Encoding.UTF8, "application/json");
 
-        // Variables
-        var client = new HttpClient();
+			// Envía la solicitud
+			HttpResponseMessage response = await client.PostAsync(url, content);
 
-        client.DefaultRequestHeaders.Add("token", token);
+			// Lee la respuesta del servidor
+			string responseContent = await response.Content.ReadAsStringAsync();
 
-        string url = ApiServer.PathURL("orgs/update/whitelist");
+			var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
 
+			return obj ?? new();
 
-        url = Web.AddParameters(url, new()
-        {
-            {"haveWhite",$"{estado}" }
-        });
+		}
+		catch
+		{
+		}
 
-        try
-        {
-            // Contenido
-            StringContent content = new("", Encoding.UTF8, "application/json");
+		return new();
 
-            // Envía la solicitud
-            HttpResponseMessage response = await client.PatchAsync(url, content);
+	}
 
-            // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
 
-            return obj ?? new();
 
-        }
-        catch
-        {
-        }
 
-        return new();
 
-    }
 
 
-    public async static Task<ResponseBase> UpdateAccessState(string token, bool estado)
-    {
 
-        // Variables
-        var client = new HttpClient();
+	public async static Task<ResponseBase> UpdateWhiteListState(string token, bool estado)
+	{
 
-        client.DefaultRequestHeaders.Add("token", token);
+		// Variables
+		var client = new HttpClient();
 
-        string url = ApiServer.PathURL("orgs/update/access");
+		client.DefaultRequestHeaders.Add("token", token);
 
+		string url = ApiServer.PathURL("orgs/update/whitelist");
 
-        url = Web.AddParameters(url, new()
-        {
-            {"state",$"{estado}" }
-        });
 
-        try
-        {
-            // Contenido
-            StringContent content = new("", Encoding.UTF8, "application/json");
+		url = Web.AddParameters(url, new()
+		{
+			{"haveWhite",$"{estado}" }
+		});
 
-            // Envía la solicitud
-            HttpResponseMessage response = await client.PatchAsync(url, content);
+		try
+		{
+			// Contenido
+			StringContent content = new("", Encoding.UTF8, "application/json");
 
-            // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+			// Envía la solicitud
+			HttpResponseMessage response = await client.PatchAsync(url, content);
 
-            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+			// Lee la respuesta del servidor
+			string responseContent = await response.Content.ReadAsStringAsync();
 
-            return obj ?? new();
+			var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
 
-        }
-        catch
-        {
-        }
+			return obj ?? new();
 
-        return new();
+		}
+		catch
+		{
+		}
 
-    }
+		return new();
+
+	}
+
+
+	public async static Task<ResponseBase> UpdateAccessState(string token, bool estado)
+	{
+
+		// Variables
+		var client = new HttpClient();
+
+		client.DefaultRequestHeaders.Add("token", token);
+
+		string url = ApiServer.PathURL("orgs/update/access");
+
+
+		url = Web.AddParameters(url, new()
+		{
+			{"state",$"{estado}" }
+		});
+
+		try
+		{
+			// Contenido
+			StringContent content = new("", Encoding.UTF8, "application/json");
+
+			// Envía la solicitud
+			HttpResponseMessage response = await client.PatchAsync(url, content);
+
+			// Lee la respuesta del servidor
+			string responseContent = await response.Content.ReadAsStringAsync();
+
+			var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+
+			return obj ?? new();
+
+		}
+		catch
+		{
+		}
+
+		return new();
+
+	}
 
 
 
