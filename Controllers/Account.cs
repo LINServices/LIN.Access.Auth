@@ -602,7 +602,7 @@ public static class Account
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("account/logs/real/all");
+        string url = ApiServer.PathURL("account/logs/read/all");
 
         // Crear HttpRequestMessage y agregar el encabezado
         var request = new HttpRequestMessage(HttpMethod.Get, url);
