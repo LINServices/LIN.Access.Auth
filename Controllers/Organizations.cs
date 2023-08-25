@@ -266,12 +266,13 @@ public static class Organizations
 
 
 
-	public async static Task<ReadAllResponse<ApplicationModel>> SearchApps(string app)
+	public async static Task<ReadAllResponse<ApplicationModel>> SearchApps(string app, string token)
 	{
 
 		// Crear HttpClient
 		using var httpClient = new HttpClient();
 
+		httpClient.DefaultRequestHeaders.Add("token", token);
 
 		// ApiServer de la solicitud GET
 		string url = ApiServer.PathURL("orgs/search/apps");
