@@ -36,14 +36,14 @@ public class Members
 
             var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
 
-            return obj ?? new();
+            return obj ?? new(Responses.UnavailableService);
 
         }
         catch
         {
         }
 
-        return new();
+        return new(Responses.NotConnection);
 
     }
 
@@ -53,7 +53,7 @@ public class Members
     /// Obtiene los integrantes asociados a su organización.
     /// </summary>
     /// <param name="token">Token de acceso</param>
-    public async static Task<ReadAllResponse<AccountModel>> ReadMembers(string token)
+    public async static Task<ReadAllResponse<AccountModel>> ReadAll(string token)
     {
 
         // Crear HttpClient
@@ -77,17 +77,14 @@ public class Members
 
             var obj = JsonConvert.DeserializeObject<ReadAllResponse<AccountModel>>(responseBody);
 
-            return obj ?? new();
-
+            return obj ?? new(Responses.UnavailableService);
 
         }
-        catch (Exception e)
+        catch
         {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
         }
 
-
-        return new();
+        return new(Responses.NotConnection);
     }
 
 
