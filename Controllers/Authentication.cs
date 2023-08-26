@@ -8,13 +8,13 @@ public class Authentication
     /// <summary>
     /// Inicia una sesión
     /// </summary>
-    public async static Task<ReadOneResponse<AccountModel>> Login(string cuenta, string password)
+    public async static Task<ReadOneResponse<AccountModel>> Login(string cuenta, string password, string? app = null)
     {
 
         // Crear HttpClient
         using var httpClient = new HttpClient();
 
-        httpClient.DefaultRequestHeaders.Add("application", $"{Build.Application}");
+        httpClient.DefaultRequestHeaders.Add("application", $"{app ?? Build.Application}");
 
         // ApiServer de la solicitud GET
         string url = ApiServer.PathURL("authentication/login");
