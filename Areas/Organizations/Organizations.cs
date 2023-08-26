@@ -158,44 +158,5 @@ public static class Organizations
 
 
 
-    public async static Task<CreateResponse> Create(string uId, string token)
-    {
-
-        // Variables
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Add("token", token);
-
-        string url = ApiServer.PathURL("orgs/insert/app");
-
-        url = Web.AddParameters(url, new()
-        {
-            {"appUid", uId }
-        });
-
-
-
-        try
-        {
-            // Contenido
-            StringContent content = new("", Encoding.UTF8, "application/json");
-
-            // Envía la solicitud
-            HttpResponseMessage response = await client.PostAsync(url, content);
-
-            // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
-
-            return obj ?? new();
-
-        }
-        catch
-        {
-        }
-
-        return new();
-
-    }
 
 }

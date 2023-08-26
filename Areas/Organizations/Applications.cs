@@ -6,6 +6,51 @@ public class Applications
 
 
     /// <summary>
+    /// Crea el acceso permitido a una aplicación en una organización.
+    /// </summary>
+    /// <param name="uId">Uid de la aplicación</param>
+    /// <param name="token">Token del administrador</param>
+    public async static Task<CreateResponse> Create(string uId, string token)
+    {
+
+        // Variables
+        var client = new HttpClient();
+        client.DefaultRequestHeaders.Add("token", token);
+
+        string url = ApiServer.PathURL("orgs/applications/insert");
+
+        url = Web.AddParameters(url, new()
+        {
+            {"appUid", uId }
+        });
+
+        try
+        {
+            // Contenido
+            StringContent content = new("", Encoding.UTF8, "application/json");
+
+            // Envía la solicitud
+            HttpResponseMessage response = await client.PostAsync(url, content);
+
+            // Lee la respuesta del servidor
+            string responseContent = await response.Content.ReadAsStringAsync();
+
+            var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
+
+            return obj ?? new(Responses.UnavailableService);
+
+        }
+        catch
+        {
+        }
+
+        return new(Responses.NotConnection);
+
+    }
+
+
+
+    /// <summary>
     /// Obtiene la lista de aplicaciones permitidas en tu organización.
     /// </summary>
     /// <param name="token">Token de acceso</param>
@@ -92,6 +137,7 @@ public class Applications
 
         return new(Responses.NotConnection);
     }
+
 
 
 
