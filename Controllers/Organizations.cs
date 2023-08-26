@@ -5,6 +5,22 @@ public static class Organizations
 {
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/// <summary>
 	/// Obtiene los datos de una cuenta especifica
 	/// </summary>
