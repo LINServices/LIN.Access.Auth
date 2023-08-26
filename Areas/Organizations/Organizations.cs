@@ -5,22 +5,11 @@ public static class Organizations
 {
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /// <summary>
+    /// Crea una nueva organización.
+    /// </summary>
+    /// <param name="organization">Modelo de la organización</param>
+    /// <param name="admin">Usuario administrador</param>
     public async static Task<CreateResponse> Create(OrganizationModel organization, AccountModel admin)
     {
 
@@ -64,12 +53,11 @@ public static class Organizations
 
 
 
-
-
-
-
-
-
+    /// <summary>
+    /// Actualiza es estado de la lista blanca de una organización.
+    /// </summary>
+    /// <param name="token">Token de administrador</param>
+    /// <param name="estado">Nuevo estado</param>
     public async static Task<ResponseBase> UpdateWhiteListState(string token, bool estado)
     {
 
@@ -111,6 +99,12 @@ public static class Organizations
     }
 
 
+
+    /// <summary>
+    /// Actualiza es estado del acceso login de los integrantes de una organización
+    /// </summary>
+    /// <param name="token">Token de administrador</param>
+    /// <param name="estado">Nuevo estado</param>
     public async static Task<ResponseBase> UpdateAccessState(string token, bool estado)
     {
 
@@ -150,12 +144,6 @@ public static class Organizations
         return new();
 
     }
-
-
-
-
-
-
 
 
 
