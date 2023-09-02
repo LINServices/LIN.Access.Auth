@@ -113,8 +113,12 @@ public sealed class AccountHub
 
     public async void ReconnectAndUpdate()
     {
-        await Suscribe();
-        GetDevicesList(DeviceModel?.Cuenta ?? 0);
+        if (HubConnection?.State != HubConnectionState.Connected)
+        {
+            await Suscribe();
+            GetDevicesList(DeviceModel?.Cuenta ?? 0);
+        }
+
 
     }
 
@@ -169,7 +173,7 @@ public sealed class AccountHub
             });
 
 
-          
+
 
 
             // Inicia la conexion
