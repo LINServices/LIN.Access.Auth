@@ -215,15 +215,17 @@ public static class Account
             url = ApiServer.PathURL("account/search");
         }
 
+        url = Web.AddParameters(url, new()
+        {
+            {"pattern", pattern }
+        });
+
         // Crear HttpRequestMessage y agregar el encabezado
         var request = new HttpRequestMessage(HttpMethod.Get, url);
         request.Headers.Add("token", $"{token}");
 
 
-        url = Web.AddParameters(url, new()
-        {
-            {"pattern", pattern }
-        });
+
 
         try
         {
