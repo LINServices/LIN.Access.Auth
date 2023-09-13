@@ -105,7 +105,7 @@ public static class Account
         using var httpClient = new HttpClient();
 
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("account/find");
+        string url = ApiServer.PathURL("account/findAll");
 
 
         var json = JsonConvert.SerializeObject(id);
