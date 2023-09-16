@@ -47,11 +47,14 @@ public static class Account
     /// Obtiene los datos de una cuenta especifica
     /// </summary>
     /// <param name="id">ID de la cuenta</param>
-    public async static Task<ReadOneResponse<AccountModel>> Read(int id)
+    public async static Task<ReadOneResponse<AccountModel>> Read(int id, string token)
     {
 
         // Crear HttpClient
         using var httpClient = new HttpClient();
+
+
+        httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
         string url = ApiServer.PathURL("account/read/id");
@@ -98,11 +101,13 @@ public static class Account
     /// Obtiene los datos de una cuenta especifica
     /// </summary>
     /// <param name="id">ID de la cuenta</param>
-    public async static Task<ReadAllResponse<AccountModel>> Read(List<int> id)
+    public async static Task<ReadAllResponse<AccountModel>> Read(List<int> id, string token)
     {
 
         // Crear HttpClient
         using var httpClient = new HttpClient();
+
+        httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
         string url = ApiServer.PathURL("account/findAll");
@@ -146,11 +151,13 @@ public static class Account
     /// Obtiene los datos de una cuenta
     /// </summary>
     /// <param name="cuenta">Usuario de la cuenta</param>
-    public async static Task<ReadOneResponse<AccountModel>> Read(string cuenta)
+    public async static Task<ReadOneResponse<AccountModel>> Read(string cuenta, string token)
     {
 
         // Crear HttpClient
         using var httpClient = new HttpClient();
+
+        httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
         string url = ApiServer.PathURL("account/read/user");
