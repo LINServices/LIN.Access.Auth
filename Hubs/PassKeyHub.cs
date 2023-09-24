@@ -121,7 +121,7 @@ public sealed class PassKeyHub
 
 
             // Recibe una respuesta (Cliente)
-            HubConnection.On<PassKeyModel>("recieveresponse", (pass) =>
+            HubConnection.On<PassKeyModel>("#response", (pass) =>
             {
                 OnRecieveResponse?.Invoke(null, pass);
             });
