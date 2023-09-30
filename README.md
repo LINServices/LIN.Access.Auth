@@ -1,6 +1,7 @@
 # LIN Auth Client Library
 
-La librería LIN Auth Client es una herramienta simple para interactuar con la API de autenticación LIN (LIN Auth). Esta librería facilita la integración de autenticación LIN en tus aplicaciones de manera sencilla y eficiente.
+La librería LIN Auth Client es una herramienta simple para interactuar con la API de autenticación LIN (LIN Auth). Esta
+librería facilita la integración de autenticación LIN en tus aplicaciones de manera sencilla y eficiente.
 
 ## Características Principales
 

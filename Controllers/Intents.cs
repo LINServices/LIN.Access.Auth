@@ -8,14 +8,14 @@ public static class Intents
     /// <summary>
     /// Obtiene los intentos de Passkey que no han sido aceptados
     /// </summary>
-    public async static Task<ReadAllResponse<PassKeyModel>> ReadAll(string token)
+    public static async Task<ReadAllResponse<PassKeyModel>> ReadAll(string token)
     {
 
         // Crear HttpClient
         using var httpClient = new HttpClient();
 
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("intents");
+        var url = ApiServer.PathURL("intents");
 
         // Crear HttpRequestMessage y agregar el encabezado
         var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -25,10 +25,10 @@ public static class Intents
         {
 
             // Hacer la solicitud GET
-            HttpResponseMessage response = await httpClient.SendAsync(request);
+            var response = await httpClient.SendAsync(request);
 
             // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
 
             var obj = JsonConvert.DeserializeObject<ReadAllResponse<PassKeyModel>>(responseBody);

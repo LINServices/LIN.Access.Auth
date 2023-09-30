@@ -11,7 +11,7 @@ public class Members
     /// <param name="modelo">Modelo del integrante</param>
     /// <param name="token">Token del administrador</param>
     /// <param name="rol">Rol del nuevo integrante</param>
-    public async static Task<CreateResponse> Create(AccountModel modelo, string token, OrgRoles rol)
+    public static async Task<CreateResponse> Create(AccountModel modelo, string token, OrgRoles rol)
     {
 
         // Variables
@@ -20,8 +20,8 @@ public class Members
         client.DefaultRequestHeaders.Add("token", token);
         client.DefaultRequestHeaders.Add("rol", $"{(int)rol}");
 
-        string url = ApiServer.PathURL("orgs/members/create");
-        string json = JsonConvert.SerializeObject(modelo);
+        var url = ApiServer.PathURL("orgs/members/create");
+        var json = JsonConvert.SerializeObject(modelo);
 
         try
         {
@@ -29,10 +29,10 @@ public class Members
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PostAsync(url, content);
+            var response = await client.PostAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
 
@@ -53,7 +53,7 @@ public class Members
     /// Obtiene los integrantes asociados a su organización.
     /// </summary>
     /// <param name="token">Token de acceso</param>
-    public async static Task<ReadAllResponse<AccountModel>> ReadAll(string token)
+    public static async Task<ReadAllResponse<AccountModel>> ReadAll(string token)
     {
 
         // Crear HttpClient
@@ -62,17 +62,17 @@ public class Members
 
         httpClient.DefaultRequestHeaders.Add("token", $"{token}");
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("orgs/members");
+        var url = ApiServer.PathURL("orgs/members");
 
 
         try
         {
 
             // Hacer la solicitud GET
-            HttpResponseMessage response = await httpClient.GetAsync(url);
+            var response = await httpClient.GetAsync(url);
 
             // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
 
             var obj = JsonConvert.DeserializeObject<ReadAllResponse<AccountModel>>(responseBody);

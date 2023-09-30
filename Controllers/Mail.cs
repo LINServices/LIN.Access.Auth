@@ -10,15 +10,15 @@ public class Mail
     /// </summary>
     /// <param name="password">Contraseña actual de la cuenta</param>
     /// <param name="modelo">Modelo del email</param>
-    public async static Task<ResponseBase> Aggregate(string password, EmailModel modelo)
+    public static async Task<ResponseBase> Aggregate(string password, EmailModel modelo)
     {
 
         // Variables
         var client = new HttpClient();
         client.DefaultRequestHeaders.Add("password", password);
 
-        string url = ApiServer.PathURL("security/mails/add");
-        string json = JsonConvert.SerializeObject(modelo);
+        var url = ApiServer.PathURL("security/mails/add");
+        var json = JsonConvert.SerializeObject(modelo);
 
         try
         {
@@ -26,10 +26,10 @@ public class Mail
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PostAsync(url, content);
+            var response = await client.PostAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
 
@@ -50,14 +50,14 @@ public class Mail
     /// Obtiene los emails asociados a una cuenta
     /// </summary>
     /// <param name="token">Token de la cuenta</param>
-    public async static Task<ReadAllResponse<EmailModel>> ReadAll(string token)
+    public static async Task<ReadAllResponse<EmailModel>> ReadAll(string token)
     {
 
         // Crear HttpClient
         using var httpClient = new HttpClient();
 
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("mails/all");
+        var url = ApiServer.PathURL("mails/all");
 
         // Crear HttpRequestMessage y agregar el encabezado
         var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -69,7 +69,7 @@ public class Mail
             var response = await httpClient.SendAsync(request);
 
             // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ReadAllResponse<EmailModel>>(responseBody) ?? new();
 
@@ -98,7 +98,7 @@ public class Mail
     /// </summary>
     /// <param name="mail">ID del mail</param>
     /// <param name="token">Token de acceso</param>
-    public async static Task<ResponseBase> ResendMail(int mail, string token)
+    public static async Task<ResponseBase> ResendMail(int mail, string token)
     {
 
         // Variables
@@ -106,7 +106,7 @@ public class Mail
         client.DefaultRequestHeaders.Add("mailID", mail.ToString());
         client.DefaultRequestHeaders.Add("token", token);
 
-        string url = ApiServer.PathURL("security/mails/resend");
+        var url = ApiServer.PathURL("security/mails/resend");
 
 
 
@@ -115,10 +115,10 @@ public class Mail
             HttpRequestMessage ms = new(HttpMethod.Post, url);
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.SendAsync(ms);
+            var response = await client.SendAsync(ms);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
 

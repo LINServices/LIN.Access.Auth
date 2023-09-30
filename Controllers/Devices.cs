@@ -8,11 +8,11 @@ public static class Devices
     /// <summary>
     /// Obtiene la lista de dispositivos asociados a una cuenta
     /// </summary>
-    public async static Task<ReadAllResponse<DeviceModel>> ReadAll(string token)
+    public static async Task<ReadAllResponse<DeviceModel>> ReadAll(string token)
     {
 
         // url
-        string url = ApiServer.PathURL("devices");
+        var url = ApiServer.PathURL("devices");
 
         // Crear HttpClient
         var httpClient = new HttpClient();
@@ -24,10 +24,10 @@ public static class Devices
         {
 
             // Hacer la solicitud GET
-            HttpResponseMessage response = await httpClient.GetAsync(url);
+            var response = await httpClient.GetAsync(url);
 
             // Leer la respuesta
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
             // Objecto respuesta
             var obj = JsonConvert.DeserializeObject<ReadAllResponse<DeviceModel>>(responseBody);

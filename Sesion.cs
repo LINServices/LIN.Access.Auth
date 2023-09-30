@@ -9,7 +9,7 @@ public sealed class SessionAuth
     /// <summary>
     /// Información del usuario
     /// </summary>
-    public LIN.Types.Auth.Models.AccountModel Account { get; private set; } = new();
+    public AccountModel Account { get; private set; } = new();
 
 
     public string AccountToken { get; set; }
@@ -19,7 +19,7 @@ public sealed class SessionAuth
     /// <summary>
     /// Si la sesión es activa
     /// </summary>
-    public static bool IsOpen { get => Instance.Account.ID > 0; }
+    public static bool IsOpen => Instance.Account.ID > 0;
 
 
 

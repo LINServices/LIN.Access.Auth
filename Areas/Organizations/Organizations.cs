@@ -10,7 +10,7 @@ public static class Organizations
     /// </summary>
     /// <param name="organization">Modelo de la organización</param>
     /// <param name="admin">Usuario administrador</param>
-    public async static Task<CreateResponse> Create(OrganizationModel organization, AccountModel admin)
+    public static async Task<CreateResponse> Create(OrganizationModel organization, AccountModel admin)
     {
 
         // Variables
@@ -18,14 +18,18 @@ public static class Organizations
 
 
         organization.AppList = new();
-        organization.Members = new() { new(){
-            Member = admin,
-            Rol = OrgRoles.SuperManager
-        } };
+        organization.Members = new()
+        {
+            new()
+            {
+                Member = admin,
+                Rol = OrgRoles.SuperManager
+            }
+        };
         admin.OrganizationAccess = null;
 
-        string url = ApiServer.PathURL("orgs/create");
-        string json = JsonConvert.SerializeObject(organization);
+        var url = ApiServer.PathURL("orgs/create");
+        var json = JsonConvert.SerializeObject(organization);
 
         try
         {
@@ -33,10 +37,10 @@ public static class Organizations
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PostAsync(url, content);
+            var response = await client.PostAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
 
@@ -58,7 +62,7 @@ public static class Organizations
     /// </summary>
     /// <param name="token">Token de administrador</param>
     /// <param name="estado">Nuevo estado</param>
-    public async static Task<ResponseBase> UpdateWhiteListState(string token, bool estado)
+    public static async Task<ResponseBase> UpdateWhiteListState(string token, bool estado)
     {
 
         // Variables
@@ -66,12 +70,14 @@ public static class Organizations
 
         client.DefaultRequestHeaders.Add("token", token);
 
-        string url = ApiServer.PathURL("orgs/update/whitelist");
+        var url = ApiServer.PathURL("orgs/update/whitelist");
 
 
         url = Web.AddParameters(url, new()
         {
-            {"haveWhite",$"{estado}" }
+            {
+                "haveWhite", $"{estado}"
+            }
         });
 
         try
@@ -80,10 +86,10 @@ public static class Organizations
             StringContent content = new("", Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PatchAsync(url, content);
+            var response = await client.PatchAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
 
@@ -105,7 +111,7 @@ public static class Organizations
     /// </summary>
     /// <param name="token">Token de administrador</param>
     /// <param name="estado">Nuevo estado</param>
-    public async static Task<ResponseBase> UpdateAccessState(string token, bool estado)
+    public static async Task<ResponseBase> UpdateAccessState(string token, bool estado)
     {
 
         // Variables
@@ -113,12 +119,14 @@ public static class Organizations
 
         client.DefaultRequestHeaders.Add("token", token);
 
-        string url = ApiServer.PathURL("orgs/update/access");
+        var url = ApiServer.PathURL("orgs/update/access");
 
 
         url = Web.AddParameters(url, new()
         {
-            {"state",$"{estado}" }
+            {
+                "state", $"{estado}"
+            }
         });
 
         try
@@ -127,10 +135,10 @@ public static class Organizations
             StringContent content = new("", Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PatchAsync(url, content);
+            var response = await client.PatchAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
 

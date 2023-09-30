@@ -34,13 +34,7 @@ public sealed class PassKeyHub
     /// <summary>
     /// Obtiene el ID de usuario asignado este dispositivo
     /// </summary>
-    public string ID
-    {
-        get
-        {
-            return HubConnection?.ConnectionId ?? string.Empty;
-        }
-    }
+    public string ID => HubConnection?.ConnectionId ?? string.Empty;
 
 
 
@@ -62,11 +56,11 @@ public sealed class PassKeyHub
     /// <summary>
     /// Constructor de un HUB
     /// </summary>
-    public PassKeyHub(string account, string appKey,  bool isAdmin = false)
+    public PassKeyHub(string account, string appKey, bool isAdmin = false)
     {
-        this.Account = account;
-        this.IsAdmin = isAdmin;
-        this.AppKey = appKey;
+        Account = account;
+        IsAdmin = isAdmin;
+        AppKey = appKey;
     }
 
 
@@ -89,7 +83,7 @@ public sealed class PassKeyHub
         {
             if (HubConnection != null)
                 await HubConnection.StopAsync();
-            
+
         }
         catch
         {
@@ -108,9 +102,9 @@ public sealed class PassKeyHub
         {
             // Crea la conexion al HUB
             HubConnection = new HubConnectionBuilder()
-                 .WithUrl(ApiServer.PathURL("realtime/auth/passkey"))
-                 .WithAutomaticReconnect()
-                 .Build();
+               .WithUrl(ApiServer.PathURL("realtime/auth/passkey"))
+               .WithAutomaticReconnect()
+               .Build();
 
 
             // Recibe un intento Admin

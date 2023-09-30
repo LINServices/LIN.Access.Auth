@@ -10,18 +10,20 @@ public class Applications
     /// </summary>
     /// <param name="uId">Uid de la aplicación</param>
     /// <param name="token">Token del administrador</param>
-    public async static Task<CreateResponse> Create(string uId, string token)
+    public static async Task<CreateResponse> Create(string uId, string token)
     {
 
         // Variables
         var client = new HttpClient();
         client.DefaultRequestHeaders.Add("token", token);
 
-        string url = ApiServer.PathURL("orgs/applications/insert");
+        var url = ApiServer.PathURL("orgs/applications/insert");
 
         url = Web.AddParameters(url, new()
         {
-            {"appUid", uId }
+            {
+                "appUid", uId
+            }
         });
 
         try
@@ -30,10 +32,10 @@ public class Applications
             StringContent content = new("", Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PostAsync(url, content);
+            var response = await client.PostAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
 
@@ -54,7 +56,7 @@ public class Applications
     /// Obtiene la lista de aplicaciones permitidas en tu organización.
     /// </summary>
     /// <param name="token">Token de acceso</param>
-    public async static Task<ReadAllResponse<ApplicationModel>> ReadAll(string token)
+    public static async Task<ReadAllResponse<ApplicationModel>> ReadAll(string token)
     {
 
         // Crear HttpClient
@@ -63,17 +65,17 @@ public class Applications
 
         httpClient.DefaultRequestHeaders.Add("token", $"{token}");
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("orgs/applications");
+        var url = ApiServer.PathURL("orgs/applications");
 
 
         try
         {
 
             // Hacer la solicitud GET
-            HttpResponseMessage response = await httpClient.GetAsync(url);
+            var response = await httpClient.GetAsync(url);
 
             // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
 
             var obj = JsonConvert.DeserializeObject<ReadAllResponse<ApplicationModel>>(responseBody);
@@ -97,7 +99,7 @@ public class Applications
     /// </summary>
     /// <param name="param">Parámetro de búsqueda</param>
     /// <param name="token">Token de acceso</param>
-    public async static Task<ReadAllResponse<ApplicationModel>> Search(string param, string token)
+    public static async Task<ReadAllResponse<ApplicationModel>> Search(string param, string token)
     {
 
         // Crear HttpClient
@@ -106,22 +108,24 @@ public class Applications
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("orgs/applications/search");
+        var url = ApiServer.PathURL("orgs/applications/search");
 
 
         url = Web.AddParameters(url, new()
         {
-            {"param", param }
+            {
+                "param", param
+            }
         });
 
         try
         {
 
             // Hacer la solicitud GET
-            HttpResponseMessage response = await httpClient.GetAsync(url);
+            var response = await httpClient.GetAsync(url);
 
             // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
 
             var obj = JsonConvert.DeserializeObject<ReadAllResponse<ApplicationModel>>(responseBody);

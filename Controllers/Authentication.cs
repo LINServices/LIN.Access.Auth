@@ -8,7 +8,7 @@ public class Authentication
     /// <summary>
     /// Inicia una sesión
     /// </summary>
-    public async static Task<ReadOneResponse<AccountModel>> Login(string cuenta, string password, string? app = null)
+    public static async Task<ReadOneResponse<AccountModel>> Login(string cuenta, string password, string? app = null)
     {
 
         // Crear HttpClient
@@ -17,12 +17,17 @@ public class Authentication
         httpClient.DefaultRequestHeaders.Add("application", $"{app ?? Build.Application}");
 
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("authentication/login");
+        var url = ApiServer.PathURL("authentication/login");
 
         // Armar la url
-        url = Web.AddParameters(url, new(){
-            {"user", cuenta },
-            {"password", password }
+        url = Web.AddParameters(url, new()
+        {
+            {
+                "user", cuenta
+            },
+            {
+                "password", password
+            }
         });
 
 
@@ -33,7 +38,7 @@ public class Authentication
             var response = await httpClient.GetAsync(url);
 
             // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ReadOneResponse<AccountModel>>(responseBody);
 
@@ -55,14 +60,14 @@ public class Authentication
     /// <summary>
     /// Inicia una sesión
     /// </summary>
-    public async static Task<ReadOneResponse<AccountModel>> Login(string token)
+    public static async Task<ReadOneResponse<AccountModel>> Login(string token)
     {
 
         // Crear HttpClient
         using var httpClient = new HttpClient();
 
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("authentication/LoginWithToken");
+        var url = ApiServer.PathURL("authentication/LoginWithToken");
 
 
         // Crear HttpRequestMessage y agregar el encabezado
@@ -77,7 +82,7 @@ public class Authentication
             var response = await httpClient.SendAsync(request);
 
             // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ReadOneResponse<AccountModel>>(responseBody);
 

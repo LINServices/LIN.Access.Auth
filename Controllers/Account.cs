@@ -8,14 +8,14 @@ public static class Account
     /// <summary>
     /// Crea un nuevo usuario
     /// </summary>
-    public async static Task<CreateResponse> Create(AccountModel modelo)
+    public static async Task<CreateResponse> Create(AccountModel modelo)
     {
 
         // Variables
         var client = new HttpClient();
 
-        string url = ApiServer.PathURL("account/create");
-        string json = JsonConvert.SerializeObject(modelo);
+        var url = ApiServer.PathURL("account/create");
+        var json = JsonConvert.SerializeObject(modelo);
 
         try
         {
@@ -23,10 +23,10 @@ public static class Account
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PostAsync(url, content);
+            var response = await client.PostAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
 
@@ -47,7 +47,7 @@ public static class Account
     /// Obtiene los datos de una cuenta especifica
     /// </summary>
     /// <param name="id">ID de la cuenta</param>
-    public async static Task<ReadOneResponse<AccountModel>> Read(int id, string token)
+    public static async Task<ReadOneResponse<AccountModel>> Read(int id, string token)
     {
 
         // Crear HttpClient
@@ -57,10 +57,13 @@ public static class Account
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("account/read/id");
+        var url = ApiServer.PathURL("account/read/id");
 
-        url = Web.AddParameters(url, new(){
-            {"id",id.ToString() }
+        url = Web.AddParameters(url, new()
+        {
+            {
+                "id", id.ToString()
+            }
         });
 
         // Crear HttpRequestMessage y agregar el encabezado
@@ -72,10 +75,10 @@ public static class Account
         {
 
             // Hacer la solicitud GET
-            HttpResponseMessage response = await httpClient.SendAsync(request);
+            var response = await httpClient.SendAsync(request);
 
             // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
 
             var obj = JsonConvert.DeserializeObject<ReadOneResponse<AccountModel>>(responseBody);
@@ -101,7 +104,7 @@ public static class Account
     /// Obtiene los datos de una cuenta especifica
     /// </summary>
     /// <param name="id">ID de la cuenta</param>
-    public async static Task<ReadAllResponse<AccountModel>> Read(List<int> id, string token)
+    public static async Task<ReadAllResponse<AccountModel>> Read(List<int> id, string token)
     {
 
         // Crear HttpClient
@@ -110,7 +113,7 @@ public static class Account
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("account/findAll");
+        var url = ApiServer.PathURL("account/findAll");
 
 
         var json = JsonConvert.SerializeObject(id);
@@ -124,10 +127,10 @@ public static class Account
         {
 
             // Hacer la solicitud GET
-            HttpResponseMessage response = await httpClient.PostAsync(url, request);
+            var response = await httpClient.PostAsync(url, request);
 
             // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
 
             var obj = JsonConvert.DeserializeObject<ReadAllResponse<AccountModel>>(responseBody);
@@ -151,7 +154,7 @@ public static class Account
     /// Obtiene los datos de una cuenta
     /// </summary>
     /// <param name="cuenta">Usuario de la cuenta</param>
-    public async static Task<ReadOneResponse<AccountModel>> Read(string cuenta, string token)
+    public static async Task<ReadOneResponse<AccountModel>> Read(string cuenta, string token)
     {
 
         // Crear HttpClient
@@ -160,10 +163,13 @@ public static class Account
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("account/read/user");
+        var url = ApiServer.PathURL("account/read/user");
 
-        url = Web.AddParameters(url, new(){
-            {"user", cuenta }
+        url = Web.AddParameters(url, new()
+        {
+            {
+                "user", cuenta
+            }
         });
 
 
@@ -177,7 +183,7 @@ public static class Account
 
 
             // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
 
             var obj = JsonConvert.DeserializeObject<ReadOneResponse<AccountModel>>(responseBody);
@@ -206,7 +212,7 @@ public static class Account
     /// </summary>
     /// <param name="pattern">Patron</param>
     /// <param name="id">ID de context</param>
-    public async static Task<ReadAllResponse<AccountModel>> Search(string pattern, string token, bool isAdmin)
+    public static async Task<ReadAllResponse<AccountModel>> Search(string pattern, string token, bool isAdmin)
     {
 
         // Crear HttpClient
@@ -224,7 +230,9 @@ public static class Account
 
         url = Web.AddParameters(url, new()
         {
-            {"pattern", pattern }
+            {
+                "pattern", pattern
+            }
         });
 
         // Crear HttpRequestMessage y agregar el encabezado
@@ -240,7 +248,7 @@ public static class Account
             var response = await httpClient.SendAsync(request);
 
             // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ReadAllResponse<AccountModel>>(responseBody) ?? new();
 
@@ -268,7 +276,7 @@ public static class Account
     /// Actualizar la contraseña de una cuenta
     /// </summary>
     /// <param name="modelo">Modelo de actualización</param>
-    public async static Task<ResponseBase> UpdatePassword(UpdatePasswordModel modelo, string token)
+    public static async Task<ResponseBase> UpdatePassword(UpdatePasswordModel modelo, string token)
     {
 
         // Variables
@@ -276,8 +284,8 @@ public static class Account
 
         client.DefaultRequestHeaders.Add("token", token);
 
-        string url = ApiServer.PathURL("account/update/password");
-        string json = JsonConvert.SerializeObject(modelo);
+        var url = ApiServer.PathURL("account/update/password");
+        var json = JsonConvert.SerializeObject(modelo);
 
         try
         {
@@ -285,10 +293,10 @@ public static class Account
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PatchAsync(url, content);
+            var response = await client.PatchAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
 
@@ -310,14 +318,14 @@ public static class Account
     /// </summary>
     /// <param name="id">ID de la cuenta</param>
     /// <param name="password">Contraseña</param>
-    public async static Task<ResponseBase> Disable(int id, string password)
+    public static async Task<ResponseBase> Disable(int id, string password)
     {
 
         // Variables
         var client = new HttpClient();
 
-        string url = ApiServer.PathURL("account/disable");
-        string json = JsonConvert.SerializeObject(new AccountModel()
+        var url = ApiServer.PathURL("account/disable");
+        var json = JsonConvert.SerializeObject(new AccountModel()
         {
             ID = id,
             Contraseña = password
@@ -329,10 +337,10 @@ public static class Account
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PatchAsync(url, content);
+            var response = await client.PatchAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
 
@@ -354,7 +362,7 @@ public static class Account
     /// </summary>
     /// <param name="token">Token de acceso</param>
     /// <param name="genero">Nuevo genero</param>
-    public async static Task<ResponseBase> UpdateGender(string token, Genders genero)
+    public static async Task<ResponseBase> UpdateGender(string token, Genders genero)
     {
 
         // Variables
@@ -362,7 +370,7 @@ public static class Account
         client.DefaultRequestHeaders.Add("token", $"{token}");
         client.DefaultRequestHeaders.Add("genero", $"{(int)genero}");
 
-        string url = ApiServer.PathURL("account/update/gender");
+        var url = ApiServer.PathURL("account/update/gender");
 
         try
         {
@@ -370,10 +378,10 @@ public static class Account
             StringContent content = new("", Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PatchAsync(url, content);
+            var response = await client.PatchAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
 
@@ -395,7 +403,7 @@ public static class Account
     /// </summary>
     /// <param name="token">Token de acceso</param>
     /// <param name="visibility">Nueva visibilidad</param>
-    public async static Task<ResponseBase> UpdateVisibility(string token, AccountVisibility visibility)
+    public static async Task<ResponseBase> UpdateVisibility(string token, AccountVisibility visibility)
     {
 
         // Variables
@@ -403,7 +411,7 @@ public static class Account
         client.DefaultRequestHeaders.Add("token", $"{token}");
         client.DefaultRequestHeaders.Add("visibility", $"{(int)visibility}");
 
-        string url = ApiServer.PathURL("account/update/visibility");
+        var url = ApiServer.PathURL("account/update/visibility");
 
         try
         {
@@ -411,10 +419,10 @@ public static class Account
             StringContent content = new("", Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PatchAsync(url, content);
+            var response = await client.PatchAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
 
@@ -459,15 +467,15 @@ public static class Account
 
 
 
-    public async static Task<ResponseBase> ResetPassword(string key, UpdatePasswordModel modelo)
+    public static async Task<ResponseBase> ResetPassword(string key, UpdatePasswordModel modelo)
     {
 
         // Variables
         var client = new HttpClient();
         client.DefaultRequestHeaders.Add("key", key);
 
-        string url = ApiServer.PathURL("security/password/reset");
-        string json = JsonConvert.SerializeObject(modelo);
+        var url = ApiServer.PathURL("security/password/reset");
+        var json = JsonConvert.SerializeObject(modelo);
 
         try
         {
@@ -475,10 +483,10 @@ public static class Account
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PatchAsync(url, content);
+            var response = await client.PatchAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
 
@@ -500,17 +508,19 @@ public static class Account
     /// <summary>
     /// Actualiza la informacion de un usuario
     /// </summary>
-    public async static Task<ReadOneResponse<EmailModel>> ForgetPassword(string user)
+    public static async Task<ReadOneResponse<EmailModel>> ForgetPassword(string user)
     {
 
         // Variables
         var client = new HttpClient();
 
-        string url = ApiServer.PathURL("security/password/forget");
+        var url = ApiServer.PathURL("security/password/forget");
 
         url = Web.AddParameters(url, new()
         {
-            {"user",user }
+            {
+                "user", user
+            }
         });
 
         try
@@ -518,10 +528,10 @@ public static class Account
             HttpRequestMessage ms = new(HttpMethod.Post, url);
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.SendAsync(ms);
+            var response = await client.SendAsync(ms);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ReadOneResponse<EmailModel>>(responseContent);
 
@@ -548,14 +558,14 @@ public static class Account
 
 
 
-    public async static Task<ResponseBase> Verficate(string key)
+    public static async Task<ResponseBase> Verficate(string key)
     {
 
         // Variables
         var client = new HttpClient();
         client.DefaultRequestHeaders.Add("key", key);
 
-        string url = ApiServer.PathURL("security/mails/verify");
+        var url = ApiServer.PathURL("security/mails/verify");
 
         try
         {
@@ -563,10 +573,10 @@ public static class Account
             StringContent content = new("", Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            HttpResponseMessage response = await client.PostAsync(url, content);
+            var response = await client.PostAsync(url, content);
 
             // Lee la respuesta del servidor
-            string responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync();
 
             var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
 
@@ -601,7 +611,7 @@ public static class Account
 
 
 
-    public async static Task<ReadAllResponse<LoginLogModel>> LoginLogs(string token)
+    public static async Task<ReadAllResponse<LoginLogModel>> LoginLogs(string token)
     {
 
         // Crear HttpClient
@@ -611,7 +621,7 @@ public static class Account
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        string url = ApiServer.PathURL("account/logs/read/all");
+        var url = ApiServer.PathURL("account/logs/read/all");
 
         // Crear HttpRequestMessage y agregar el encabezado
         var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -622,10 +632,10 @@ public static class Account
         {
 
             // Hacer la solicitud GET
-            HttpResponseMessage response = await httpClient.SendAsync(request);
+            var response = await httpClient.SendAsync(request);
 
             // Leer la respuesta como una cadena
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
 
 
             var obj = JsonConvert.DeserializeObject<ReadAllResponse<LoginLogModel>>(responseBody);

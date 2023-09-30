@@ -57,13 +57,7 @@ public sealed class AccountHub
     /// <summary>
     /// Obtiene el ID de usuario asignado este dispositivo
     /// </summary>
-    public string ID
-    {
-        get
-        {
-            return HubConnection?.ConnectionId ?? string.Empty;
-        }
-    }
+    public string ID => HubConnection?.ConnectionId ?? string.Empty;
 
 
 
@@ -133,9 +127,9 @@ public sealed class AccountHub
         {
             // Crea la conexion al HUB
             HubConnection = new HubConnectionBuilder()
-                 .WithUrl(ApiServer.PathURL("realTime/service"))
-                 .WithAutomaticReconnect()
-                 .Build();
+               .WithUrl(ApiServer.PathURL("realTime/service"))
+               .WithAutomaticReconnect()
+               .Build();
 
 
             // Evento ccuando se reciba una tarea
@@ -378,14 +372,20 @@ public sealed class AccountHub
     /// <summary>
     /// Envía el evento de tarea
     /// </summary>
-    private void SendTaskEvent(string contenido) => OnReceivingCommand?.Invoke(null, contenido);
+    private void SendTaskEvent(string contenido)
+    {
+        OnReceivingCommand?.Invoke(null, contenido);
+    }
 
 
 
     /// <summary>
     /// Envía el evento de tarea
     /// </summary>
-    private void SendNewDeviceEvent(DeviceModel modelo) => OnDeviceJoins?.Invoke(null, modelo);
+    private void SendNewDeviceEvent(DeviceModel modelo)
+    {
+        OnDeviceJoins?.Invoke(null, modelo);
+    }
 
 
 
