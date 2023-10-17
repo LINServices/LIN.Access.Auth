@@ -104,6 +104,32 @@ public static class Account
     /// Obtiene los datos de una cuenta especifica
     /// </summary>
     /// <param name="id">ID de la cuenta</param>
+    public static async Task<ReadOneResponse<AccountModel>> ReadAdmin(int id, string token)
+    {
+
+        var x = await Read(new List<int>
+        {
+            id
+        }, token);
+
+
+        return new ReadOneResponse<AccountModel>
+        {
+            Message = x.Message,
+            Model = x.Models.FirstOrDefault() ?? new(),
+            Response = x.Response
+        };
+
+    }
+
+
+
+
+
+    /// <summary>
+    /// Obtiene los datos de una cuenta especifica
+    /// </summary>
+    /// <param name="id">ID de la cuenta</param>
     public static async Task<ReadAllResponse<AccountModel>> Read(List<int> id, string token)
     {
 
