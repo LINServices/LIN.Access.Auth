@@ -113,7 +113,7 @@ public static class Account
         }, token);
 
 
-        return new ReadOneResponse<AccountModel>
+        return new()
         {
             Message = x.Message,
             Model = x.Models.FirstOrDefault() ?? new(),

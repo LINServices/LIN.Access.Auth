@@ -5,7 +5,7 @@ public static class Admin
 {
 
 
-    
+
     /// <summary>
     /// Obtiene los datos de una cuenta especifica
     /// </summary>
