@@ -6,7 +6,10 @@ public class Applications
 
 
 
-
+    /// <summary>
+    /// Obtiene las aplicaciones asociadas a una cuenta.
+    /// </summary>
+    /// <param name="token">Token de acceso.</param>
     public static async Task<ReadAllResponse<ApplicationModel>> ReadAll(string token)
     {
 

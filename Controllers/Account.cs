@@ -6,8 +6,9 @@ public static class Account
 
 
     /// <summary>
-    /// Crea un nuevo usuario
+    /// Crear nuevo usuario.
     /// </summary>
+    /// <param name="modelo">Modelo.</param>
     public static async Task<CreateResponse> Create(AccountModel modelo)
     {
 
@@ -33,8 +34,9 @@ public static class Account
             return obj ?? new();
 
         }
-        catch
+        catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
         }
 
         return new();
@@ -44,9 +46,10 @@ public static class Account
 
 
     /// <summary>
-    /// Obtiene los datos de una cuenta especifica
+    /// Obtiene una cuenta según el Id.
     /// </summary>
-    /// <param name="id">ID de la cuenta</param>
+    /// <param name="id">Id del usuario.</param>
+    /// <param name="token">Token de acceso.</param>
     public static async Task<ReadOneResponse<AccountModel>> Read(int id, string token)
     {
 
@@ -98,39 +101,12 @@ public static class Account
 
 
 
-
-
     /// <summary>
-    /// Obtiene los datos de una cuenta especifica
+    /// Obtiene una lista de cuentas según los Id.
     /// </summary>
-    /// <param name="id">ID de la cuenta</param>
-    public static async Task<ReadOneResponse<AccountModel>> ReadAdmin(int id, string token)
-    {
-
-        var x = await Read(new List<int>
-        {
-            id
-        }, token);
-
-
-        return new()
-        {
-            Message = x.Message,
-            Model = x.Models.FirstOrDefault() ?? new(),
-            Response = x.Response
-        };
-
-    }
-
-
-
-
-
-    /// <summary>
-    /// Obtiene los datos de una cuenta especifica
-    /// </summary>
-    /// <param name="id">ID de la cuenta</param>
-    public static async Task<ReadAllResponse<AccountModel>> Read(List<int> id, string token)
+    /// <param name="ids">Lista de Ids.</param>
+    /// <param name="token">Token de acceso.</param>
+    public static async Task<ReadAllResponse<AccountModel>> Read(List<int> ids, string token)
     {
 
         // Crear HttpClient
@@ -141,13 +117,10 @@ public static class Account
         // ApiServer de la solicitud GET
         var url = ApiServer.PathURL("account/findAll");
 
-
-        var json = JsonConvert.SerializeObject(id);
+        var json = JsonConvert.SerializeObject(ids);
 
         // Crear HttpRequestMessage y agregar el encabezado
         var request = new StringContent(json, Encoding.UTF8, "application/json");
-
-
 
         try
         {
@@ -158,11 +131,9 @@ public static class Account
             // Leer la respuesta como una cadena
             var responseBody = await response.Content.ReadAsStringAsync();
 
-
             var obj = JsonConvert.DeserializeObject<ReadAllResponse<AccountModel>>(responseBody);
 
             return obj ?? new();
-
 
         }
         catch (Exception e)
@@ -170,16 +141,16 @@ public static class Account
             Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
         }
 
-
         return new();
     }
 
 
 
     /// <summary>
-    /// Obtiene los datos de una cuenta
+    /// Obtiene una cuenta según el usuario único.
     /// </summary>
-    /// <param name="cuenta">Usuario de la cuenta</param>
+    /// <param name="cuenta">Usuario de la cuenta.</param>
+    /// <param name="token">Token de acceso.</param>
     public static async Task<ReadOneResponse<AccountModel>> Read(string cuenta, string token)
     {
 
@@ -234,10 +205,11 @@ public static class Account
 
 
     /// <summary>
-    /// Buscar usuarios por medio de un patron
+    /// Buscar usuario por coincidencia del usuario.
     /// </summary>
-    /// <param name="pattern">Patron</param>
-    /// <param name="id">ID de context</param>
+    /// <param name="pattern">Patron de búsqueda.</param>
+    /// <param name="token">Token de acceso.</param>
+    /// <param name="isAdmin">Es un administrador.</param>
     public static async Task<ReadAllResponse<AccountModel>> Search(string pattern, string token, bool isAdmin)
     {
 
@@ -295,6 +267,49 @@ public static class Account
 
 
     }
+
+
+
+
+
+
+
+
+    /// <summary>
+    /// Obtiene los datos de una cuenta especifica
+    /// </summary>
+    /// <param name="id">ID de la cuenta</param>
+    public static async Task<ReadOneResponse<AccountModel>> ReadAdmin(int id, string token)
+    {
+
+        var x = await Read(new List<int>
+        {
+            id
+        }, token);
+
+
+        return new()
+        {
+            Message = x.Message,
+            Model = x.Models.FirstOrDefault() ?? new(),
+            Response = x.Response
+        };
+
+    }
+
+
+
+
+
+
+
+
+
+    
+
+
+
+   
 
 
 

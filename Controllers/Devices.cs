@@ -5,9 +5,10 @@ public static class Devices
 {
 
 
-    /// <summary>
-    /// Obtiene la lista de dispositivos asociados a una cuenta
-    /// </summary>
+   /// <summary>
+   /// Obtiene la lista de dispositivos conectados a la cuenta.
+   /// </summary>
+   /// <param name="token">Token de acceso.</param>
     public static async Task<ReadAllResponse<DeviceModel>> ReadAll(string token)
     {
 

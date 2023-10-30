@@ -6,8 +6,11 @@ public class Authentication
 
 
     /// <summary>
-    /// Inicia una sesión
+    /// Iniciar sesión.
     /// </summary>
+    /// <param name="cuenta">Usuario.</param>
+    /// <param name="password">Contraseña.</param>
+    /// <param name="app">Aplicación.</param>
     public static async Task<ReadOneResponse<AccountModel>> Login(string cuenta, string password, string? app = null)
     {
 
@@ -60,6 +63,7 @@ public class Authentication
     /// <summary>
     /// Inicia una sesión
     /// </summary>
+    /// <param name="token">Token de acceso.</param>
     public static async Task<ReadOneResponse<AccountModel>> Login(string token)
     {
 
