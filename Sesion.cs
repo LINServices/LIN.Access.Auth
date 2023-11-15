@@ -5,13 +5,16 @@ public sealed class SessionAuth
 {
 
 
-
     /// <summary>
-    /// Información del usuario
+    /// Modelo de la cuenta.
     /// </summary>
     public AccountModel Account { get; private set; } = new();
 
 
+
+    /// <summary>
+    /// Token.
+    /// </summary>
     public string AccountToken { get; set; }
 
 

@@ -1,25 +1,24 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-
-namespace LIN.Access.Auth.Hubs;
+﻿namespace LIN.Access.Auth.Hubs;
 
 
 public sealed class PassKeyHub
 {
 
+
     //======== Eventos ========//
 
 
     /// <summary>
-    /// Recive un intento (Admin)
+    /// Recibe un intento (Admin).
     /// </summary>
-    public event EventHandler<PassKeyModel>? OnRecieveIntentAdmin;
+    public event EventHandler<PassKeyModel>? OnReceiveIntent;
 
 
 
     /// <summary>
-    /// Recibe un intento (Client)
+    /// Recibe un intento (Client).
     /// </summary>
-    public event EventHandler<PassKeyModel>? OnRecieveResponse;
+    public event EventHandler<PassKeyModel>? OnReceiveResponse;
 
 
 
@@ -27,7 +26,7 @@ public sealed class PassKeyHub
 
 
     /// <summary>
-    /// Conexion del Hub
+    /// Conexión del Hub
     /// </summary>
     private HubConnection? HubConnection { get; set; }
 
@@ -39,7 +38,6 @@ public sealed class PassKeyHub
     public string ID => HubConnection?.ConnectionId ?? string.Empty;
 
 
-
     /// <summary>
     /// Usuario 
     /// </summary>
@@ -47,12 +45,15 @@ public sealed class PassKeyHub
 
 
     /// <summary>
-    /// Si es una sesion de Admin
+    /// Si es una sesión de Admin
     /// </summary>
     public bool IsAdmin { get; set; }
 
 
-    private string AppKey = "";
+    /// <summary>
+    /// Llave de la aplicación.
+    /// </summary>
+    private string AppKey { get; set; } = string.Empty;
 
 
     /// <summary>
@@ -67,7 +68,7 @@ public sealed class PassKeyHub
 
 
     /// <summary>
-    /// Reconecta la conexion
+    /// Reconecta la conexión.
     /// </summary>
     public async void Reconnect()
     {
@@ -77,9 +78,9 @@ public sealed class PassKeyHub
 
 
     /// <summary>
-    /// Cierra la conexion
+    /// Cierra la conexión.
     /// </summary>
-    public async void Disconet()
+    public async void Disconnect()
     {
         try
         {
@@ -107,21 +108,21 @@ public sealed class PassKeyHub
                .WithUrl(ApiServer.PathURL("realtime/auth/passkey"))
                .WithAutomaticReconnect()
                .WithKeepAliveInterval(TimeSpan.FromSeconds(2))
-               .WithStatefulReconnect() 
+               .WithStatefulReconnect()
                .Build();
-           
+
 
             // Recibe un intento Admin
             HubConnection.On<PassKeyModel>("newintent", (pass) =>
             {
-                OnRecieveIntentAdmin?.Invoke(null, pass);
+                OnReceiveIntent?.Invoke(null, pass);
             });
 
 
             // Recibe una respuesta (Cliente)
             HubConnection.On<PassKeyModel>("#response", (pass) =>
             {
-                OnRecieveResponse?.Invoke(null, pass);
+                OnReceiveResponse?.Invoke(null, pass);
             });
 
 

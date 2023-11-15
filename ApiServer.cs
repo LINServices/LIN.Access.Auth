@@ -4,6 +4,7 @@
 public static class ApiServer
 {
 
+
     private static bool IsSeted = false;
     private static string SetedUrl = "";
 
