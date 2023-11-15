@@ -95,7 +95,7 @@ public class Applications
 
 
     /// <summary>
-    /// Obtiene la lista de aplicación según un parámetro que no coincidan con la de una organización.
+    /// Obtiene la lista de aplicaciones según un parámetro que no coincidan con la de una organización.
     /// </summary>
     /// <param name="param">Parámetro de búsqueda</param>
     /// <param name="token">Token de acceso</param>
