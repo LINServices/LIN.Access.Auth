@@ -31,7 +31,7 @@ public static class Intents
             var responseBody = await response.Content.ReadAsStringAsync();
 
 
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<PassKeyModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadAllResponse<PassKeyModel>>(responseBody);
 
             return obj ?? new();
 

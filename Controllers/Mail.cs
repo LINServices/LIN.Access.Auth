@@ -18,7 +18,7 @@ public class Mail
         client.DefaultRequestHeaders.Add("password", password);
 
         var url = ApiServer.PathURL("security/mails/add");
-        var json = JsonConvert.SerializeObject(modelo);
+        var json = JsonSerializer.Serialize(modelo);
 
         try
         {
@@ -31,7 +31,7 @@ public class Mail
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
             return obj ?? new();
 
@@ -71,7 +71,7 @@ public class Mail
             // Leer la respuesta como una cadena
             var responseBody = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<EmailModel>>(responseBody) ?? new();
+            var obj = JsonSerializer.Deserialize<ReadAllResponse<EmailModel>>(responseBody) ?? new();
 
 
             return obj ?? new();
@@ -120,7 +120,7 @@ public class Mail
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
             return obj ?? new();
 

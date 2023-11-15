@@ -37,7 +37,7 @@ public class Applications
             var responseBody = await response.Content.ReadAsStringAsync();
 
 
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<ApplicationModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadAllResponse<ApplicationModel>>(responseBody);
 
             return obj ?? new();
 

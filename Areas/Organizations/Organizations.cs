@@ -29,7 +29,7 @@ public static class Organizations
         admin.OrganizationAccess = null;
 
         var url = ApiServer.PathURL("orgs/create");
-        var json = JsonConvert.SerializeObject(organization);
+        var json = JsonSerializer.Serialize(organization);
 
         try
         {
@@ -42,7 +42,7 @@ public static class Organizations
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
+            var obj = JsonSerializer.Deserialize<CreateResponse>(responseContent);
 
             return obj ?? new();
 
@@ -91,7 +91,7 @@ public static class Organizations
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
             return obj ?? new();
 
@@ -140,7 +140,7 @@ public static class Organizations
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
             return obj ?? new();
 

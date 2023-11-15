@@ -21,7 +21,7 @@ public class Members
         client.DefaultRequestHeaders.Add("rol", $"{(int)rol}");
 
         var url = ApiServer.PathURL("orgs/members/create");
-        var json = JsonConvert.SerializeObject(modelo);
+        var json = JsonSerializer.Serialize(modelo);
 
         try
         {
@@ -34,7 +34,7 @@ public class Members
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
+            var obj = JsonSerializer.Deserialize<CreateResponse>(responseContent);
 
             return obj ?? new(Responses.UnavailableService);
 
@@ -75,7 +75,7 @@ public class Members
             var responseBody = await response.Content.ReadAsStringAsync();
 
 
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<AccountModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadAllResponse<AccountModel>>(responseBody);
 
             return obj ?? new(Responses.UnavailableService);
 

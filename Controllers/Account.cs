@@ -16,7 +16,7 @@ public static class Account
         var client = new HttpClient();
 
         var url = ApiServer.PathURL("account/create");
-        var json = JsonConvert.SerializeObject(modelo);
+        var json = JsonSerializer.Serialize(modelo);
 
         try
         {
@@ -29,7 +29,7 @@ public static class Account
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
+            var obj = JsonSerializer.Deserialize<CreateResponse>(responseContent);
 
             return obj ?? new();
 
@@ -84,7 +84,7 @@ public static class Account
             var responseBody = await response.Content.ReadAsStringAsync();
 
 
-            var obj = JsonConvert.DeserializeObject<ReadOneResponse<AccountModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadOneResponse<AccountModel>>(responseBody);
 
             return obj ?? new();
 
@@ -117,7 +117,7 @@ public static class Account
         // ApiServer de la solicitud GET
         var url = ApiServer.PathURL("account/findAll");
 
-        var json = JsonConvert.SerializeObject(ids);
+        var json = JsonSerializer.Serialize(ids);
 
         // Crear HttpRequestMessage y agregar el encabezado
         var request = new StringContent(json, Encoding.UTF8, "application/json");
@@ -131,7 +131,7 @@ public static class Account
             // Leer la respuesta como una cadena
             var responseBody = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<AccountModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadAllResponse<AccountModel>>(responseBody);
 
             return obj ?? new();
 
@@ -183,7 +183,7 @@ public static class Account
             var responseBody = await response.Content.ReadAsStringAsync();
 
 
-            var obj = JsonConvert.DeserializeObject<ReadOneResponse<AccountModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadOneResponse<AccountModel>>(responseBody);
 
             return obj ?? new();
 
@@ -248,7 +248,7 @@ public static class Account
             // Leer la respuesta como una cadena
             var responseBody = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<AccountModel>>(responseBody) ?? new();
+            var obj = JsonSerializer.Deserialize<ReadAllResponse<AccountModel>>(responseBody) ?? new();
 
 
             return obj ?? new();
@@ -326,7 +326,7 @@ public static class Account
         client.DefaultRequestHeaders.Add("token", token);
 
         var url = ApiServer.PathURL("account/update/password");
-        var json = JsonConvert.SerializeObject(modelo);
+        var json = JsonSerializer.Serialize(modelo);
 
         try
         {
@@ -339,7 +339,7 @@ public static class Account
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
             return obj ?? new();
 
@@ -366,7 +366,7 @@ public static class Account
         var client = new HttpClient();
 
         var url = ApiServer.PathURL("account/disable");
-        var json = JsonConvert.SerializeObject(new AccountModel()
+        var json = JsonSerializer.Serialize(new AccountModel()
         {
             ID = id,
             Contraseña = password
@@ -383,7 +383,7 @@ public static class Account
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
             return obj ?? new();
 
@@ -424,7 +424,7 @@ public static class Account
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
             return obj ?? new();
 
@@ -465,7 +465,7 @@ public static class Account
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
             return obj ?? new();
 
@@ -516,7 +516,7 @@ public static class Account
         client.DefaultRequestHeaders.Add("key", key);
 
         var url = ApiServer.PathURL("security/password/reset");
-        var json = JsonConvert.SerializeObject(modelo);
+        var json = JsonSerializer.Serialize(modelo);
 
         try
         {
@@ -529,7 +529,7 @@ public static class Account
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
             return obj ?? new();
 
@@ -574,7 +574,7 @@ public static class Account
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ReadOneResponse<EmailModel>>(responseContent);
+            var obj = JsonSerializer.Deserialize<ReadOneResponse<EmailModel>>(responseContent);
 
             return obj ?? new();
 
@@ -619,7 +619,7 @@ public static class Account
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<ResponseBase>(responseContent);
+            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
             return obj ?? new();
 
@@ -679,7 +679,7 @@ public static class Account
             var responseBody = await response.Content.ReadAsStringAsync();
 
 
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<LoginLogModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadAllResponse<LoginLogModel>>(responseBody);
 
             return obj ?? new();
 

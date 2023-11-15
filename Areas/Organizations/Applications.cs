@@ -37,7 +37,7 @@ public class Applications
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonConvert.DeserializeObject<CreateResponse>(responseContent);
+            var obj = JsonSerializer.Deserialize<CreateResponse>(responseContent);
 
             return obj ?? new(Responses.UnavailableService);
 
@@ -78,7 +78,7 @@ public class Applications
             var responseBody = await response.Content.ReadAsStringAsync();
 
 
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<ApplicationModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadAllResponse<ApplicationModel>>(responseBody);
 
             return obj ?? new(Responses.UnavailableService);
 
@@ -128,7 +128,7 @@ public class Applications
             var responseBody = await response.Content.ReadAsStringAsync();
 
 
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<ApplicationModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadAllResponse<ApplicationModel>>(responseBody);
 
             return obj ?? new(Responses.UnavailableService);
 

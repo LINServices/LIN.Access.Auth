@@ -31,7 +31,7 @@ public static class Devices
             var responseBody = await response.Content.ReadAsStringAsync();
 
             // Objecto respuesta
-            var obj = JsonConvert.DeserializeObject<ReadAllResponse<DeviceModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadAllResponse<DeviceModel>>(responseBody);
 
             return obj ?? new();
 

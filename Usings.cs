@@ -4,7 +4,7 @@ global using LIN.Types.Auth.Models;
 global using LIN.Types.Enumerations;
 global using LIN.Types.Responses;
 global using Microsoft.AspNetCore.SignalR.Client;
-global using Newtonsoft.Json;
+global using System.Text.Json;
 global using System;
 global using System.Net.Http;
 global using System.Text;

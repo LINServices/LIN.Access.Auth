@@ -44,7 +44,7 @@ public static class Admin
             var responseBody = await response.Content.ReadAsStringAsync();
 
 
-            var obj = JsonConvert.DeserializeObject<ReadOneResponse<AccountModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadOneResponse<AccountModel>>(responseBody);
 
             return obj ?? new();
 
@@ -98,7 +98,7 @@ public static class Admin
             var responseBody = await response.Content.ReadAsStringAsync();
 
 
-            var obj = JsonConvert.DeserializeObject<ReadOneResponse<AccountModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadOneResponse<AccountModel>>(responseBody);
 
             return obj ?? new();
 
