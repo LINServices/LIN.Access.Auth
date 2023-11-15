@@ -9,35 +9,35 @@ public sealed class AccountHub
 
 
     /// <summary>
-    /// Evento: Cuando se recibe un comando
+    /// Evento: Cuando se recibe un comando.
     /// </summary>
     public event EventHandler<string>? OnReceivingCommand;
 
 
 
     /// <summary>
-    /// Evento: Cuando un dispositivo se va
+    /// Evento: Cuando un dispositivo se va.
     /// </summary>
     public event EventHandler<string>? OnDeviceLeaves;
 
 
 
     /// <summary>
-    /// Evento: Cuando un dispositivo se une
+    /// Evento: Cuando un dispositivo se une.
     /// </summary>
     public event EventHandler<DeviceModel>? OnDeviceJoins;
 
 
 
     /// <summary>
-    /// Evento cuando la lista de dispositivos cambio
+    /// Evento cuando la lista de dispositivos cambio.
     /// </summary>
     public event EventHandler<string>? OnDeviceChange;
 
 
 
     /// <summary>
-    /// Evento cuando se reciven la lista de dispositivos
+    /// Evento cuando se reciben la lista de dispositivos.
     /// </summary>
     public event EventHandler<List<DeviceModel>>? OnReceiveDevicesList;
 
@@ -48,28 +48,28 @@ public sealed class AccountHub
 
 
     /// <summary>
-    /// Conexion del Hub
+    /// Conexión del Hub.
     /// </summary>
     private HubConnection? HubConnection { get; set; }
 
 
 
     /// <summary>
-    /// Obtiene el ID de usuario asignado este dispositivo
+    /// Obtiene el ID de usuario asignado este dispositivo.
     /// </summary>
     public string ID => HubConnection?.ConnectionId ?? string.Empty;
 
 
 
     /// <summary>
-    /// Modelo del dispositivo
+    /// Modelo del dispositivo.
     /// </summary>
     public DeviceModel? DeviceModel { get; set; }
 
 
 
     /// <summary>
-    /// Constructor
+    /// Constructor.
     /// </summary>
     public AccountHub(Task<DeviceModel> task)
     {
@@ -95,7 +95,7 @@ public sealed class AccountHub
 
 
     /// <summary>
-    /// Reconecta la conexion
+    /// Reconecta la conexión
     /// </summary>
     public async void Reconnect()
     {
@@ -125,17 +125,17 @@ public sealed class AccountHub
     {
         try
         {
-            // Crea la conexion al HUB
+            // Crea la conexión al HUB
             HubConnection = new HubConnectionBuilder()
                .WithUrl(ApiServer.PathURL("realTime/service"))
                .WithAutomaticReconnect()
                .Build();
 
 
-            // Evento ccuando se reciba una tarea
+            // Evento cuando se reciba una tarea
             HubConnection.On<string>("devicecommand", SendTaskEvent);
 
-            // Evento ccuando se reciba una tarea
+            // Evento cuando se reciba una tarea
             HubConnection.On<string>("accountcommand", SendTaskEvent);
 
 
@@ -143,7 +143,7 @@ public sealed class AccountHub
             HubConnection.On<string>("leaveevent", (id) => { OnDeviceLeaves?.Invoke(null, id); });
 
 
-            // Evento ccuando se reciba una tarea
+            // Evento cuando se reciba una tarea
             HubConnection.On<DeviceModel>("newdevice", SendNewDeviceEvent);
 
 
@@ -151,7 +151,7 @@ public sealed class AccountHub
             HubConnection.On<List<DeviceModel>, string>("devicesList", SendAllEvent);
 
 
-            // Evento cuando se esta testenado la conexion
+            // Evento cuando se esta testeando la conexión
             HubConnection.On("ontest", async () =>
             {
                 try
@@ -166,11 +166,7 @@ public sealed class AccountHub
                 }
             });
 
-
-
-
-
-            // Inicia la conexion
+            // Inicia la conexión
             await HubConnection.StartAsync();
 
             // Suscribe al grupo
@@ -191,11 +187,11 @@ public sealed class AccountHub
     public async void GetDevicesList(int cuenta)
     {
 
-        // Comprueba la conexion
+        // Comprueba la conexión
         if (HubConnection?.State != HubConnectionState.Connected)
             return;
 
-        // Ejecucion
+        // Ejecución
         try
         {
             await HubConnection!.InvokeAsync("GetDevicesList", cuenta);
