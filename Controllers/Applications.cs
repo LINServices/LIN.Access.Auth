@@ -22,7 +22,7 @@ public class Applications
         // ApiServer de la solicitud GET
         var url = ApiServer.PathURL("applications");
 
-       
+
 
         // Crear HttpRequestMessage y agregar el encabezado
         var request = new HttpRequestMessage(HttpMethod.Get, url);

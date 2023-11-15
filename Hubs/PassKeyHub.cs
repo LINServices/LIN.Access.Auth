@@ -1,4 +1,6 @@
-﻿namespace LIN.Access.Auth.Hubs;
+﻿using Microsoft.AspNetCore.SignalR.Client;
+
+namespace LIN.Access.Auth.Hubs;
 
 
 public sealed class PassKeyHub
@@ -100,12 +102,14 @@ public sealed class PassKeyHub
     {
         try
         {
-            // Crea la conexion al HUB
+            // Crea la conexión al HUB
             HubConnection = new HubConnectionBuilder()
                .WithUrl(ApiServer.PathURL("realtime/auth/passkey"))
                .WithAutomaticReconnect()
+               .WithKeepAliveInterval(TimeSpan.FromSeconds(2))
+               .WithStatefulReconnect() 
                .Build();
-
+           
 
             // Recibe un intento Admin
             HubConnection.On<PassKeyModel>("newintent", (pass) =>
