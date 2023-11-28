@@ -22,19 +22,43 @@ public static class Service
     /// <summary>
     /// Obtener un cliente Http.
     /// </summary>
-    public static HttpClient GetClient()
+    public static HttpClient GetClient(string url)
     {
 
         // Objeto.
         var client = new HttpClient()
         {
-            BaseAddress = new Uri(GetURL),
+            BaseAddress = new Uri(DefaultUrl),
             Timeout = TimeSpan.FromSeconds(20)
         };
+
+        // Crear la url.
+        Uri.TryCreate(client.BaseAddress, url, out var result);
+
+        // Establecer la url.
+        client.BaseAddress = result;
 
         return client;
     }
 
+
+
+    /// <summary>
+    /// Obtener un cliente Http.
+    /// </summary>
+    public static HttpClient GetClient(string url, Dictionary<string, string> parameters)
+    {
+        // Obtiene el cliente.
+        var client = GetClient(url);
+
+        // Url final.
+        string finalUrl = Web.AddParameters(client.BaseAddress?.ToString() ?? "", parameters);
+
+        // Establecer.
+        client.BaseAddress = new Uri(finalUrl);
+
+        return client;
+    }
 
 
 

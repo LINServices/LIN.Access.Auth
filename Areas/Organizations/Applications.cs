@@ -13,18 +13,14 @@ public class Applications
     public static async Task<CreateResponse> Create(string uId, string token)
     {
 
-        // Variables
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Add("token", token);
-
-        var url = Service.PathURL("orgs/applications/insert");
-
-        url = Web.AddParameters(url, new()
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("orgs/applications/insert", new()
         {
-            {
-                "appUid", uId
-            }
+            {"appUid", uId }
         });
+
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
 
         try
         {
@@ -32,17 +28,18 @@ public class Applications
             StringContent content = new("", Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            var response = await client.PostAsync(url, content);
+            var response = await client.PostAsync("", content);
 
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
 
+            // Obtiene el objeto.
             var obj = JsonSerializer.Deserialize<CreateResponse>(responseContent);
 
             return obj ?? new(Responses.UnavailableService);
 
         }
-        catch
+        catch (Exception)
         {
         }
 
