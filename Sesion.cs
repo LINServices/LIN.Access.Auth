@@ -107,6 +107,7 @@ public sealed class SessionAuth
 
     private SessionAuth()
     {
+        AccountToken = string.Empty;
         Account = new();
     }
 
