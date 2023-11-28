@@ -56,35 +56,29 @@ public class Applications
     public static async Task<ReadAllResponse<ApplicationModel>> ReadAll(string token)
     {
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("orgs/applications");
 
-
-        httpClient.DefaultRequestHeaders.Add("token", $"{token}");
-        // ApiServer de la solicitud GET
-        var url = Service.PathURL("orgs/applications");
-
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
 
         try
         {
 
             // Hacer la solicitud GET
-            var response = await httpClient.GetAsync(url);
+            var response = await client.GetAsync("");
 
             // Leer la respuesta como una cadena
             var responseBody = await response.Content.ReadAsStringAsync();
-
 
             var obj = JsonSerializer.Deserialize<ReadAllResponse<ApplicationModel>>(responseBody);
 
             return obj ?? new(Responses.UnavailableService);
 
-
         }
-        catch
+        catch (Exception) 
         {
         }
-
 
         return new(Responses.NotConnection);
     }
@@ -99,27 +93,21 @@ public class Applications
     public static async Task<ReadAllResponse<ApplicationModel>> Search(string param, string token)
     {
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
-
-        httpClient.DefaultRequestHeaders.Add("token", token);
-
-        // ApiServer de la solicitud GET
-        var url = Service.PathURL("orgs/applications/search");
-
-
-        url = Web.AddParameters(url, new()
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("orgs/applications/search", new()
         {
-            {
-                "param", param
-            }
+            {"param", param }
         });
+
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
+
 
         try
         {
 
             // Hacer la solicitud GET
-            var response = await httpClient.GetAsync(url);
+            var response = await client.GetAsync("");
 
             // Leer la respuesta como una cadena
             var responseBody = await response.Content.ReadAsStringAsync();
@@ -131,7 +119,7 @@ public class Applications
 
 
         }
-        catch
+        catch (Exception)
         {
         }
 
