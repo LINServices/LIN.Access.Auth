@@ -20,7 +20,7 @@ public class Applications
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("applications");
+        var url = Service.PathURL("applications");
 
 
 

@@ -127,7 +127,7 @@ public sealed class AccountHub
         {
             // Crea la conexión al HUB
             HubConnection = new HubConnectionBuilder()
-               .WithUrl(ApiServer.PathURL("realTime/service"))
+               .WithUrl(Service.PathURL("realTime/service"))
                .WithAutomaticReconnect()
                .Build();
 

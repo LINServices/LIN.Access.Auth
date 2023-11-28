@@ -20,7 +20,7 @@ public class Members
         client.DefaultRequestHeaders.Add("token", token);
         client.DefaultRequestHeaders.Add("rol", $"{(int)rol}");
 
-        var url = ApiServer.PathURL("orgs/members/create");
+        var url = Service.PathURL("orgs/members/create");
         var json = JsonSerializer.Serialize(modelo);
 
         try
@@ -62,7 +62,7 @@ public class Members
 
         httpClient.DefaultRequestHeaders.Add("token", $"{token}");
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("orgs/members");
+        var url = Service.PathURL("orgs/members");
 
 
         try

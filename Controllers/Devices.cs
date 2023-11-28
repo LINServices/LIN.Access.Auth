@@ -13,7 +13,7 @@ public static class Devices
     {
 
         // url
-        var url = ApiServer.PathURL("devices");
+        var url = Service.PathURL("devices");
 
         // Crear HttpClient
         var httpClient = new HttpClient();

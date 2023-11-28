@@ -15,7 +15,7 @@ public static class Intents
         using var httpClient = new HttpClient();
 
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("intents");
+        var url = Service.PathURL("intents");
 
         // Crear HttpRequestMessage y agregar el encabezado
         var request = new HttpRequestMessage(HttpMethod.Get, url);

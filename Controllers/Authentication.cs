@@ -20,7 +20,7 @@ public class Authentication
         httpClient.DefaultRequestHeaders.Add("application", $"{app ?? Build.Application}");
 
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("authentication/login");
+        var url = Service.PathURL("authentication/login");
 
         // Armar la url
         url = Web.AddParameters(url, new()
@@ -71,7 +71,7 @@ public class Authentication
         using var httpClient = new HttpClient();
 
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("authentication/LoginWithToken");
+        var url = Service.PathURL("authentication/LoginWithToken");
 
 
         // Crear HttpRequestMessage y agregar el encabezado

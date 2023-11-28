@@ -17,7 +17,7 @@ public class Applications
         var client = new HttpClient();
         client.DefaultRequestHeaders.Add("token", token);
 
-        var url = ApiServer.PathURL("orgs/applications/insert");
+        var url = Service.PathURL("orgs/applications/insert");
 
         url = Web.AddParameters(url, new()
         {
@@ -65,7 +65,7 @@ public class Applications
 
         httpClient.DefaultRequestHeaders.Add("token", $"{token}");
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("orgs/applications");
+        var url = Service.PathURL("orgs/applications");
 
 
         try
@@ -108,7 +108,7 @@ public class Applications
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("orgs/applications/search");
+        var url = Service.PathURL("orgs/applications/search");
 
 
         url = Web.AddParameters(url, new()

@@ -17,7 +17,7 @@ public class Mail
         var client = new HttpClient();
         client.DefaultRequestHeaders.Add("password", password);
 
-        var url = ApiServer.PathURL("security/mails/add");
+        var url = Service.PathURL("security/mails/add");
         var json = JsonSerializer.Serialize(modelo);
 
         try
@@ -57,7 +57,7 @@ public class Mail
         using var httpClient = new HttpClient();
 
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("mails/all");
+        var url = Service.PathURL("mails/all");
 
         // Crear HttpRequestMessage y agregar el encabezado
         var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -102,7 +102,7 @@ public class Mail
         client.DefaultRequestHeaders.Add("mailID", mail.ToString());
         client.DefaultRequestHeaders.Add("token", token);
 
-        var url = ApiServer.PathURL("security/mails/resend");
+        var url = Service.PathURL("security/mails/resend");
 
 
 

@@ -28,7 +28,7 @@ public static class Organizations
         };
         admin.OrganizationAccess = null;
 
-        var url = ApiServer.PathURL("orgs/create");
+        var url = Service.PathURL("orgs/create");
         var json = JsonSerializer.Serialize(organization);
 
         try
@@ -70,7 +70,7 @@ public static class Organizations
 
         client.DefaultRequestHeaders.Add("token", token);
 
-        var url = ApiServer.PathURL("orgs/update/whitelist");
+        var url = Service.PathURL("orgs/update/whitelist");
 
 
         url = Web.AddParameters(url, new()
@@ -119,7 +119,7 @@ public static class Organizations
 
         client.DefaultRequestHeaders.Add("token", token);
 
-        var url = ApiServer.PathURL("orgs/update/access");
+        var url = Service.PathURL("orgs/update/access");
 
 
         url = Web.AddParameters(url, new()

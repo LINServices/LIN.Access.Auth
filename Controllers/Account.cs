@@ -15,7 +15,7 @@ public static class Account
         // Variables
         var client = new HttpClient();
 
-        var url = ApiServer.PathURL("account/create");
+        var url = Service.PathURL("account/create");
         var json = JsonSerializer.Serialize(modelo);
 
         try
@@ -60,7 +60,7 @@ public static class Account
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("account/read/id");
+        var url = Service.PathURL("account/read/id");
 
         url = Web.AddParameters(url, new()
         {
@@ -115,7 +115,7 @@ public static class Account
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("account/findAll");
+        var url = Service.PathURL("account/findAll");
 
         var json = JsonSerializer.Serialize(ids);
 
@@ -160,7 +160,7 @@ public static class Account
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("account/read/user");
+        var url = Service.PathURL("account/read/user");
 
         url = Web.AddParameters(url, new()
         {
@@ -219,11 +219,11 @@ public static class Account
         string url;
         if (isAdmin)
         {
-            url = ApiServer.PathURL("account/admin/search");
+            url = Service.PathURL("account/admin/search");
         }
         else
         {
-            url = ApiServer.PathURL("account/search");
+            url = Service.PathURL("account/search");
         }
 
         url = Web.AddParameters(url, new()
@@ -325,7 +325,7 @@ public static class Account
 
         client.DefaultRequestHeaders.Add("token", token);
 
-        var url = ApiServer.PathURL("account/update/password");
+        var url = Service.PathURL("account/update/password");
         var json = JsonSerializer.Serialize(modelo);
 
         try
@@ -365,7 +365,7 @@ public static class Account
         // Variables
         var client = new HttpClient();
 
-        var url = ApiServer.PathURL("account/disable");
+        var url = Service.PathURL("account/disable");
         var json = JsonSerializer.Serialize(new AccountModel()
         {
             ID = id,
@@ -411,7 +411,7 @@ public static class Account
         client.DefaultRequestHeaders.Add("token", $"{token}");
         client.DefaultRequestHeaders.Add("genero", $"{(int)genero}");
 
-        var url = ApiServer.PathURL("account/update/gender");
+        var url = Service.PathURL("account/update/gender");
 
         try
         {
@@ -452,7 +452,7 @@ public static class Account
         client.DefaultRequestHeaders.Add("token", $"{token}");
         client.DefaultRequestHeaders.Add("visibility", $"{(int)visibility}");
 
-        var url = ApiServer.PathURL("account/update/visibility");
+        var url = Service.PathURL("account/update/visibility");
 
         try
         {
@@ -515,7 +515,7 @@ public static class Account
         var client = new HttpClient();
         client.DefaultRequestHeaders.Add("key", key);
 
-        var url = ApiServer.PathURL("security/password/reset");
+        var url = Service.PathURL("security/password/reset");
         var json = JsonSerializer.Serialize(modelo);
 
         try
@@ -555,7 +555,7 @@ public static class Account
         // Variables
         var client = new HttpClient();
 
-        var url = ApiServer.PathURL("security/password/forget");
+        var url = Service.PathURL("security/password/forget");
 
         url = Web.AddParameters(url, new()
         {
@@ -606,7 +606,7 @@ public static class Account
         var client = new HttpClient();
         client.DefaultRequestHeaders.Add("key", key);
 
-        var url = ApiServer.PathURL("security/mails/verify");
+        var url = Service.PathURL("security/mails/verify");
 
         try
         {
@@ -662,7 +662,7 @@ public static class Account
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("account/logs/read/all");
+        var url = Service.PathURL("account/logs/read/all");
 
         // Crear HttpRequestMessage y agregar el encabezado
         var request = new HttpRequestMessage(HttpMethod.Get, url);

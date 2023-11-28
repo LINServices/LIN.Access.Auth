@@ -20,7 +20,7 @@ public static class Admin
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("administrator/read/id");
+        var url = Service.PathURL("administrator/read/id");
 
         url = Web.AddParameters(url, new()
         {
@@ -75,7 +75,7 @@ public static class Admin
         httpClient.DefaultRequestHeaders.Add("token", token);
 
         // ApiServer de la solicitud GET
-        var url = ApiServer.PathURL("administrator/read/user");
+        var url = Service.PathURL("administrator/read/user");
 
         url = Web.AddParameters(url, new()
         {
