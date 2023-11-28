@@ -14,13 +14,14 @@ public class Members
     public static async Task<CreateResponse> Create(AccountModel modelo, string token, OrgRoles rol)
     {
 
-        // Variables
-        var client = new HttpClient();
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("orgs/members/create");
 
+        // Headers.
         client.DefaultRequestHeaders.Add("token", token);
         client.DefaultRequestHeaders.Add("rol", $"{(int)rol}");
 
-        var url = Service.PathURL("orgs/members/create");
+        // Serializar el objeto.
         var json = JsonSerializer.Serialize(modelo);
 
         try
@@ -29,7 +30,7 @@ public class Members
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            var response = await client.PostAsync(url, content);
+            var response = await client.PostAsync("", content);
 
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -39,7 +40,7 @@ public class Members
             return obj ?? new(Responses.UnavailableService);
 
         }
-        catch
+        catch (Exception)
         {
         }
 
@@ -56,20 +57,17 @@ public class Members
     public static async Task<ReadAllResponse<AccountModel>> ReadAll(string token)
     {
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("orgs/members");
 
-
-        httpClient.DefaultRequestHeaders.Add("token", $"{token}");
-        // ApiServer de la solicitud GET
-        var url = Service.PathURL("orgs/members");
-
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
 
         try
         {
 
             // Hacer la solicitud GET
-            var response = await httpClient.GetAsync(url);
+            var response = await client.GetAsync("");
 
             // Leer la respuesta como una cadena
             var responseBody = await response.Content.ReadAsStringAsync();
@@ -80,7 +78,7 @@ public class Members
             return obj ?? new(Responses.UnavailableService);
 
         }
-        catch
+        catch (Exception)
         {
         }
 
