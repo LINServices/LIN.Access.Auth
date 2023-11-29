@@ -1,4 +1,6 @@
-﻿namespace LIN.Access.Auth.Controllers;
+﻿using LIN.Modules;
+
+namespace LIN.Access.Auth.Controllers;
 
 
 public class Mail
@@ -13,11 +15,12 @@ public class Mail
     public static async Task<ResponseBase> Aggregate(string password, EmailModel modelo)
     {
 
-        // Variables
-        var client = new HttpClient();
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("security/mails/add");
+
+        // Headers.
         client.DefaultRequestHeaders.Add("password", password);
 
-        var url = Service.PathURL("security/mails/add");
         var json = JsonSerializer.Serialize(modelo);
 
         try
@@ -26,7 +29,7 @@ public class Mail
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            var response = await client.PostAsync(url, content);
+            var response = await client.PostAsync("", content);
 
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();

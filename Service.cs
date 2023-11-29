@@ -72,4 +72,13 @@ public static class Service
     }
 
 
+
+    /// <summary>
+    /// Convertir la URL.
+    /// </summary>
+    /// <param name="url">url</param>
+    public static string PathURL(string url)
+    {
+        return Url + url;
+    }
 }

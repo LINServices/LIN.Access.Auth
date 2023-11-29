@@ -10,14 +10,19 @@ public static class Organizations
     /// </summary>
     /// <param name="organization">Modelo de la organización</param>
     /// <param name="admin">Usuario administrador</param>
-    public static async Task<CreateResponse> Create(OrganizationModel organization, AccountModel admin)
+    public static async Task<CreateResponse> Create(OrganizationModel organization, AccountModel admin, string token)
     {
 
-        // Variables
-        var client = new HttpClient();
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("orgs/create");
+
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
 
 
+        // Organizar el modelo.
         organization.AppList = new();
+        admin.OrganizationAccess = null;
         organization.Members = new()
         {
             new()
@@ -26,9 +31,8 @@ public static class Organizations
                 Rol = OrgRoles.SuperManager
             }
         };
-        admin.OrganizationAccess = null;
 
-        var url = Service.PathURL("orgs/create");
+        // Serializar el objeto.
         var json = JsonSerializer.Serialize(organization);
 
         try
@@ -37,7 +41,7 @@ public static class Organizations
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            var response = await client.PostAsync(url, content);
+            var response = await client.PostAsync("", content);
 
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -47,7 +51,7 @@ public static class Organizations
             return obj ?? new();
 
         }
-        catch
+        catch (Exception)
         {
         }
 
@@ -65,28 +69,20 @@ public static class Organizations
     public static async Task<ResponseBase> UpdateWhiteListState(string token, bool estado)
     {
 
-        // Variables
-        var client = new HttpClient();
-
-        client.DefaultRequestHeaders.Add("token", token);
-
-        var url = Service.PathURL("orgs/update/whitelist");
-
-
-        url = Web.AddParameters(url, new()
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("orgs/update/whitelist", new()
         {
-            {
-                "haveWhite", $"{estado}"
-            }
-        });
+            {"haveWhite", $"{estado}"}
+        }
+        );
+
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
 
         try
         {
-            // Contenido
-            StringContent content = new("", Encoding.UTF8, "application/json");
-
             // Envía la solicitud
-            var response = await client.PatchAsync(url, content);
+            var response = await client.PatchAsync("", null);
 
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -96,7 +92,7 @@ public static class Organizations
             return obj ?? new();
 
         }
-        catch
+        catch (Exception)
         {
         }
 
@@ -114,20 +110,15 @@ public static class Organizations
     public static async Task<ResponseBase> UpdateAccessState(string token, bool estado)
     {
 
-        // Variables
-        var client = new HttpClient();
-
-        client.DefaultRequestHeaders.Add("token", token);
-
-        var url = Service.PathURL("orgs/update/access");
-
-
-        url = Web.AddParameters(url, new()
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("orgs/update/access", new()
         {
-            {
-                "state", $"{estado}"
-            }
-        });
+            {"state", $"{estado}"}
+        }
+        );
+
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
 
         try
         {
@@ -135,7 +126,7 @@ public static class Organizations
             StringContent content = new("", Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            var response = await client.PatchAsync(url, content);
+            var response = await client.PatchAsync("", content);
 
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();

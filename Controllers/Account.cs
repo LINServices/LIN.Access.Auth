@@ -12,10 +12,10 @@ public static class Account
     public static async Task<CreateResponse> Create(AccountModel modelo)
     {
 
-        // Variables
-        var client = new HttpClient();
 
-        var url = Service.PathURL("account/create");
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("account/create");
+
         var json = JsonSerializer.Serialize(modelo);
 
         try
@@ -24,7 +24,7 @@ public static class Account
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            var response = await client.PostAsync(url, content);
+            var response = await client.PostAsync("", content);
 
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -34,9 +34,8 @@ public static class Account
             return obj ?? new();
 
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine(ex.Message);
         }
 
         return new();
@@ -53,32 +52,23 @@ public static class Account
     public static async Task<ReadOneResponse<AccountModel>> Read(int id, string token)
     {
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
-
-
-        httpClient.DefaultRequestHeaders.Add("token", token);
-
-        // ApiServer de la solicitud GET
-        var url = Service.PathURL("account/read/id");
-
-        url = Web.AddParameters(url, new()
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("account/read/id", new()
         {
-            {
-                "id", id.ToString()
-            }
+            {"id", $"{id}"}
         });
 
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
+
         // Crear HttpRequestMessage y agregar el encabezado
-        var request = new HttpRequestMessage(HttpMethod.Get, url);
-
-
+        var request = new HttpRequestMessage(HttpMethod.Get, "");
 
         try
         {
 
             // Hacer la solicitud GET
-            var response = await httpClient.SendAsync(request);
+            var response = await client.SendAsync(request);
 
             // Leer la respuesta como una cadena
             var responseBody = await response.Content.ReadAsStringAsync();
@@ -90,9 +80,8 @@ public static class Account
 
 
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
         }
 
 
@@ -109,13 +98,11 @@ public static class Account
     public static async Task<ReadAllResponse<AccountModel>> Read(List<int> ids, string token)
     {
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("account/findAll");
 
-        httpClient.DefaultRequestHeaders.Add("token", token);
-
-        // ApiServer de la solicitud GET
-        var url = Service.PathURL("account/findAll");
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
 
         var json = JsonSerializer.Serialize(ids);
 
@@ -126,7 +113,7 @@ public static class Account
         {
 
             // Hacer la solicitud GET
-            var response = await httpClient.PostAsync(url, request);
+            var response = await client.PostAsync("", request);
 
             // Leer la respuesta como una cadena
             var responseBody = await response.Content.ReadAsStringAsync();
@@ -136,9 +123,8 @@ public static class Account
             return obj ?? new();
 
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
         }
 
         return new();
@@ -154,29 +140,24 @@ public static class Account
     public static async Task<ReadOneResponse<AccountModel>> Read(string cuenta, string token)
     {
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
-
-        httpClient.DefaultRequestHeaders.Add("token", token);
-
-        // ApiServer de la solicitud GET
-        var url = Service.PathURL("account/read/user");
-
-        url = Web.AddParameters(url, new()
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("account/read/user", new()
         {
-            {
-                "user", cuenta
-            }
+            {"user", $"{cuenta}"}
         });
 
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
 
+
+       
         // Crear HttpRequestMessage y agregar el encabezado
-        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        var request = new HttpRequestMessage(HttpMethod.Get, "");
 
         try
         {
             // Hacer la solicitud GET
-            var response = await httpClient.SendAsync(request);
+            var response = await client.SendAsync(request);
 
 
             // Leer la respuesta como una cadena
@@ -188,17 +169,11 @@ public static class Account
             return obj ?? new();
 
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
         }
 
-
         return new();
-
-
-
-
 
     }
 
@@ -320,12 +295,12 @@ public static class Account
     public static async Task<ResponseBase> UpdatePassword(UpdatePasswordModel modelo, string token)
     {
 
-        // Variables
-        var client = new HttpClient();
+        // Obtiene el cliente http.
+        HttpClient client = Service.GetClient("account/update/password");
 
+        // Headers.
         client.DefaultRequestHeaders.Add("token", token);
 
-        var url = Service.PathURL("account/update/password");
         var json = JsonSerializer.Serialize(modelo);
 
         try
@@ -334,7 +309,7 @@ public static class Account
             StringContent content = new(json, Encoding.UTF8, "application/json");
 
             // Envía la solicitud
-            var response = await client.PatchAsync(url, content);
+            var response = await client.PatchAsync("", content);
 
             // Lee la respuesta del servidor
             var responseContent = await response.Content.ReadAsStringAsync();
