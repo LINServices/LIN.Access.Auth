@@ -8,7 +8,7 @@ public static class Service
     /// <summary>
     /// Url base.
     /// </summary>
-    private static string DefaultUrl { get; set; } = "http://linauth.somee.com/";
+    private static string DefaultUrl { get; set; } = "http://api.identity.linapps.co/";
 
 
 
@@ -81,4 +81,6 @@ public static class Service
     {
         return Url + url;
     }
+
+
 }
