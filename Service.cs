@@ -22,7 +22,7 @@ public static class Service
     /// <summary>
     /// Obtener un cliente Http.
     /// </summary>
-    public static HttpClient GetClient(string url)
+    public static HttpClient GetClient()
     {
 
         // Objeto.
@@ -32,33 +32,13 @@ public static class Service
             Timeout = TimeSpan.FromSeconds(20)
         };
 
-        // Crear la url.
-        Uri.TryCreate(client.BaseAddress, url, out var result);
-
-        // Establecer la url.
-        client.BaseAddress = result;
+        // Default.
+        client.DefaultRequestHeaders.UserAgent.Clear();
+        client.DefaultRequestHeaders.UserAgent.Add(new("LIN App"));
 
         return client;
     }
 
-
-
-    /// <summary>
-    /// Obtener un cliente Http.
-    /// </summary>
-    public static HttpClient GetClient(string url, Dictionary<string, string> parameters)
-    {
-        // Obtiene el cliente.
-        var client = GetClient(url);
-
-        // Url final.
-        string finalUrl = Web.AddParameters(client.BaseAddress?.ToString() ?? "", parameters);
-
-        // Establecer.
-        client.BaseAddress = new Uri(finalUrl);
-
-        return client;
-    }
 
 
 

@@ -1,6 +1,4 @@
-﻿using LIN.Modules;
-
-namespace LIN.Access.Auth.Controllers;
+﻿namespace LIN.Access.Auth.Controllers;
 
 
 public class Mail
