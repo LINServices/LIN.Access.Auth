@@ -28,7 +28,6 @@ public static class Service
         // Objeto.
         var client = new HttpClient()
         {
-            BaseAddress = new Uri(DefaultUrl),
             Timeout = TimeSpan.FromSeconds(20)
         };
 
@@ -59,8 +58,31 @@ public static class Service
     /// <param name="url">url</param>
     public static string PathURL(string url)
     {
-        return Url + url;
+        Uri.TryCreate(new Uri(Url), url, out Uri? result);
+        return result?.ToString() ?? "";
     }
+
+
+
+    /// <summary>
+    /// Convertir la URL.
+    /// </summary>
+    /// <param name="url">url</param>
+    /// <param name="values">Valores de consulta.</param>
+    public static string PathURL(string url, Dictionary<string, string> values)
+    {
+        // Unir la URL.
+        Uri.TryCreate(new Uri(Url), url, out Uri? result);
+
+        // Resultado.
+        string uri = result?.ToString() ?? "";
+
+        // Agregar parametros.
+        uri = Web.AddParameters(uri, values);
+
+        return uri;
+    }
+
 
 
 }

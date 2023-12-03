@@ -35,13 +35,10 @@ public static class Intents
 
             return obj ?? new();
 
-
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
         }
-
 
         return new();
     }
