@@ -1,4 +1,6 @@
-﻿namespace LIN.Access.Auth.Controllers;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace LIN.Access.Auth.Controllers;
 
 
 public static class Account
@@ -312,11 +314,27 @@ public static class Account
 
 
 
+
+
+
+    //======================== NO MAPEADOS ==========================//
+
+
+
+
+
+
+
+
+
+
+
     /// <summary>
     /// Desactiva una cuenta
     /// </summary>
     /// <param name="id">ID de la cuenta</param>
     /// <param name="password">Contraseña</param>
+    [Obsolete]
     public static async Task<ResponseBase> Disable(int id, string password)
     {
 
@@ -356,7 +374,7 @@ public static class Account
 
 
 
-  
+
 
 
 
@@ -427,6 +445,7 @@ public static class Account
     /// <summary>
     /// Actualiza la informacion de un usuario
     /// </summary>
+    [Obsolete]
     public static async Task<ReadOneResponse<EmailModel>> ForgetPassword(string user)
     {
 
@@ -476,7 +495,7 @@ public static class Account
 
 
 
-
+    [Obsolete]
     public static async Task<ResponseBase> Verficate(string key)
     {
 
@@ -529,7 +548,7 @@ public static class Account
 
 
 
-
+    [Obsolete]
     public static async Task<ReadAllResponse<LoginLogModel>> LoginLogs(string token)
     {
 

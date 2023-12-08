@@ -1,4 +1,6 @@
-﻿namespace LIN.Access.Auth.Areas.Organizations;
+﻿using System.Reflection;
+
+namespace LIN.Access.Auth.Areas.Organizations;
 
 
 public class Members
@@ -14,37 +16,17 @@ public class Members
     public static async Task<CreateResponse> Create(AccountModel modelo, string token, OrgRoles rol)
     {
 
-        // Obtiene el cliente http.
-        HttpClient client = Service.GetClient("orgs/members/create");
+        // Cliente.
+        Client client = Service.GetClient("orgs/members");
 
-        // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
-        client.DefaultRequestHeaders.Add("rol", $"{(int)rol}");
+        // Headers
+        client.AddHeader("token", token);
+        client.AddHeader("rol", $"{(int)rol}");
 
-        // Serializar el objeto.
-        var json = JsonSerializer.Serialize(modelo);
+        // Respuesta.
+        var response = await client.Post<CreateResponse>(modelo);
 
-        try
-        {
-            // Contenido
-            StringContent content = new(json, Encoding.UTF8, "application/json");
-
-            // Envía la solicitud
-            var response = await client.PostAsync("", content);
-
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<CreateResponse>(responseContent);
-
-            return obj ?? new(Responses.UnavailableService);
-
-        }
-        catch (Exception)
-        {
-        }
-
-        return new(Responses.NotConnection);
+        return response;
 
     }
 
@@ -56,33 +38,17 @@ public class Members
     /// <param name="token">Token de acceso</param>
     public static async Task<ReadAllResponse<AccountModel>> ReadAll(string token)
     {
+        // Cliente.
+        Client client = Service.GetClient("orgs/members");
 
-        // Obtiene el cliente http.
-        HttpClient client = Service.GetClient("orgs/members");
+        // Headers
+        client.AddHeader("token", token);
 
-        // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        // Respuesta.
+        var response = await client.Get<ReadAllResponse<AccountModel>>();
 
-        try
-        {
+        return response;
 
-            // Hacer la solicitud GET
-            var response = await client.GetAsync("");
-
-            // Leer la respuesta como una cadena
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-
-            var obj = JsonSerializer.Deserialize<ReadAllResponse<AccountModel>>(responseBody);
-
-            return obj ?? new(Responses.UnavailableService);
-
-        }
-        catch (Exception)
-        {
-        }
-
-        return new(Responses.NotConnection);
     }
 
 
