@@ -5,46 +5,46 @@ public static class Devices
 {
 
 
-    /// <summary>
-    /// Obtiene la lista de dispositivos conectados a la cuenta.
-    /// </summary>
-    /// <param name="token">Token de acceso.</param>
-    public static async Task<ReadAllResponse<DeviceModel>> ReadAll(string token)
-    {
+    ///// <summary>
+    ///// Obtiene la lista de dispositivos conectados a la cuenta.
+    ///// </summary>
+    ///// <param name="token">Token de acceso.</param>
+    //public static async Task<ReadAllResponse<DeviceModel>> ReadAll(string token)
+    //{
 
-        // url
-        var url = Service.PathURL("devices");
+    //    // url
+    //    var url = Service.PathURL("devices");
 
-        // Crear HttpClient
-        var httpClient = new HttpClient();
+    //    // Crear HttpClient
+    //    var httpClient = new HttpClient();
 
-        // Headers
-        httpClient.DefaultRequestHeaders.Add("token", $"{token}");
+    //    // Headers
+    //    httpClient.DefaultRequestHeaders.Add("token", $"{token}");
 
-        try
-        {
+    //    try
+    //    {
 
-            // Hacer la solicitud GET
-            var response = await httpClient.GetAsync(url);
+    //        // Hacer la solicitud GET
+    //        var response = await httpClient.GetAsync(url);
 
-            // Leer la respuesta
-            var responseBody = await response.Content.ReadAsStringAsync();
+    //        // Leer la respuesta
+    //        var responseBody = await response.Content.ReadAsStringAsync();
 
-            // Objecto respuesta
-            var obj = JsonSerializer.Deserialize<ReadAllResponse<DeviceModel>>(responseBody);
+    //        // Objecto respuesta
+    //        var obj = JsonSerializer.Deserialize<ReadAllResponse<DeviceModel>>(responseBody);
 
-            return obj ?? new();
-
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
-        }
+    //        return obj ?? new();
 
 
-        return new();
-    }
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
+    //    }
+
+
+    //    return new();
+    //}
 
 
 }

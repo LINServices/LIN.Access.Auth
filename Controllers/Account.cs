@@ -13,35 +13,13 @@ public static class Account
     {
 
         // Cliente HTTP.
-        HttpClient client = Service.GetClient();
+        Client client = Service.GetClient("account/create");
 
-        // Establecer parámetros.
-        string url = Service.PathURL("account/create");
+        // Resultado.
+        var Content= await client.Post<CreateResponse>(modelo);
 
-        // JSON.
-        string json = JsonSerializer.Serialize(modelo);
-
-        try
-        {
-            // Contenido
-            StringContent content = new(json, Encoding.UTF8, "application/json");
-
-            // Envía la solicitud
-            var response = await client.PostAsync(url, content);
-
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<CreateResponse>(responseContent);
-
-            return obj ?? new();
-
-        }
-        catch (Exception)
-        {
-        }
-
-        return new();
+        // Retornar.
+        return Content;
 
     }
 
@@ -56,39 +34,22 @@ public static class Account
     {
 
         // Cliente HTTP.
-        HttpClient client = Service.GetClient();
+        Client client = Service.GetClient("account/read/id");
 
         // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        client.AddHeader("token", token);
 
-        // Establecer parámetros.
-        string url = Service.PathURL("account/read/id", new()
+        // Parámetros.
+        client.AddParameter(new()
         {
-            {"id", $"{id}"}
+           {"id", $"{id}"}
         });
 
-        try
-        {
+        // Get.
+        var (Content, _) = await client.Get<ReadOneResponse<AccountModel>>();
 
-            // Hacer la solicitud GET
-            var response = await client.GetAsync(url);
+        return Content;
 
-            // Leer la respuesta como una cadena
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-
-            var obj = JsonSerializer.Deserialize<ReadOneResponse<AccountModel>>(responseBody);
-
-            return obj ?? new();
-
-
-        }
-        catch (Exception)
-        {
-        }
-
-
-        return new();
     }
 
 
@@ -101,40 +62,17 @@ public static class Account
     public static async Task<ReadAllResponse<AccountModel>> Read(List<int> ids, string token)
     {
 
-        // Obtiene el cliente http.
-        HttpClient client = Service.GetClient();
+        // Cliente HTTP.
+        Client client = Service.GetClient("account/findAll");
 
         // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        client.AddHeader("token", token);
 
-        // Establecer parámetros.
-        string url = Service.PathURL("account/findAll");
+        // Get.
+        var Content = await client.Post<ReadAllResponse<AccountModel>>(ids);
 
-        // Json.
-        var json = JsonSerializer.Serialize(ids);
+        return Content;
 
-        // Crear HttpRequestMessage y agregar el encabezado
-        var request = new StringContent(json, Encoding.UTF8, "application/json");
-
-        try
-        {
-
-            // Hacer la solicitud GET
-            var response = await client.PostAsync(url, request);
-
-            // Leer la respuesta como una cadena
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ReadAllResponse<AccountModel>>(responseBody);
-
-            return obj ?? new();
-
-        }
-        catch (Exception)
-        {
-        }
-
-        return new();
     }
 
 
@@ -147,37 +85,22 @@ public static class Account
     public static async Task<ReadOneResponse<AccountModel>> Read(string cuenta, string token)
     {
 
-        // Obtiene el cliente http.
-        HttpClient client = Service.GetClient();
+        // Cliente HTTP.
+        Client client = Service.GetClient("account/read/user");
 
         // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        client.AddHeader("token", token);
 
-        // Establecer parámetros.
-        string url = Service.PathURL("account/read/user", new()
+        // Parámetros.
+        client.AddParameter(new()
         {
-            {"user", $"{cuenta}"}
+           {"user", $"{cuenta}"}
         });
 
-        try
-        {
-            // Hacer la solicitud GET
-            var response = await client.GetAsync(url);
+        // Get.
+        var (Content, _) = await client.Get<ReadOneResponse<AccountModel>>();
 
-            // Leer la respuesta como una cadena
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-
-            var obj = JsonSerializer.Deserialize<ReadOneResponse<AccountModel>>(responseBody);
-
-            return obj ?? new();
-
-        }
-        catch (Exception)
-        {
-        }
-
-        return new();
+        return Content;
 
     }
 
@@ -287,44 +210,44 @@ public static class Account
 
 
 
-    /// <summary>
-    /// Actualizar la contraseña de una cuenta
-    /// </summary>
-    /// <param name="modelo">Modelo de actualización</param>
-    public static async Task<ResponseBase> UpdatePassword(UpdatePasswordModel modelo, string token)
-    {
+    ///// <summary>
+    ///// Actualizar la contraseña de una cuenta
+    ///// </summary>
+    ///// <param name="modelo">Modelo de actualización</param>
+    //public static async Task<ResponseBase> UpdatePassword(UpdatePasswordModel modelo, string token)
+    //{
 
-        // Obtiene el cliente http.
-        HttpClient client = Service.GetClient("account/update/password");
+    //    // Obtiene el cliente http.
+    //    HttpClient client = Service.GetClient("account/update/password");
 
-        // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+    //    // Headers.
+    //    client.DefaultRequestHeaders.Add("token", token);
 
-        var json = JsonSerializer.Serialize(modelo);
+    //    var json = JsonSerializer.Serialize(modelo);
 
-        try
-        {
-            // Contenido
-            StringContent content = new(json, Encoding.UTF8, "application/json");
+    //    try
+    //    {
+    //        // Contenido
+    //        StringContent content = new(json, Encoding.UTF8, "application/json");
 
-            // Envía la solicitud
-            var response = await client.PatchAsync("", content);
+    //        // Envía la solicitud
+    //        var response = await client.PatchAsync("", content);
 
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
+    //        // Lee la respuesta del servidor
+    //        var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
+    //        var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
-            return obj ?? new();
+    //        return obj ?? new();
 
-        }
-        catch
-        {
-        }
+    //    }
+    //    catch
+    //    {
+    //    }
 
-        return new();
+    //    return new();
 
-    }
+    //}
 
 
 
@@ -482,39 +405,39 @@ public static class Account
 
 
 
-    public static async Task<ResponseBase> ResetPassword(string key, UpdatePasswordModel modelo)
-    {
+    //public static async Task<ResponseBase> ResetPassword(string key, UpdatePasswordModel modelo)
+    //{
 
-        // Variables
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Add("key", key);
+    //    // Variables
+    //    var client = new HttpClient();
+    //    client.DefaultRequestHeaders.Add("key", key);
 
-        var url = Service.PathURL("security/password/reset");
-        var json = JsonSerializer.Serialize(modelo);
+    //    var url = Service.PathURL("security/password/reset");
+    //    var json = JsonSerializer.Serialize(modelo);
 
-        try
-        {
-            // Contenido
-            StringContent content = new(json, Encoding.UTF8, "application/json");
+    //    try
+    //    {
+    //        // Contenido
+    //        StringContent content = new(json, Encoding.UTF8, "application/json");
 
-            // Envía la solicitud
-            var response = await client.PatchAsync(url, content);
+    //        // Envía la solicitud
+    //        var response = await client.PatchAsync(url, content);
 
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
+    //        // Lee la respuesta del servidor
+    //        var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
+    //        var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
-            return obj ?? new();
+    //        return obj ?? new();
 
-        }
-        catch
-        {
-        }
+    //    }
+    //    catch
+    //    {
+    //    }
 
-        return new();
+    //    return new();
 
-    }
+    //}
 
 
 

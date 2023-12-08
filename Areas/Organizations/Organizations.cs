@@ -21,7 +21,6 @@ public static class Organizations
 
 
         // Organizar el modelo.
-        organization.AppList = new();
         admin.OrganizationAccess = null;
         organization.Members = new()
         {
@@ -69,34 +68,22 @@ public static class Organizations
     public static async Task<ResponseBase> UpdateWhiteListState(string token, bool estado)
     {
 
-        // Obtiene el cliente http.
-        HttpClient client = Service.GetClient("orgs/update/whitelist", new()
-        {
-            {"haveWhite", $"{estado}"}
-        }
-        );
+        // Cliente HTTP.
+        Client client = Service.GetClient("orgs/update/whitelist");
 
         // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        client.AddHeader("token", token);
 
-        try
+        // Parámetros.
+        client.AddParameter(new()
         {
-            // Envía la solicitud
-            var response = await client.PatchAsync("", null);
+           {"haveWhite", $"{estado}"}
+        });
 
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
+        // Get.
+        var (Content, _) = await client.Get<ReadOneResponse<AccountModel>>();
 
-            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
-
-            return obj ?? new();
-
-        }
-        catch (Exception)
-        {
-        }
-
-        return new();
+        return Content;
 
     }
 
@@ -110,37 +97,22 @@ public static class Organizations
     public static async Task<ResponseBase> UpdateAccessState(string token, bool estado)
     {
 
-        // Obtiene el cliente http.
-        HttpClient client = Service.GetClient("orgs/update/access", new()
-        {
-            {"state", $"{estado}"}
-        }
-        );
+        // Cliente HTTP.
+        Client client = Service.GetClient("orgs/update/access");
 
         // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        client.AddHeader("token", token);
 
-        try
+        // Parámetros.
+        client.AddParameter(new()
         {
-            // Contenido
-            StringContent content = new("", Encoding.UTF8, "application/json");
+           {"state", $"{estado}"}
+        });
 
-            // Envía la solicitud
-            var response = await client.PatchAsync("", content);
+        // Get.
+        var (Content, _) = await client.Get<ResponseBase>();
 
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
-
-            return obj ?? new();
-
-        }
-        catch
-        {
-        }
-
-        return new();
+        return Content;
 
     }
 

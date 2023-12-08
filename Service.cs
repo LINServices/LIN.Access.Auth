@@ -1,14 +1,14 @@
 ﻿namespace LIN.Access.Auth;
 
 
-public static class Service
+internal static class Service
 {
 
 
     /// <summary>
     /// Url base.
     /// </summary>
-    private static string DefaultUrl { get; set; } = "http://api.identity.linapps.co/";
+    private static string DefaultUrl { get; set; } = "http://localhost:5225/";
 
 
 
@@ -22,19 +22,15 @@ public static class Service
     /// <summary>
     /// Obtener un cliente Http.
     /// </summary>
-    public static HttpClient GetClient()
+    public static Client GetClient(string url)
     {
 
         // Objeto.
-        var client = new HttpClient()
-        {
-            Timeout = TimeSpan.FromSeconds(20)
-        };
+        var client = new Client(Url);
 
-        // Default.
-        client.DefaultRequestHeaders.UserAgent.Clear();
-        client.DefaultRequestHeaders.UserAgent.Add(new("LIN App"));
+        Uri.TryCreate(new Uri(Url), url, out Uri? result);
 
+        client.BaseAddress = result;
         return client;
     }
 

@@ -13,37 +13,22 @@ public class Applications
     public static async Task<CreateResponse> Create(string uId, string token)
     {
 
-        // Obtiene el cliente http.
-        HttpClient client = Service.GetClient("orgs/applications/insert", new()
-        {
-            {"appUid", uId }
-        });
+        // Cliente HTTP.
+        Client client = Service.GetClient("orgs/applications/insert");
 
         // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        client.AddHeader("token", token);
 
-        try
+        // Parámetros.
+        client.AddParameter(new()
         {
-            // Contenido
-            StringContent content = new("", Encoding.UTF8, "application/json");
+           {"appUid", $"{uId}"}
+        });
 
-            // Envía la solicitud
-            var response = await client.PostAsync("", content);
+        // Get.
+        var (Content, _) = await client.Get<CreateResponse>();
 
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            // Obtiene el objeto.
-            var obj = JsonSerializer.Deserialize<CreateResponse>(responseContent);
-
-            return obj ?? new(Responses.UnavailableService);
-
-        }
-        catch (Exception)
-        {
-        }
-
-        return new(Responses.NotConnection);
+        return Content;
 
     }
 
@@ -56,31 +41,18 @@ public class Applications
     public static async Task<ReadAllResponse<ApplicationModel>> ReadAll(string token)
     {
 
-        // Obtiene el cliente http.
-        HttpClient client = Service.GetClient("orgs/applications");
+        // Cliente HTTP.
+        Client client = Service.GetClient("orgs/applications");
 
         // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        client.AddHeader("token", token);
 
-        try
-        {
+      
+        // Get.
+        var (Content, _) = await client.Get<ReadAllResponse<ApplicationModel>>();
 
-            // Hacer la solicitud GET
-            var response = await client.GetAsync("");
+        return Content;
 
-            // Leer la respuesta como una cadena
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ReadAllResponse<ApplicationModel>>(responseBody);
-
-            return obj ?? new(Responses.UnavailableService);
-
-        }
-        catch (Exception) 
-        {
-        }
-
-        return new(Responses.NotConnection);
     }
 
 
@@ -93,39 +65,25 @@ public class Applications
     public static async Task<ReadAllResponse<ApplicationModel>> Search(string param, string token)
     {
 
-        // Obtiene el cliente http.
-        HttpClient client = Service.GetClient("orgs/applications/search", new()
-        {
-            {"param", param }
-        });
+        // Cliente HTTP.
+        Client client = Service.GetClient("orgs/applications/search");
 
         // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        client.AddHeader("token", token);
 
-
-        try
+        // Parámetros.
+        client.AddParameter(new()
         {
+           {"param", $"{param}"}
+        });
 
-            // Hacer la solicitud GET
-            var response = await client.GetAsync("");
+        // Get.
+        var (Content, _) = await client.Get<ReadAllResponse<ApplicationModel>>();
 
-            // Leer la respuesta como una cadena
-            var responseBody = await response.Content.ReadAsStringAsync();
+        return Content;
 
-
-            var obj = JsonSerializer.Deserialize<ReadAllResponse<ApplicationModel>>(responseBody);
-
-            return obj ?? new(Responses.UnavailableService);
-
-
-        }
-        catch (Exception)
-        {
-        }
-
-
-        return new(Responses.NotConnection);
     }
+
 
 
 }
