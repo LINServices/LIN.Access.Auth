@@ -69,7 +69,7 @@ internal class Client : HttpClient
     /// <summary>
     /// Enviar solicitud [GET]
     /// </summary>
-    public async Task<(T Content, int statusCode)> Get<T>() where T : new()
+    public async Task<T> Get<T>() where T : new()
     {
 
         // Resultado.
@@ -82,7 +82,35 @@ internal class Client : HttpClient
         T @object = Deserialize<T>(response);
 
         // Respuesta.
-        return (@object, (int)result.StatusCode);
+        return @object;
+    }
+
+
+
+    /// <summary>
+    /// Enviar solicitud [POST]
+    /// </summary>
+    /// <param name="body">Body de documento.</param>
+    public async Task<T> Patch<T>(object? body = null) where T : new()
+    {
+
+        // Body en JSON.
+        string json = JsonSerializer.Serialize(body ?? new { });
+
+        // Contenido.
+        StringContent content = new(json, Encoding.UTF8, "application/json");
+
+        // Resultado.
+        var result = await PatchAsync(string.Empty, content);
+
+        // Respuesta
+        var response = await result.Content.ReadAsStringAsync();
+
+        // Objeto
+        T @object = Deserialize<T>(response);
+
+        // Respuesta.
+        return (@object);
     }
 
 
@@ -119,7 +147,7 @@ internal class Client : HttpClient
     /// Enviar solicitud [PUT]
     /// </summary>
     /// <param name="body">Body de documento.</param>
-    public async Task<(T Content, int statusCode)> Put<T>(object body) where T : new()
+    public async Task<T> Put<T>(object body) where T : new()
     {
 
         // Body en JSON.
@@ -138,7 +166,7 @@ internal class Client : HttpClient
         T @object = Deserialize<T>(response);
 
         // Respuesta.
-        return (@object, (int)result.StatusCode);
+        return @object;
     }
 
 
@@ -146,7 +174,7 @@ internal class Client : HttpClient
     /// <summary>
     /// Enviar solicitud [DELETE]
     /// </summary>
-    public async Task<(T Content, int statusCode)> Delete<T>() where T : new()
+    public async Task<T> Delete<T>() where T : new()
     {
 
         // Resultado.
@@ -159,7 +187,8 @@ internal class Client : HttpClient
         T @object = Deserialize<T>(response);
 
         // Respuesta.
-        return (@object, (int)result.StatusCode);
+        return @object;
+
     }
 
 

@@ -6,7 +6,7 @@ public static class Account
 
 
     /// <summary>
-    /// Crear nuevo usuario.
+    /// Crear una cuenta.
     /// </summary>
     /// <param name="modelo">Modelo.</param>
     public static async Task<CreateResponse> Create(AccountModel modelo)
@@ -16,7 +16,7 @@ public static class Account
         Client client = Service.GetClient("account/create");
 
         // Resultado.
-        var Content= await client.Post<CreateResponse>(modelo);
+        var Content = await client.Post<CreateResponse>(modelo);
 
         // Retornar.
         return Content;
@@ -46,9 +46,38 @@ public static class Account
         });
 
         // Get.
-        var (Content, _) = await client.Get<ReadOneResponse<AccountModel>>();
+        var content = await client.Get<ReadOneResponse<AccountModel>>();
 
-        return Content;
+        return content;
+
+    }
+
+
+
+    /// <summary>
+    /// Obtiene una cuenta según el usuario único.
+    /// </summary>
+    /// <param name="cuenta">Usuario de la cuenta.</param>
+    /// <param name="token">Token de acceso.</param>
+    public static async Task<ReadOneResponse<AccountModel>> Read(string cuenta, string token)
+    {
+
+        // Cliente HTTP.
+        Client client = Service.GetClient("account/read/user");
+
+        // Headers.
+        client.AddHeader("token", token);
+
+        // Parámetros.
+        client.AddParameter(new()
+        {
+           {"user", $"{cuenta}"}
+        });
+
+        // Get.
+        var content = await client.Get<ReadOneResponse<AccountModel>>();
+
+        return content;
 
     }
 
@@ -78,102 +107,34 @@ public static class Account
 
 
     /// <summary>
-    /// Obtiene una cuenta según el usuario único.
-    /// </summary>
-    /// <param name="cuenta">Usuario de la cuenta.</param>
-    /// <param name="token">Token de acceso.</param>
-    public static async Task<ReadOneResponse<AccountModel>> Read(string cuenta, string token)
-    {
-
-        // Cliente HTTP.
-        Client client = Service.GetClient("account/read/user");
-
-        // Headers.
-        client.AddHeader("token", token);
-
-        // Parámetros.
-        client.AddParameter(new()
-        {
-           {"user", $"{cuenta}"}
-        });
-
-        // Get.
-        var (Content, _) = await client.Get<ReadOneResponse<AccountModel>>();
-
-        return Content;
-
-    }
-
-
-
-    /// <summary>
-    /// Buscar usuario por coincidencia del usuario.
+    /// Buscar usuarios por coincidencia del usuario.
     /// </summary>
     /// <param name="pattern">Patron de búsqueda.</param>
     /// <param name="token">Token de acceso.</param>
     /// <param name="isAdmin">Es un administrador.</param>
-    public static async Task<ReadAllResponse<AccountModel>> Search(string pattern, string token, bool isAdmin)
+    public static async Task<ReadAllResponse<AccountModel>> Search(string pattern, string token)
     {
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
+        // Cliente.
+        Client client = Service.GetClient("account/search");
 
-        string url;
-        if (isAdmin)
-        {
-            url = Service.PathURL("account/admin/search");
-        }
-        else
-        {
-            url = Service.PathURL("account/search");
-        }
+        // Parámetros.
+        client.AddParameter("pattern", $"{pattern}");
 
-        url = Web.AddParameters(url, new()
-        {
-            {
-                "pattern", pattern
-            }
-        });
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
 
-        // Crear HttpRequestMessage y agregar el encabezado
-        var request = new HttpRequestMessage(HttpMethod.Get, url);
-        request.Headers.Add("token", $"{token}");
+        // Response.
+        var content = await client.Get<ReadAllResponse<AccountModel>>();
 
-
-
-
-        try
-        {
-            // Hacer la solicitud GET
-            var response = await httpClient.SendAsync(request);
-
-            // Leer la respuesta como una cadena
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ReadAllResponse<AccountModel>>(responseBody) ?? new();
-
-
-            return obj ?? new();
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
-        }
-
-
-        return new();
-
-
-
-
+        return content;
 
     }
 
 
 
     /// <summary>
-    /// Obtiene los datos de una cuenta especifica
+    /// Obtiene los datos de una cuenta especifica.
     /// </summary>
     /// <param name="id">ID de la cuenta</param>
     public static async Task<ReadOneResponse<AccountModel>> ReadAdmin(int id, string token)
@@ -196,6 +157,133 @@ public static class Account
 
 
 
+    /// <summary>
+    /// Actualiza el genero de una cuenta.
+    /// </summary>
+    /// <param name="token">Token de acceso</param>
+    /// <param name="genero">Nuevo genero</param>
+    public static async Task<ResponseBase> UpdateGender(string token, Genders genero)
+    {
+
+        // Variables
+        var client = new HttpClient();
+        client.DefaultRequestHeaders.Add("token", $"{token}");
+        client.DefaultRequestHeaders.Add("genero", $"{(int)genero}");
+
+        var url = Service.PathURL("account/update/gender");
+
+        try
+        {
+            // Contenido
+            StringContent content = new("", Encoding.UTF8, "application/json");
+
+            // Envía la solicitud
+            var response = await client.PatchAsync(url, content);
+
+            // Lee la respuesta del servidor
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
+
+            return obj ?? new();
+
+        }
+        catch
+        {
+        }
+
+        return new();
+
+    }
+
+
+
+    /// <summary>
+    /// Actualiza la visibilidad de una cuenta.
+    /// </summary>
+    /// <param name="token">Token de acceso</param>
+    /// <param name="visibility">Nueva visibilidad</param>
+    public static async Task<ResponseBase> UpdateVisibility(string token, AccountVisibility visibility)
+    {
+
+        // Variables
+        var client = new HttpClient();
+        client.DefaultRequestHeaders.Add("token", $"{token}");
+        client.DefaultRequestHeaders.Add("visibility", $"{(int)visibility}");
+
+        var url = Service.PathURL("account/update/visibility");
+
+        try
+        {
+            // Contenido
+            StringContent content = new("", Encoding.UTF8, "application/json");
+
+            // Envía la solicitud
+            var response = await client.PatchAsync(url, content);
+
+            // Lee la respuesta del servidor
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
+
+            return obj ?? new();
+
+        }
+        catch
+        {
+        }
+
+        return new();
+
+    }
+
+
+
+    /// <summary>
+    /// Actualizar la contraseña.
+    /// </summary>
+    /// <param name="account">Id de la cuenta.</param>
+    /// <param name="oldPassword">Contraseña antigua.</param>
+    /// <param name="newPassword">Contraseña nueva.</param>
+    public static async Task<ResponseBase> UpdatePassword(int account, string oldPassword, string newPassword)
+    {
+
+        // Obtiene el cliente http.
+        Client client = Service.GetClient("account/security/update/password");
+
+        // Parámetros.
+        client.AddParameter("actualPassword", oldPassword);
+        client.AddParameter("newPassword", newPassword);
+
+        // Headers.
+        client.DefaultRequestHeaders.Add("account", account.ToString());
+
+        var content = await client.Patch<ResponseBase>();
+
+        return content ?? new();
+
+    }
+
+
+
+    /// <summary>
+    /// Eliminar (Desactivar) una cuenta.
+    /// </summary>
+    /// <param name="token">Token de acceso.</param>
+    public static async Task<ResponseBase> Delete(string token)
+    {
+
+        // Obtiene el cliente http.
+        Client client = Service.GetClient("account/security/delete");
+
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
+
+        var content = await client.Delete<ResponseBase>();
+
+        return content ?? new();
+
+    }
 
 
 
@@ -210,44 +298,17 @@ public static class Account
 
 
 
-    ///// <summary>
-    ///// Actualizar la contraseña de una cuenta
-    ///// </summary>
-    ///// <param name="modelo">Modelo de actualización</param>
-    //public static async Task<ResponseBase> UpdatePassword(UpdatePasswordModel modelo, string token)
-    //{
 
-    //    // Obtiene el cliente http.
-    //    HttpClient client = Service.GetClient("account/update/password");
 
-    //    // Headers.
-    //    client.DefaultRequestHeaders.Add("token", token);
 
-    //    var json = JsonSerializer.Serialize(modelo);
 
-    //    try
-    //    {
-    //        // Contenido
-    //        StringContent content = new(json, Encoding.UTF8, "application/json");
 
-    //        // Envía la solicitud
-    //        var response = await client.PatchAsync("", content);
 
-    //        // Lee la respuesta del servidor
-    //        var responseContent = await response.Content.ReadAsStringAsync();
 
-    //        var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
-    //        return obj ?? new();
 
-    //    }
-    //    catch
-    //    {
-    //    }
 
-    //    return new();
 
-    //}
 
 
 
@@ -295,87 +356,7 @@ public static class Account
 
 
 
-    /// <summary>
-    /// Actualiza el genero de una cuenta
-    /// </summary>
-    /// <param name="token">Token de acceso</param>
-    /// <param name="genero">Nuevo genero</param>
-    public static async Task<ResponseBase> UpdateGender(string token, Genders genero)
-    {
-
-        // Variables
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Add("token", $"{token}");
-        client.DefaultRequestHeaders.Add("genero", $"{(int)genero}");
-
-        var url = Service.PathURL("account/update/gender");
-
-        try
-        {
-            // Contenido
-            StringContent content = new("", Encoding.UTF8, "application/json");
-
-            // Envía la solicitud
-            var response = await client.PatchAsync(url, content);
-
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
-
-            return obj ?? new();
-
-        }
-        catch
-        {
-        }
-
-        return new();
-
-    }
-
-
-
-    /// <summary>
-    /// Actualiza la visibilidad de una cuenta
-    /// </summary>
-    /// <param name="token">Token de acceso</param>
-    /// <param name="visibility">Nueva visibilidad</param>
-    public static async Task<ResponseBase> UpdateVisibility(string token, AccountVisibility visibility)
-    {
-
-        // Variables
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Add("token", $"{token}");
-        client.DefaultRequestHeaders.Add("visibility", $"{(int)visibility}");
-
-        var url = Service.PathURL("account/update/visibility");
-
-        try
-        {
-            // Contenido
-            StringContent content = new("", Encoding.UTF8, "application/json");
-
-            // Envía la solicitud
-            var response = await client.PatchAsync(url, content);
-
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
-
-            return obj ?? new();
-
-        }
-        catch
-        {
-        }
-
-        return new();
-
-    }
-
-
+  
 
 
 
