@@ -6,41 +6,22 @@ public static class Intents
 
 
     /// <summary>
-    /// Obtiene los intentos de Passkey que no han sido aceptados
+    /// Obtiene la lista de intentos passkey.
     /// </summary>
+    /// <param name="token">Token de acceso.</param>
     public static async Task<ReadAllResponse<PassKeyModel>> ReadAll(string token)
     {
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
+        // Cliente.
+        Client client = Service.GetClient("Intents");
 
-        // ApiServer de la solicitud GET
-        var url = Service.PathURL("intents");
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
 
-        // Crear HttpRequestMessage y agregar el encabezado
-        var request = new HttpRequestMessage(HttpMethod.Get, url);
-        request.Headers.Add("token", $"{token}");
+        // Respuesta.
+        var response = await client.Get<ReadAllResponse<PassKeyModel>>();
 
-        try
-        {
-
-            // Hacer la solicitud GET
-            var response = await httpClient.SendAsync(request);
-
-            // Leer la respuesta como una cadena
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-
-            var obj = JsonSerializer.Deserialize<ReadAllResponse<PassKeyModel>>(responseBody);
-
-            return obj ?? new();
-
-        }
-        catch (Exception)
-        {
-        }
-
-        return new();
+        return response;
     }
 
 
