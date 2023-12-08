@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace LIN.Access.Auth.Controllers;
+﻿namespace LIN.Access.Auth.Controllers;
 
 
 public static class Account
@@ -113,7 +111,6 @@ public static class Account
     /// </summary>
     /// <param name="pattern">Patron de búsqueda.</param>
     /// <param name="token">Token de acceso.</param>
-    /// <param name="isAdmin">Es un administrador.</param>
     public static async Task<ReadAllResponse<AccountModel>> Search(string pattern, string token)
     {
 
