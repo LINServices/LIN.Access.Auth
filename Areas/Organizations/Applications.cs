@@ -10,6 +10,7 @@ public class Applications
     /// </summary>
     /// <param name="uId">Uid de la aplicación</param>
     /// <param name="token">Token del administrador</param>
+    [Obsolete]
     public static async Task<CreateResponse> Create(string uId, string token)
     {
 
@@ -26,7 +27,7 @@ public class Applications
         });
 
         // Get.
-        var (Content, _) = await client.Get<CreateResponse>();
+        var Content = await client.Get<CreateResponse>();
 
         return Content;
 
@@ -38,6 +39,7 @@ public class Applications
     /// Obtiene la lista de aplicaciones permitidas en tu organización.
     /// </summary>
     /// <param name="token">Token de acceso</param>
+    [Obsolete]
     public static async Task<ReadAllResponse<ApplicationModel>> ReadAll(string token)
     {
 
@@ -49,7 +51,7 @@ public class Applications
 
       
         // Get.
-        var (Content, _) = await client.Get<ReadAllResponse<ApplicationModel>>();
+        var Content = await client.Get<ReadAllResponse<ApplicationModel>>();
 
         return Content;
 
@@ -62,6 +64,7 @@ public class Applications
     /// </summary>
     /// <param name="param">Parámetro de búsqueda</param>
     /// <param name="token">Token de acceso</param>
+    [Obsolete]
     public static async Task<ReadAllResponse<ApplicationModel>> Search(string param, string token)
     {
 
@@ -78,7 +81,7 @@ public class Applications
         });
 
         // Get.
-        var (Content, _) = await client.Get<ReadAllResponse<ApplicationModel>>();
+        var Content = await client.Get<ReadAllResponse<ApplicationModel>>();
 
         return Content;
 

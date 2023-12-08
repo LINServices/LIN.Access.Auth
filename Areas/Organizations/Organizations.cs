@@ -10,15 +10,11 @@ public static class Organizations
     /// </summary>
     /// <param name="organization">Modelo de la organización</param>
     /// <param name="admin">Usuario administrador</param>
-    public static async Task<CreateResponse> Create(OrganizationModel organization, AccountModel admin, string token)
+    public static async Task<CreateResponse> Create(OrganizationModel organization, AccountModel admin)
     {
 
         // Obtiene el cliente http.
-        HttpClient client = Service.GetClient("orgs/create");
-
-        // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
-
+        Client client = Service.GetClient("organizations/create");
 
         // Organizar el modelo.
         admin.OrganizationAccess = null;
@@ -31,91 +27,36 @@ public static class Organizations
             }
         };
 
-        // Serializar el objeto.
-        var json = JsonSerializer.Serialize(organization);
+        var response = await client.Post<CreateResponse>(organization);
 
-        try
-        {
-            // Contenido
-            StringContent content = new(json, Encoding.UTF8, "application/json");
-
-            // Envía la solicitud
-            var response = await client.PostAsync("", content);
-
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<CreateResponse>(responseContent);
-
-            return obj ?? new();
-
-        }
-        catch (Exception)
-        {
-        }
-
-        return new();
+        return response;
 
     }
 
 
 
     /// <summary>
-    /// Actualiza es estado de la lista blanca de una organización.
+    /// Obtiene una organización.
     /// </summary>
-    /// <param name="token">Token de administrador</param>
-    /// <param name="estado">Nuevo estado</param>
-    public static async Task<ResponseBase> UpdateWhiteListState(string token, bool estado)
+    /// <param name="id">ID de la organización</param>
+    /// <param name="token">token de acceso.</param>
+    public static async Task<ReadOneResponse<OrganizationModel>> Read(int id, string token)
     {
 
-        // Cliente HTTP.
-        Client client = Service.GetClient("orgs/update/whitelist");
+        // Obtiene el cliente http.
+        Client client = Service.GetClient("organizations/read/id");
 
         // Headers.
         client.AddHeader("token", token);
 
-        // Parámetros.
-        client.AddParameter(new()
-        {
-           {"haveWhite", $"{estado}"}
-        });
+        // Consultas.
+        client.AddParameter("id", id.ToString());   
 
-        // Get.
-        var (Content, _) = await client.Get<ReadOneResponse<AccountModel>>();
+        var response = await client.Get<ReadOneResponse<OrganizationModel>>();
 
-        return Content;
+        return response;
 
     }
-
-
-
-    /// <summary>
-    /// Actualiza es estado del acceso login de los integrantes de una organización
-    /// </summary>
-    /// <param name="token">Token de administrador</param>
-    /// <param name="estado">Nuevo estado</param>
-    public static async Task<ResponseBase> UpdateAccessState(string token, bool estado)
-    {
-
-        // Cliente HTTP.
-        Client client = Service.GetClient("orgs/update/access");
-
-        // Headers.
-        client.AddHeader("token", token);
-
-        // Parámetros.
-        client.AddParameter(new()
-        {
-           {"state", $"{estado}"}
-        });
-
-        // Get.
-        var (Content, _) = await client.Get<ResponseBase>();
-
-        return Content;
-
-    }
-
 
 
 }

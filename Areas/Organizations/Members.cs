@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace LIN.Access.Auth.Areas.Organizations;
+﻿namespace LIN.Access.Auth.Areas.Organizations;
 
 
 public class Members
