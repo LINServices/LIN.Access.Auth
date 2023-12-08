@@ -5,6 +5,28 @@ public class Applications
 {
 
 
+    /// <summary>
+    /// Crear aplicación.
+    /// </summary>
+    /// <param name="application">Modelo.</param>
+    /// <param name="token">Token.</param>
+    public static async Task<CreateResponse> Create(ApplicationModel application, string token)
+    {
+
+        // Cliente.
+        Client client = Service.GetClient("applications");
+
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
+
+        // Respuesta.
+        var response = await client.Post<CreateResponse>(application);
+
+        return response;
+
+    }
+
+
 
     /// <summary>
     /// Obtiene las aplicaciones asociadas a una cuenta.
@@ -13,43 +35,43 @@ public class Applications
     public static async Task<ReadAllResponse<ApplicationModel>> ReadAll(string token)
     {
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
+        // Cliente.
+        Client client = Service.GetClient("applications");
+
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
+
+        // Respuesta.
+        var response = await client.Get<ReadAllResponse<ApplicationModel>>();
+
+        return response;
+
+    }
 
 
-        httpClient.DefaultRequestHeaders.Add("token", token);
 
-        // ApiServer de la solicitud GET
-        var url = Service.PathURL("applications");
+    /// <summary>
+    /// Insertar acceso al directorio de una app.
+    /// </summary>
+    /// <param name="appId">Id de la app.</param>
+    /// <param name="accountId">Id de la cuenta.</param>
+    /// <param name="token">Token de acceso</param>
+    public static async Task<ReadOneResponse<bool>> AllowTo(int appId, int accountId, string token)
+    {
 
+        // Cliente.
+        Client client = Service.GetClient("applications");
 
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
+        client.DefaultRequestHeaders.Add("appId", appId.ToString());
+        client.DefaultRequestHeaders.Add("accountId", accountId.ToString());
 
-        // Crear HttpRequestMessage y agregar el encabezado
-        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        // Respuesta.
+        var response = await client.Put<ReadOneResponse<bool>>();
 
-        try
-        {
+        return response;
 
-            // Hacer la solicitud GET
-            var response = await httpClient.SendAsync(request);
-
-            // Leer la respuesta como una cadena
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-
-            var obj = JsonSerializer.Deserialize<ReadAllResponse<ApplicationModel>>(responseBody);
-
-            return obj ?? new();
-
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
-        }
-
-
-        return new();
     }
 
 
