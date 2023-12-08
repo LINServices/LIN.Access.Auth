@@ -18,14 +18,14 @@ public static class Organizations
 
         // Organizar el modelo.
         admin.OrganizationAccess = null;
-        organization.Members = new()
-        {
+        organization.Members =
+        [
             new()
             {
                 Member = admin,
                 Rol = OrgRoles.SuperManager
             }
-        };
+        ];
 
         var response = await client.Post<CreateResponse>(organization);
 

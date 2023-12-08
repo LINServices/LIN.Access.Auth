@@ -15,11 +15,9 @@ internal class Client : HttpClient
         {
             BaseAddress = new Uri(url ?? "");
         }
-        catch (Exception ex)
+        finally
         {
-            var x = ex.InnerException;
         }
-
     }
 
 
