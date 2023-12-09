@@ -14,7 +14,7 @@ public class Directories
     {
 
         // Cliente.
-        Client client = Service.GetClient("applications");
+        Client client = Service.GetClient("directory/read/id");
 
         client.AddParameter("id", id.ToString());
 
@@ -23,6 +23,28 @@ public class Directories
 
         // Respuesta.
         var response = await client.Get<ReadOneResponse<DirectoryModel>>();
+
+        return response;
+
+    }
+
+
+
+    /// <summary>
+    /// Obtener los directorios.
+    /// </summary>
+    /// <param name="token">Token de acceso.</param>
+    public static async Task<ReadAllResponse<DirectoryMember>> ReadAll(string token)
+    {
+
+        // Cliente.
+        Client client = Service.GetClient("directory/read/all");
+
+        // Headers.
+        client.AddHeader("token", token);
+
+        // Respuesta.
+        var response = await client.Get<ReadAllResponse<DirectoryMember>>();
 
         return response;
 
