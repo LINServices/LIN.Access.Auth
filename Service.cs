@@ -8,7 +8,7 @@ internal static class Service
     /// <summary>
     /// Url base.
     /// </summary>
-    private static string DefaultUrl { get; set; } = "http://localhost:5225/";
+    private static string DefaultUrl { get; set; } = "http://linidentity.somee.com/";
 
 
 
