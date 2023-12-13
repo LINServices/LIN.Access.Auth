@@ -37,7 +37,7 @@ public class Policies
     {
 
         // Cliente.
-        Client client = Service.GetClient("policies");
+        Client client = Service.GetClient("policies/access");
 
         // Headers.
         client.AddParameter("identity", identity.ToString());
