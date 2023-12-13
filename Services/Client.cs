@@ -117,7 +117,7 @@ internal class Client : HttpClient
     /// Enviar solicitud [POST]
     /// </summary>
     /// <param name="body">Body de documento.</param>
-    public async Task<T> Post<T>(object body) where T : new()
+    public async Task<T> Post<T>(object? body = null) where T : new()
     {
 
         // Body en JSON.

@@ -29,8 +29,10 @@ public sealed class SessionAuth
 
 
     /// <summary>
-    /// Recarga o inicia una sesión
+    /// Iniciar sesión.
     /// </summary>
+    /// <param name="user">Usuario.</param>
+    /// <param name="password">Contraseña.</param>
     public static async Task<(SessionAuth? Sesion, Responses Response)> LoginWith(string user, string password)
     {
 
@@ -57,8 +59,10 @@ public sealed class SessionAuth
 
 
     /// <summary>
-    /// Recarga o inicia una sesión
+    /// Recargar sesión.
     /// </summary>
+    /// <param name="token">Token de acceso.</param>
+    /// <returns></returns>
     public static async Task<(SessionAuth? Sesion, Responses Response)> LoginWith(string token)
     {
 
@@ -72,10 +76,8 @@ public sealed class SessionAuth
         if (response.Response != Responses.Success)
             return (null, response.Response);
 
-
         // Datos de la instancia
         Instance.Account = response.Model;
-
         Instance.AccountToken = response.Token;
 
         return (Instance, Responses.Success);
@@ -84,14 +86,12 @@ public sealed class SessionAuth
 
 
 
-
-
-
     /// <summary>
-    /// Cierra la sesión
+    /// Cierra la sesión.
     /// </summary>
     public static void CloseSession()
     {
+        Instance.AccountToken = string.Empty;
         Instance.Account = new();
     }
 
@@ -113,4 +113,5 @@ public sealed class SessionAuth
 
 
     public static SessionAuth Instance => _instance;
+
 }

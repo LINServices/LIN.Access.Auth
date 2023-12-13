@@ -1,4 +1,6 @@
-﻿namespace LIN.Access.Auth.Controllers;
+﻿using System.Reflection;
+
+namespace LIN.Access.Auth.Controllers;
 
 
 public class Mail
@@ -13,35 +15,17 @@ public class Mail
     public static async Task<ResponseBase> Aggregate(string password, EmailModel modelo)
     {
 
-        // Obtiene el cliente http.
-        HttpClient client = Service.GetClient("security/mails/add");
+        // Cliente HTTP.
+        Client client = Service.GetClient("security/mails/add");
 
         // Headers.
         client.DefaultRequestHeaders.Add("password", password);
 
-        var json = JsonSerializer.Serialize(modelo);
+        // Resultado.
+        var Content = await client.Post<ResponseBase>(modelo);
 
-        try
-        {
-            // Contenido
-            StringContent content = new(json, Encoding.UTF8, "application/json");
-
-            // Envía la solicitud
-            var response = await client.PostAsync("", content);
-
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
-
-            return obj ?? new();
-
-        }
-        catch
-        {
-        }
-
-        return new();
+        // Retornar.
+        return Content;
 
     }
 
@@ -54,37 +38,17 @@ public class Mail
     public static async Task<ReadAllResponse<EmailModel>> ReadAll(string token)
     {
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
+        // Cliente HTTP.
+        Client client = Service.GetClient("mails/all");
 
-        // ApiServer de la solicitud GET
-        var url = Service.PathURL("mails/all");
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
 
-        // Crear HttpRequestMessage y agregar el encabezado
-        var request = new HttpRequestMessage(HttpMethod.Get, url);
-        request.Headers.Add("token", $"{token}");
+        // Resultado.
+        var Content = await client.Get<ReadAllResponse<EmailModel>>();
 
-        try
-        {
-            // Hacer la solicitud GET
-            var response = await httpClient.SendAsync(request);
-
-            // Leer la respuesta como una cadena
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ReadAllResponse<EmailModel>>(responseBody) ?? new();
-
-
-            return obj ?? new();
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
-        }
-
-
-        return new();
+        // Retornar.
+        return Content;
 
     }
 
@@ -98,35 +62,18 @@ public class Mail
     public static async Task<ResponseBase> ResendMail(int mail, string token)
     {
 
-        // Variables
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Add("mailID", mail.ToString());
+        // Cliente HTTP.
+        Client client = Service.GetClient("security/mails/resend");
+
+        // Headers.
         client.DefaultRequestHeaders.Add("token", token);
+        client.DefaultRequestHeaders.Add("mailID", mail.ToString());
 
-        var url = Service.PathURL("security/mails/resend");
+        // Resultado.
+        var Content = await client.Post<ResponseBase>();
 
-
-
-        try
-        {
-            HttpRequestMessage ms = new(HttpMethod.Post, url);
-
-            // Envía la solicitud
-            var response = await client.SendAsync(ms);
-
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
-
-            return obj ?? new();
-
-        }
-        catch
-        {
-        }
-
-        return new();
+        // Retornar.
+        return Content;
 
     }
 

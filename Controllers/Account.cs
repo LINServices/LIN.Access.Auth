@@ -164,34 +164,16 @@ public static class Account
     public static async Task<ResponseBase> UpdateGender(string token, Genders genero)
     {
 
-        // Variables
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Add("token", $"{token}");
-        client.DefaultRequestHeaders.Add("genero", $"{(int)genero}");
+        // Cliente.
+        Client client = Service.GetClient("account/update/gender");
 
-        var url = Service.PathURL("account/update/gender");
+        // Headers.
+        client.AddHeader("token", $"{token}");
+        client.AddHeader("visibility", $"{(int)genero}");
 
-        try
-        {
-            // Contenido
-            StringContent content = new("", Encoding.UTF8, "application/json");
+        var response = await client.Patch<ResponseBase>();
 
-            // Envía la solicitud
-            var response = await client.PatchAsync(url, content);
-
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
-
-            return obj ?? new();
-
-        }
-        catch
-        {
-        }
-
-        return new();
+        return response;
 
     }
 
@@ -205,34 +187,16 @@ public static class Account
     public static async Task<ResponseBase> UpdateVisibility(string token, AccountVisibility visibility)
     {
 
-        // Variables
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Add("token", $"{token}");
-        client.DefaultRequestHeaders.Add("visibility", $"{(int)visibility}");
+        // Cliente.
+        Client client = Service.GetClient("account/update/visibility");
 
-        var url = Service.PathURL("account/update/visibility");
+        // Headers.
+        client.AddHeader("token", $"{token}");
+        client.AddHeader("visibility", $"{(int)visibility}");
 
-        try
-        {
-            // Contenido
-            StringContent content = new("", Encoding.UTF8, "application/json");
+        var response = await client.Patch<ResponseBase>();
 
-            // Envía la solicitud
-            var response = await client.PatchAsync(url, content);
-
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
-
-            return obj ?? new();
-
-        }
-        catch
-        {
-        }
-
-        return new();
+        return response;
 
     }
 
@@ -283,6 +247,14 @@ public static class Account
         return content ?? new();
 
     }
+
+
+
+
+
+
+
+
 
 
 

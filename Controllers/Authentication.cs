@@ -14,47 +14,19 @@ public class Authentication
     public static async Task<ReadOneResponse<AccountModel>> Login(string cuenta, string password, string? app = null)
     {
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
+        // Cliente.
+        Client client = Service.GetClient("authentication/login");
 
-        httpClient.DefaultRequestHeaders.Add("application", $"{app ?? Build.Application}");
+        // Headers.
+        client.AddHeader("application", $"{app ?? Build.Application}");
 
-        // ApiServer de la solicitud GET
-        var url = Service.PathURL("authentication/login");
+        // Parámetros
+        client.AddParameter("user", cuenta);
+        client.AddParameter("password", password);
 
-        // Armar la url
-        url = Web.AddParameters(url, new()
-        {
-            {
-                "user", cuenta
-            },
-            {
-                "password", password
-            }
-        });
+        var response = await client.Get<ReadOneResponse<AccountModel>>();
 
-
-        try
-        {
-
-            // Hacer la solicitud GET
-            var response = await httpClient.GetAsync(url);
-
-            // Leer la respuesta como una cadena
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ReadOneResponse<AccountModel>>(responseBody);
-
-            return obj ?? new();
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
-        }
-
-
-        return new();
+        return response;
 
     }
 
