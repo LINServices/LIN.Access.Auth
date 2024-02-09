@@ -10,22 +10,11 @@ public static class Organizations
     /// </summary>
     /// <param name="organization">Modelo de la organización</param>
     /// <param name="admin">Usuario administrador</param>
-    public static async Task<CreateResponse> Create(OrganizationModel organization, AccountModel admin)
+    public static async Task<CreateResponse> Create(OrganizationModel organization)
     {
 
         // Obtiene el cliente http.
         Client client = Service.GetClient("organizations/create");
-
-        // Organizar el modelo.
-        admin.OrganizationAccess = null;
-        organization.Members =
-        [
-            new()
-            {
-                Member = admin,
-                Rol = OrgRoles.SuperManager
-            }
-        ];
 
         var response = await client.Post<CreateResponse>(organization);
 
@@ -38,7 +27,7 @@ public static class Organizations
     /// <summary>
     /// Obtiene una organización.
     /// </summary>
-    /// <param name="id">ID de la organización</param>
+    /// <param name="id">Id de la organización</param>
     /// <param name="token">token de acceso.</param>
     public static async Task<ReadOneResponse<OrganizationModel>> Read(int id, string token)
     {
@@ -53,6 +42,23 @@ public static class Organizations
         client.AddParameter("id", id.ToString());   
 
         var response = await client.Get<ReadOneResponse<OrganizationModel>>();
+
+        return response;
+
+    }
+
+
+
+    public static async Task<ReadAllResponse<OrganizationModel>> ReadAll(string token)
+    {
+
+        // Obtiene el cliente http.
+        Client client = Service.GetClient("organizations/read/all");
+
+        // Headers.
+        client.AddHeader("token", token);
+
+        var response = await client.Get<ReadAllResponse<OrganizationModel>>();
 
         return response;
 

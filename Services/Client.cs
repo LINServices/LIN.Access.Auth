@@ -22,20 +22,29 @@ internal class Client : HttpClient
 
 
 
+    private Dictionary<string, string> Params = [];
+
+
+    private void Build()
+    {
+        string url = Web.AddParameters(BaseAddress?.ToString() ?? "", Params);
+        BaseAddress = new Uri(url);
+    }
+
+
+
+
+
+
 
     /// <summary>
     /// Agregar parámetro a la url
     /// </summary>
-    /// <param name="name">Nombre</param>
+    /// <param name="name">Name</param>
     /// <param name="value">Valor</param>
     public void AddParameter(string name, string value)
     {
-        string url = Web.AddParameters(BaseAddress?.ToString() ?? "", new()
-        {
-           {name, value }
-        });
-
-        BaseAddress = new Uri(url);
+        Params.Add(name, value);
     }
 
 
@@ -55,7 +64,7 @@ internal class Client : HttpClient
     /// <summary>
     /// Agregar un header.
     /// </summary>
-    /// <param name="name">Nombre</param>
+    /// <param name="name">Name</param>
     /// <param name="value">Valor</param>
     public void AddHeader(string name, string value)
     {
@@ -69,6 +78,8 @@ internal class Client : HttpClient
     /// </summary>
     public async Task<T> Get<T>() where T : new()
     {
+
+        Build();
 
         // Resultado.
         var result = await GetAsync(string.Empty);
@@ -91,6 +102,7 @@ internal class Client : HttpClient
     /// <param name="body">Body de documento.</param>
     public async Task<T> Patch<T>(object? body = null) where T : new()
     {
+        Build();
 
         // Body en JSON.
         string json = JsonSerializer.Serialize(body ?? new { });
@@ -119,24 +131,34 @@ internal class Client : HttpClient
     /// <param name="body">Body de documento.</param>
     public async Task<T> Post<T>(object? body = null) where T : new()
     {
+        try
+        {
+            Build();
 
-        // Body en JSON.
-        string json = JsonSerializer.Serialize(body);
+            // Body en JSON.
+            string json = JsonSerializer.Serialize(body);
 
-        // Contenido.
-        StringContent content = new(json, Encoding.UTF8, "application/json");
+            // Contenido.
+            StringContent content = new(json, Encoding.UTF8, "application/json");
 
-        // Resultado.
-        var result = await PostAsync(string.Empty, content);
+            // Resultado.
+            var result = await PostAsync("", content);
 
-        // Respuesta
-        var response = await result.Content.ReadAsStringAsync();
+            // Respuesta
+            var response = await result.Content.ReadAsStringAsync();
 
-        // Objeto
-        T @object = Deserialize<T>(response);
+            // Objeto
+            T @object = Deserialize<T>(response);
 
-        // Respuesta.
-        return (@object);
+            // Respuesta.
+            return (@object);
+        }
+        catch (Exception) 
+        {
+            var s = "";
+        }
+
+        return new();
     }
 
 
@@ -147,6 +169,8 @@ internal class Client : HttpClient
     /// <param name="body">Body de documento.</param>
     public async Task<T> Put<T>(object? body = null) where T : new()
     {
+
+        Build();
 
         // Body en JSON.
         string json = JsonSerializer.Serialize(body);
@@ -175,6 +199,8 @@ internal class Client : HttpClient
     public async Task<T> Delete<T>() where T : new()
     {
 
+        Build();
+
         // Resultado.
         var result = await DeleteAsync(string.Empty);
 
@@ -201,8 +227,9 @@ internal class Client : HttpClient
         try
         {
             // Objeto
-            T @object = JsonSerializer.Deserialize<T>(content) ?? new();
-            return @object;
+            T result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(content) ?? new();
+
+            return result;
         }
         catch (Exception)
         {

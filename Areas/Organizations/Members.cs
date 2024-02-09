@@ -1,4 +1,6 @@
-﻿namespace LIN.Access.Auth.Areas.Organizations;
+﻿using LIN.Types.Cloud.Identity.Abstracts;
+
+namespace LIN.Access.Auth.Areas.Organizations;
 
 
 public class Members
@@ -11,7 +13,7 @@ public class Members
     /// <param name="modelo">Modelo del integrante</param>
     /// <param name="token">Token del administrador</param>
     /// <param name="rol">Rol del nuevo integrante</param>
-    public static async Task<CreateResponse> Create(AccountModel modelo, string token, OrgRoles rol)
+    public static async Task<CreateResponse> Create(AccountModel modelo, string token, int organization)
     {
 
         // Cliente.
@@ -19,7 +21,7 @@ public class Members
 
         // Headers
         client.AddHeader("token", token);
-        client.AddHeader("rol", $"{(int)rol}");
+        client.AddHeader("organization", organization.ToString());
 
         // Respuesta.
         var response = await client.Post<CreateResponse>(modelo);
@@ -34,16 +36,17 @@ public class Members
     /// Obtiene los integrantes asociados a su organización.
     /// </summary>
     /// <param name="token">Token de acceso</param>
-    public static async Task<ReadAllResponse<AccountModel>> ReadAll(string token)
+    public static async Task<ReadAllResponse<SessionModel<GroupMember>>> ReadAll(string token, int organization)
     {
         // Cliente.
         Client client = Service.GetClient("orgs/members");
 
         // Headers
         client.AddHeader("token", token);
+        client.AddHeader("organization", organization.ToString());
 
         // Respuesta.
-        var response = await client.Get<ReadAllResponse<AccountModel>>();
+        var response = await client.Get<ReadAllResponse<SessionModel<GroupMember>>>();
 
         return response;
 

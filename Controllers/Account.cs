@@ -26,7 +26,7 @@ public static class Account
 
 
     /// <summary>
-    /// Obtiene una cuenta según el ID.
+    /// Obtiene una cuenta según el Id.
     /// </summary>
     /// <param name="id">Id del usuario.</param>
     /// <param name="token">Token de acceso.</param>
@@ -84,7 +84,7 @@ public static class Account
 
 
     /// <summary>
-    /// Obtiene una lista de cuentas según los ID.
+    /// Obtiene una lista de cuentas según los Id.
     /// </summary>
     /// <param name="ids">Lista de Ids.</param>
     /// <param name="token">Token de acceso.</param>
@@ -135,7 +135,7 @@ public static class Account
     /// <summary>
     /// Obtiene los datos de una cuenta especifica.
     /// </summary>
-    /// <param name="id">ID de la cuenta</param>
+    /// <param name="id">Id de la cuenta</param>
     public static async Task<ReadOneResponse<AccountModel>> ReadAdmin(int id, string token)
     {
 
@@ -184,21 +184,21 @@ public static class Account
     /// </summary>
     /// <param name="token">Token de acceso</param>
     /// <param name="visibility">Nueva visibilidad</param>
-    public static async Task<ResponseBase> UpdateVisibility(string token, AccountVisibility visibility)
-    {
+    //public static async Task<ResponseBase> UpdateVisibility(string token, AccountVisibility visibility)
+    //{
 
-        // Cliente.
-        Client client = Service.GetClient("account/update/visibility");
+    //    // Cliente.
+    //    Client client = Service.GetClient("account/update/visibility");
 
-        // Headers.
-        client.AddHeader("token", $"{token}");
-        client.AddHeader("visibility", $"{(int)visibility}");
+    //    // Headers.
+    //    client.AddHeader("token", $"{token}");
+    //    client.AddHeader("visibility", $"{(int)visibility}");
 
-        var response = await client.Patch<ResponseBase>();
+    //    var response = await client.Patch<ResponseBase>();
 
-        return response;
+    //    return response;
 
-    }
+    //}
 
 
 
@@ -301,45 +301,44 @@ public static class Account
     /// <summary>
     /// Desactiva una cuenta
     /// </summary>
-    /// <param name="id">ID de la cuenta</param>
-    /// <param name="password">Contraseña</param>
-    [Obsolete]
-    public static async Task<ResponseBase> Disable(int id, string password)
-    {
+    /// <param name="id">Id de la cuenta</param>
+ 
+    //public static async Task<ResponseBase> Disable(int id, string password)
+    //{
 
-        // Variables
-        var client = new HttpClient();
+    //    // Variables
+    //    var client = new HttpClient();
 
-        var url = Service.PathURL("account/disable");
-        var json = JsonSerializer.Serialize(new AccountModel()
-        {
-            ID = id,
-            Contraseña = password
-        });
+    //    var url = Service.PathURL("account/disable");
+    //    var json = JsonSerializer.Serialize(new AccountModel()
+    //    {
+    //        Id = id,
+    //        Contraseña = password
+    //    });
 
-        try
-        {
-            // Contenido
-            StringContent content = new(json, Encoding.UTF8, "application/json");
+    //    try
+    //    {
+    //        // Contenido
+    //        StringContent content = new(json, Encoding.UTF8, "application/json");
 
-            // Envía la solicitud
-            var response = await client.PatchAsync(url, content);
+    //        // Envía la solicitud
+    //        var response = await client.PatchAsync(url, content);
 
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
+    //        // Lee la respuesta del servidor
+    //        var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
+    //        var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
 
-            return obj ?? new();
+    //        return obj ?? new();
 
-        }
-        catch
-        {
-        }
+    //    }
+    //    catch
+    //    {
+    //    }
 
-        return new();
+    //    return new();
 
-    }
+    //}
 
 
 
@@ -411,49 +410,47 @@ public static class Account
 
 
 
-    /// <summary>
-    /// Actualiza la informacion de un usuario
-    /// </summary>
-    [Obsolete]
-    public static async Task<ReadOneResponse<EmailModel>> ForgetPassword(string user)
-    {
+    ///// <summary>
+    ///// Actualiza la informacion de un usuario
+    ///// </summary>
+    //[Obsolete]
+    //public static async Task<ReadOneResponse<EmailModel>> ForgetPassword(string user)
+    //{
 
-        // Variables
-        var client = new HttpClient();
+    //    // Variables
+    //    var client = new HttpClient();
 
-        var url = Service.PathURL("security/password/forget");
+    //    var url = Service.PathURL("security/password/forget");
 
-        url = Web.AddParameters(url, new()
-        {
-            {
-                "user", user
-            }
-        });
+    //    url = Web.AddParameters(url, new()
+    //    {
+    //        {
+    //            "user", user
+    //        }
+    //    });
 
-        try
-        {
-            HttpRequestMessage ms = new(HttpMethod.Post, url);
+    //    try
+    //    {
+    //        HttpRequestMessage ms = new(HttpMethod.Post, url);
 
-            // Envía la solicitud
-            var response = await client.SendAsync(ms);
+    //        // Envía la solicitud
+    //        var response = await client.SendAsync(ms);
 
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
+    //        // Lee la respuesta del servidor
+    //        var responseContent = await response.Content.ReadAsStringAsync();
 
-            var obj = JsonSerializer.Deserialize<ReadOneResponse<EmailModel>>(responseContent);
+    //        var obj = JsonSerializer.Deserialize<ReadOneResponse<EmailModel>>(responseContent);
 
-            return obj ?? new();
+    //        return obj ?? new();
 
-        }
-        catch
-        {
-        }
+    //    }
+    //    catch
+    //    {
+    //    }
 
-        return new();
+    //    return new();
 
-    }
-
-
+    //}
 
 
 
@@ -464,41 +461,41 @@ public static class Account
 
 
 
-    [Obsolete]
-    public static async Task<ResponseBase> Verficate(string key)
-    {
-
-        // Variables
-        var client = new HttpClient();
-        client.DefaultRequestHeaders.Add("key", key);
-
-        var url = Service.PathURL("security/mails/verify");
-
-        try
-        {
-            // Contenido
-            StringContent content = new("", Encoding.UTF8, "application/json");
-
-            // Envía la solicitud
-            var response = await client.PostAsync(url, content);
-
-            // Lee la respuesta del servidor
-            var responseContent = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
-
-            return obj ?? new();
-
-        }
-        catch
-        {
-        }
-
-        return new();
-
-    }
 
 
+    //[Obsolete]
+    //public static async Task<ResponseBase> Verficate(string key)
+    //{
+
+    //    // Variables
+    //    var client = new HttpClient();
+    //    client.DefaultRequestHeaders.Add("key", key);
+
+    //    var url = Service.PathURL("security/mails/verify");
+
+    //    try
+    //    {
+    //        // Contenido
+    //        StringContent content = new("", Encoding.UTF8, "application/json");
+
+    //        // Envía la solicitud
+    //        var response = await client.PostAsync(url, content);
+
+    //        // Lee la respuesta del servidor
+    //        var responseContent = await response.Content.ReadAsStringAsync();
+
+    //        var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
+
+    //        return obj ?? new();
+
+    //    }
+    //    catch
+    //    {
+    //    }
+
+    //    return new();
+
+    //}
 
 
 
@@ -531,3 +528,4 @@ public static class Account
 
 
 }
+

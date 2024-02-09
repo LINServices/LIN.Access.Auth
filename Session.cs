@@ -22,7 +22,7 @@ public sealed class SessionAuth
     /// <summary>
     /// Si la sesión es activa
     /// </summary>
-    public static bool IsOpen => Instance.Account.ID > 0;
+    public static bool IsOpen => Instance.Account.Id > 0;
 
 
 

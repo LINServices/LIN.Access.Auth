@@ -9,7 +9,7 @@ public static class Admin
     /// <summary>
     /// Obtiene los datos de una cuenta especifica
     /// </summary>
-    /// <param name="id">ID de la cuenta</param>
+    /// <param name="id">Id de la cuenta</param>
     public static async Task<ReadOneResponse<AccountModel>> Read(int id, string token)
     {
 
