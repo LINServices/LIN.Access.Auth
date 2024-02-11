@@ -178,9 +178,8 @@ public sealed class PassKeyHub
         {
             await HubConnection!.InvokeAsync("ReceiveRequest", intent);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            var s = "";
         }
     }
 

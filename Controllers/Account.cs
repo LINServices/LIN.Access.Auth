@@ -132,6 +132,19 @@ public static class Account
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     /// <summary>
     /// Obtiene los datos de una cuenta especifica.
     /// </summary>

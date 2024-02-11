@@ -76,7 +76,7 @@ internal class Client : HttpClient
     /// <summary>
     /// Enviar solicitud [GET]
     /// </summary>
-    public async Task<T> Get<T>() where T : new()
+    public async Task<T> Get<T>() where T : class, new()
     {
 
         Build();
@@ -100,7 +100,7 @@ internal class Client : HttpClient
     /// Enviar solicitud [POST]
     /// </summary>
     /// <param name="body">Body de documento.</param>
-    public async Task<T> Patch<T>(object? body = null) where T : new()
+    public async Task<T> Patch<T>(object? body = null) where T : class, new()
     {
         Build();
 
@@ -129,7 +129,7 @@ internal class Client : HttpClient
     /// Enviar solicitud [POST]
     /// </summary>
     /// <param name="body">Body de documento.</param>
-    public async Task<T> Post<T>(object? body = null) where T : new()
+    public async Task<T> Post<T>(object? body = null) where T : class, new()
     {
         try
         {
@@ -153,9 +153,8 @@ internal class Client : HttpClient
             // Respuesta.
             return (@object);
         }
-        catch (Exception) 
+        catch (Exception)
         {
-            var s = "";
         }
 
         return new();
@@ -167,7 +166,7 @@ internal class Client : HttpClient
     /// Enviar solicitud [PUT]
     /// </summary>
     /// <param name="body">Body de documento.</param>
-    public async Task<T> Put<T>(object? body = null) where T : new()
+    public async Task<T> Put<T>(object? body = null) where T : class, new()
     {
 
         Build();
@@ -196,7 +195,7 @@ internal class Client : HttpClient
     /// <summary>
     /// Enviar solicitud [DELETE]
     /// </summary>
-    public async Task<T> Delete<T>() where T : new()
+    public async Task<T> Delete<T>() where T : class, new()
     {
 
         Build();
@@ -222,14 +221,16 @@ internal class Client : HttpClient
     /// </summary>
     /// <typeparam name="T">Tipo de la respuesta.</typeparam>
     /// <param name="content">Contenido.</param>
-    public static T Deserialize<T>(string content) where T : new()
+    public static T Deserialize<T>(string content) where T : class, new()
     {
         try
         {
             // Objeto
-            T result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(content) ?? new();
+            var result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(content);
 
-            return result;
+
+            return result ?? new();
+
         }
         catch (Exception)
         {
@@ -237,6 +238,7 @@ internal class Client : HttpClient
 
         return new();
     }
+
 
 
 

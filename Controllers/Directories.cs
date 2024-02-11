@@ -5,42 +5,11 @@ public class Directories
 {
 
 
-
-
-
-
-
-
-
     /// <summary>
-    /// Obtener un directorio.
-    /// </summary>
-    /// <param name="id">Id del directorio.</param>
-    /// <param name="token">Token de acceso.</param>
-    public static async Task<ReadOneResponse<GroupModel>> Read(int id, string token)
-    {
-
-        // Cliente.
-        Client client = Service.GetClient("directory/read/id");
-
-        client.AddParameter("id", id.ToString());
-
-        // Headers.
-        client.AddHeader("token", token);
-
-        // Respuesta.
-        var response = await client.Get<ReadOneResponse<GroupModel>>();
-
-        return response;
-
-    }
-
-
-
-    /// <summary>
-    /// Obtener los directorios.
+    /// Obtener los directorios base asociados.
     /// </summary>
     /// <param name="token">Token de acceso.</param>
+    /// <param name="organization">Id de la organización.</param>
     public static async Task<ReadAllResponse<GroupMember>> ReadAll(string token, int organization)
     {
 
@@ -72,7 +41,6 @@ public class Directories
 
         // Headers.
         client.AddHeader("token", token);
-
         client.AddParameter("directory", directory.ToString());
 
         // Respuesta.
@@ -83,6 +51,12 @@ public class Directories
     }
 
 
+
+    /// <summary>
+    /// Nuevo integrante.
+    /// </summary>
+    /// <param name="model">Modelo</param>
+    /// <param name="token">Token</param>
     public static async Task<CreateResponse> InsertMember(GroupMember model, string token)
     {
 

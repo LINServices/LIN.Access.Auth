@@ -6,10 +6,9 @@ public static class Organizations
 
 
     /// <summary>
-    /// Crea una nueva organización.
+    /// Crear organización.
     /// </summary>
-    /// <param name="organization">Modelo de la organización</param>
-    /// <param name="admin">Usuario administrador</param>
+    /// <param name="organization">Modelo.</param>
     public static async Task<CreateResponse> Create(OrganizationModel organization)
     {
 
@@ -25,10 +24,10 @@ public static class Organizations
 
 
     /// <summary>
-    /// Obtiene una organización.
+    /// Obtener una organización.
     /// </summary>
-    /// <param name="id">Id de la organización</param>
-    /// <param name="token">token de acceso.</param>
+    /// <param name="id">Id del organización.</param>
+    /// <param name="token">Token de acceso.</param>
     public static async Task<ReadOneResponse<OrganizationModel>> Read(int id, string token)
     {
 
@@ -49,6 +48,10 @@ public static class Organizations
 
 
 
+    /// <summary>
+    /// Obtener las organizaciones donde un usuario pertenece.
+    /// </summary>
+    /// <param name="token">Token de acceso.</param>
     public static async Task<ReadAllResponse<OrganizationModel>> ReadAll(string token)
     {
 
@@ -63,6 +66,7 @@ public static class Organizations
         return response;
 
     }
+
 
 
 }
