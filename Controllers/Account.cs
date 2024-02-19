@@ -40,10 +40,8 @@ public static class Account
         client.AddHeader("token", token);
 
         // Parámetros.
-        client.AddParameter(new()
-        {
-           {"id", $"{id}"}
-        });
+        client.AddParameter("id", id);
+
 
         // Get.
         var content = await client.Get<ReadOneResponse<AccountModel>>();
@@ -72,10 +70,7 @@ public static class Account
         client.AddHeader("token", token);
 
         // Parámetros.
-        client.AddParameter(new()
-        {
-           {"id", $"{id}"}
-        });
+        client.AddParameter("id", id);
 
         // Get.
         var content = await client.Get<ReadOneResponse<AccountModel>>();
@@ -100,11 +95,8 @@ public static class Account
         // Headers.
         client.AddHeader("token", token);
 
-        // Parámetros.
-        client.AddParameter(new()
-        {
-           {"user", $"{cuenta}"}
-        });
+       // Parámetros.
+        client.AddParameter("user", cuenta);
 
         // Get.
         var content = await client.Get<ReadOneResponse<AccountModel>>();
@@ -347,7 +339,7 @@ public static class Account
     /// Desactiva una cuenta
     /// </summary>
     /// <param name="id">Id de la cuenta</param>
- 
+
     //public static async Task<ResponseBase> Disable(int id, string password)
     //{
 

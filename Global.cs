@@ -9,4 +9,4 @@ global using System;
 global using System.Net.Http;
 global using System.Text;
 global using System.Threading.Tasks;
-global using LIN.Access.Auth.Services;
+global using LIN.Access.Services;

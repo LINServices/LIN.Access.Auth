@@ -11,4 +11,10 @@ public class Build
         Application = app;
     }
 
+
+    public static void Init()
+    {
+        LIN.Access.Service.SetDefault("http://api.identity.linapps.co/");
+    }
+
 }
