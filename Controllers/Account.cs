@@ -54,6 +54,38 @@ public static class Account
 
 
 
+
+
+
+    /// <summary>
+    /// Obtiene una cuenta según el Id.
+    /// </summary>
+    /// <param name="id">Id del usuario.</param>
+    /// <param name="token">Token de acceso.</param>
+    public static async Task<ReadOneResponse<AccountModel>> ReadByIdentity(int id, string token)
+    {
+
+        // Cliente HTTP.
+        Client client = Service.GetClient("account/read/identity");
+
+        // Headers.
+        client.AddHeader("token", token);
+
+        // Parámetros.
+        client.AddParameter(new()
+        {
+           {"id", $"{id}"}
+        });
+
+        // Get.
+        var content = await client.Get<ReadOneResponse<AccountModel>>();
+
+        return content;
+
+    }
+
+
+
     /// <summary>
     /// Obtiene una cuenta según el usuario único.
     /// </summary>

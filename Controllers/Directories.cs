@@ -52,26 +52,7 @@ public class Directories
 
 
 
-    /// <summary>
-    /// Nuevo integrante.
-    /// </summary>
-    /// <param name="model">Modelo</param>
-    /// <param name="token">Token</param>
-    public static async Task<CreateResponse> InsertMember(GroupMember model, string token)
-    {
-
-        // Cliente.
-        Client client = Service.GetClient("directory/members");
-
-        // Headers.
-        client.AddHeader("token", token);
-
-        // Respuesta.
-        var response = await client.Post<CreateResponse>(model);
-
-        return response;
-
-    }
+   
 
 
 
