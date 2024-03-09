@@ -14,7 +14,8 @@ public class Build
 
     public static void Init()
     {
-        LIN.Access.Service.SetDefault("http://api.identity.linapps.co/");
+        Service._Service = new();
+        Service._Service.SetDefault("http://api.identity.linapps.co/");
     }
 
 }

@@ -43,7 +43,7 @@ public class Authentication
         using var httpClient = new HttpClient();
 
         // ApiServer de la solicitud GET
-        var url = Service.PathURL("authentication/LoginWithToken");
+        var url = Service._Service.PathURL("authentication/LoginWithToken");
 
 
         // Crear HttpRequestMessage y agregar el encabezado
