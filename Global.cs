@@ -1,4 +1,5 @@
-﻿global using LIN.Modules;
+﻿global using Global.Utilities.Network;
+global using Global.Utilities;
 global using LIN.Types.Cloud.Identity.Enumerations;
 global using LIN.Types.Cloud.Identity.Models;
 global using LIN.Types.Enumerations;
@@ -9,4 +10,4 @@ global using System;
 global using System.Net.Http;
 global using System.Text;
 global using System.Threading.Tasks;
-global using LIN.Access.Services;
+global using Global.Http.Services;

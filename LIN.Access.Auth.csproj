@@ -8,15 +8,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.2" />
+        <PackageReference Include="Global.Http" Version="1.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.3" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Tipos\LIN.Modules\LIN.Modules.csproj" />
         <ProjectReference Include="..\..\Tipos\LIN.Types.Cloud.Identity\LIN.Types.Cloud.Identity.csproj" />
         <ProjectReference Include="..\..\Tipos\LIN.Types\LIN.Types.csproj" />
-        <ProjectReference Include="..\LIN.Access\LIN.Access\LIN.Access.csproj" />
     </ItemGroup>
 
 </Project>

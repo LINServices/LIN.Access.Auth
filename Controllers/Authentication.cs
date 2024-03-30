@@ -17,6 +17,8 @@ public class Authentication
         // Cliente.
         Client client = Service.GetClient("authentication/login");
 
+        client.TimeOut = 20;
+
         // Headers.
         client.AddHeader("application", $"{app ?? Build.Application}");
 
