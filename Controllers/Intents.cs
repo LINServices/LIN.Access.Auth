@@ -25,4 +25,25 @@ public static class Intents
     }
 
 
+
+    /// <summary>
+    /// Obtiene la lista de intentos passkey.
+    /// </summary>
+    /// <param name="token">Token de acceso.</param>
+    public static async Task<ReadOneResponse<int>> Count(string token)
+    {
+
+        // Cliente.
+        Client client = Service.GetClient("Intents/count");
+
+        // Headers.
+        client.DefaultRequestHeaders.Add("token", token);
+
+        // Respuesta.
+        var response = await client.Get<ReadOneResponse<int>>();
+
+        return response;
+    }
+
+
 }
