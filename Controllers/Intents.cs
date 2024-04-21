@@ -16,7 +16,7 @@ public static class Intents
         Client client = Service.GetClient("Intents");
 
         // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        client.AddHeader("token", token);
 
         // Respuesta.
         var response = await client.Get<ReadAllResponse<PassKeyModel>>();
@@ -37,7 +37,7 @@ public static class Intents
         Client client = Service.GetClient("Intents/count");
 
         // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        client.AddHeader("token", token);
 
         // Respuesta.
         var response = await client.Get<ReadOneResponse<int>>();

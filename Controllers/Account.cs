@@ -145,7 +145,7 @@ public static class Account
         client.AddParameter("pattern", $"{pattern}");
 
         // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        client.AddHeader("token", token);
 
         // Response.
         var content = await client.Get<ReadAllResponse<AccountModel>>();
@@ -153,16 +153,6 @@ public static class Account
         return content;
 
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -256,7 +246,7 @@ public static class Account
         client.AddParameter("newPassword", newPassword);
 
         // Headers.
-        client.DefaultRequestHeaders.Add("account", account.ToString());
+        client.AddHeader("account", account.ToString());
 
         var content = await client.Patch<ResponseBase>();
 
@@ -277,7 +267,7 @@ public static class Account
         Client client = Service.GetClient("account/security/delete");
 
         // Headers.
-        client.DefaultRequestHeaders.Add("token", token);
+        client.AddHeader("token", token);
 
         var content = await client.Delete<ResponseBase>();
 
