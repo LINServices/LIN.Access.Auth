@@ -44,7 +44,7 @@ public sealed class SessionAuth
 
 
         if (response.Response != Responses.Success)
-            return (null, response.Response);
+return (null, response.Response);
 
 
         // Datos de la instancia
@@ -74,7 +74,7 @@ public sealed class SessionAuth
 
 
         if (response.Response != Responses.Success)
-            return (null, response.Response);
+return (null, response.Response);
 
         // Datos de la instancia
         Instance.Account = response.Model;

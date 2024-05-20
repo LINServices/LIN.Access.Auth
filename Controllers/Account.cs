@@ -168,15 +168,15 @@ public static class Account
 
         var x = await Read(new List<int>
         {
-            id
+id
         }, token);
 
 
         return new()
         {
-            Message = x.Message,
-            Model = x.Models.FirstOrDefault() ?? new(),
-            Response = x.Response
+Message = x.Message,
+Model = x.Models.FirstOrDefault() ?? new(),
+Response = x.Response
         };
 
     }
@@ -452,7 +452,7 @@ public static class Account
     //    url = Web.AddParameters(url, new()
     //    {
     //        {
-    //            "user", user
+    //"user", user
     //        }
     //    });
 

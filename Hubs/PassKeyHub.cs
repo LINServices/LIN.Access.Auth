@@ -92,8 +92,8 @@ public sealed class PassKeyHub
     {
         try
         {
-            if (HubConnection != null)
-                await HubConnection.StopAsync();
+if (HubConnection != null)
+    await HubConnection.StopAsync();
 
         }
         catch
@@ -112,44 +112,44 @@ public sealed class PassKeyHub
         try
         {
 
-            var s = Service._Service.PathURL("realTime/auth/passkey");
-            // Crea la conexión al HUB
-            HubConnection = new HubConnectionBuilder()
-               .WithUrl(Service._Service.PathURL("realTime/auth/passkey"))
-                .WithAutomaticReconnect()
-                .Build();
+var s = Service._Service.PathURL("realTime/auth/passkey");
+// Crea la conexión al HUB
+HubConnection = new HubConnectionBuilder()
+   .WithUrl(Service._Service.PathURL("realTime/auth/passkey"))
+    .WithAutomaticReconnect()
+    .Build();
 
 
-            // Recibe un intento Admin
-            HubConnection.On<PassKeyModel>("#attempts", (pass) =>
-            {
-                OnReceiveIntent?.Invoke(null, pass);
-            });
+// Recibe un intento Admin
+HubConnection.On<PassKeyModel>("#attempts", (pass) =>
+{
+    OnReceiveIntent?.Invoke(null, pass);
+});
 
 
-            // Recibe una respuesta (Cliente)
-            HubConnection.On<PassKeyModel>("#responses", (pass) =>
-            {
-                OnReceiveResponse?.Invoke(null, pass);
-            });
+// Recibe una respuesta (Cliente)
+HubConnection.On<PassKeyModel>("#responses", (pass) =>
+{
+    OnReceiveResponse?.Invoke(null, pass);
+});
 
 
-            // Inicia la conexión
-            await HubConnection.StartAsync();
+// Inicia la conexión
+await HubConnection.StartAsync();
 
 
-            if (IsAdmin)
-            {
-                // Suscribe al grupo
-                await HubConnection.InvokeAsync("JoinAdmin", Token);
-            }
+if (IsAdmin)
+{
+    // Suscribe al grupo
+    await HubConnection.InvokeAsync("JoinAdmin", Token);
+}
 
 
 
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine("Error HUB Account: " + ex);
+System.Diagnostics.Debug.WriteLine("Error HUB Account: " + ex);
         }
 
     }
@@ -162,9 +162,9 @@ public sealed class PassKeyHub
     {
         try
         {
-            //intent.Application ??= new();
-            //intent.Application.Key = AppKey;
-            await HubConnection!.InvokeAsync("JoinIntent", intent);
+//intent.Application ??= new();
+//intent.Application.Key = AppKey;
+await HubConnection!.InvokeAsync("JoinIntent", intent);
         }
         catch
         {
@@ -176,7 +176,7 @@ public sealed class PassKeyHub
     {
         try
         {
-            await HubConnection!.InvokeAsync("ReceiveRequest", intent);
+await HubConnection!.InvokeAsync("ReceiveRequest", intent);
         }
         catch (Exception)
         {
