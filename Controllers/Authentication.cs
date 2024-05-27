@@ -56,20 +56,20 @@ public class Authentication
         try
         {
 
-// Hacer la solicitud GET
-var response = await httpClient.SendAsync(request);
+            // Hacer la solicitud GET
+            var response = await httpClient.SendAsync(request);
 
-// Leer la respuesta como una cadena
-var responseBody = await response.Content.ReadAsStringAsync();
+            // Leer la respuesta como una cadena
+            var responseBody = await response.Content.ReadAsStringAsync();
 
-var obj = JsonSerializer.Deserialize<ReadOneResponse<AccountModel>>(responseBody);
+            var obj = JsonSerializer.Deserialize<ReadOneResponse<AccountModel>>(responseBody);
 
-return obj ?? new();
+            return obj ?? new();
 
         }
         catch (Exception e)
         {
-Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
+            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
         }
 
         return new();

@@ -95,7 +95,7 @@ public static class Account
         // Headers.
         client.AddHeader("token", token);
 
-       // Parámetros.
+        // Parámetros.
         client.AddParameter("user", cuenta);
 
         // Get.
@@ -174,9 +174,9 @@ id
 
         return new()
         {
-Message = x.Message,
-Model = x.Models.FirstOrDefault() ?? new(),
-Response = x.Response
+            Message = x.Message,
+            Model = x.Models.FirstOrDefault() ?? new(),
+            Response = x.Response
         };
 
     }

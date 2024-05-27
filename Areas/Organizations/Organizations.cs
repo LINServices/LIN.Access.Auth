@@ -38,7 +38,7 @@ public static class Organizations
         client.AddHeader("token", token);
 
         // Consultas.
-        client.AddParameter("id", id.ToString());   
+        client.AddParameter("id", id.ToString());
 
         var response = await client.Get<ReadOneResponse<OrganizationModel>>();
 

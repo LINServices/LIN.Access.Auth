@@ -1,7 +1,9 @@
-﻿namespace LIN.Access.Auth;
+﻿using LIN.Access.Auth.Interfaces;
+
+namespace LIN.Access.Auth;
 
 
-public sealed class SessionAuth
+public sealed class SessionAuth : IISession
 {
 
 
@@ -44,7 +46,7 @@ public sealed class SessionAuth
 
 
         if (response.Response != Responses.Success)
-return (null, response.Response);
+            return (null, response.Response);
 
 
         // Datos de la instancia
@@ -74,7 +76,7 @@ return (null, response.Response);
 
 
         if (response.Response != Responses.Success)
-return (null, response.Response);
+            return (null, response.Response);
 
         // Datos de la instancia
         Instance.Account = response.Model;
@@ -113,5 +115,6 @@ return (null, response.Response);
 
 
     public static SessionAuth Instance => _instance;
+
 
 }

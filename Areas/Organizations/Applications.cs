@@ -49,7 +49,7 @@
 //        // Headers.
 //        client.AddHeader("token", token);
 
-      
+
 //        // Get.
 //        var Content = await client.Get<ReadAllResponse<ApplicationModel>>();
 
