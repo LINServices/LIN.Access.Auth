@@ -105,7 +105,7 @@ public sealed class SessionAuth : IISession
     //==================== Singleton ====================//
 
 
-    private readonly static SessionAuth _instance = new();
+    private static readonly SessionAuth _instance = new();
 
     private SessionAuth()
     {

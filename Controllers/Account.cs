@@ -13,7 +13,7 @@ public static class Account
     {
 
         // Cliente HTTP.
-        Client client = Service.GetClient("account/create");
+        Client client = Service.GetClient("account");
 
         // Resultado.
         var Content = await client.Post<CreateResponse>(modelo);
