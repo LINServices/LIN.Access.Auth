@@ -4,9 +4,7 @@
 public sealed class PassKeyHub
 {
 
-
     //======== Eventos ========//
-
 
     /// <summary>
     /// Recibe un intento (Admin).
@@ -182,12 +180,4 @@ public sealed class PassKeyHub
         {
         }
     }
-
-
-    //==== Disparadores ====//
-
-
-
-
-
 }
