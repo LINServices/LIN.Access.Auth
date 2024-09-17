@@ -13,10 +13,11 @@ public static class Build
     /// </summary>
     /// <param name="app">Aplicación.</param>
     /// <param name="url">Ruta.</param>
-    public static IServiceCollection AddAuthenticationService(this IServiceCollection service, string? url = null)
+    public static IServiceCollection AddAuthenticationService(this IServiceCollection service, string? url = null, string? app = null)
     {
         Service._Service = new();
         Service._Service.SetDefault(url ?? "https://api.identity.linplatform.com/");
+        Application = app ?? "default";
         return service;
     }
 }
