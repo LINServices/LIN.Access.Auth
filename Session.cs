@@ -44,10 +44,8 @@ public sealed class SessionAuth : IISession
         // Validación de user
         var response = await Controllers.Authentication.Login(user, password);
 
-
         if (response.Response != Responses.Success)
             return (null, response.Response);
-
 
         // Datos de la instancia
         Instance.Account = response.Model;
