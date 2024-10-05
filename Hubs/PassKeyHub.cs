@@ -90,7 +90,7 @@ public sealed class PassKeyHub
     {
         try
         {
-            if (HubConnection != null)
+            if (HubConnection is not null)
                 await HubConnection.StopAsync();
 
         }
