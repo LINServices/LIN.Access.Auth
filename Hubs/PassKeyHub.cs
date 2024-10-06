@@ -1,6 +1,5 @@
 ﻿namespace LIN.Access.Auth.Hubs;
 
-
 public sealed class PassKeyHub
 {
 
