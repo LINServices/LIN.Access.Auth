@@ -1,9 +1,7 @@
 ﻿namespace LIN.Access.Auth.Controllers;
 
-
 public class Groups
 {
-
 
     /// <summary>
     /// Crear grupo.
@@ -24,7 +22,6 @@ public class Groups
         return response;
 
     }
-
 
 
     /// <summary>
@@ -49,8 +46,6 @@ public class Groups
     }
 
 
-
-
     /// <summary>
     /// Obtener un grupo.
     /// </summary>
@@ -73,7 +68,6 @@ public class Groups
     }
 
 
-
     /// <summary>
     /// Obtener los grupos asociados a una organización.
     /// </summary>
@@ -94,7 +88,5 @@ public class Groups
         return response;
 
     }
-
-
 
 }

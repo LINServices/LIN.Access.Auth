@@ -1,9 +1,7 @@
 ﻿namespace LIN.Access.Auth.Controllers;
 
-
 public class Authentication
 {
-
 
     /// <summary>
     /// Iniciar sesión.
@@ -31,7 +29,6 @@ public class Authentication
         return response;
 
     }
-
 
 
     /// <summary>
@@ -75,7 +72,5 @@ public class Authentication
         return new();
 
     }
-
-
 
 }

@@ -2,16 +2,13 @@
 
 namespace LIN.Access.Auth;
 
-
 public sealed class SessionAuth : IISession
 {
-
 
     /// <summary>
     /// Modelo de la cuenta.
     /// </summary>
     public AccountModel Account { get; private set; } = new();
-
 
 
     /// <summary>
@@ -20,14 +17,10 @@ public sealed class SessionAuth : IISession
     public string AccountToken { get; set; }
 
 
-
     /// <summary>
     /// Si la sesión es activa
     /// </summary>
     public static bool IsOpen => Instance.Account.Id > 0;
-
-
-
 
 
     /// <summary>
@@ -57,7 +50,6 @@ public sealed class SessionAuth : IISession
     }
 
 
-
     /// <summary>
     /// Recargar sesión.
     /// </summary>
@@ -83,7 +75,6 @@ public sealed class SessionAuth : IISession
         return (Instance, Responses.Success);
 
     }
-
 
 
     /// <summary>

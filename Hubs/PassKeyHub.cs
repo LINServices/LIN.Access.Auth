@@ -113,7 +113,7 @@ public sealed class PassKeyHub
             var s = Service._Service.PathURL("realTime/auth/passkey");
             // Crea la conexión al HUB
             HubConnection = new HubConnectionBuilder()
-               .WithUrl(Service._Service.PathURL("realTime/auth/passkey"))
+                .WithUrl(Service._Service.PathURL("realTime/auth/passkey"))
                 .WithAutomaticReconnect()
                 .Build();
 
@@ -124,17 +124,14 @@ public sealed class PassKeyHub
                 OnReceiveIntent?.Invoke(null, pass);
             });
 
-
             // Recibe una respuesta (Cliente)
             HubConnection.On<PassKeyModel>("#responses", (pass) =>
             {
                 OnReceiveResponse?.Invoke(null, pass);
             });
 
-
             // Inicia la conexión
             await HubConnection.StartAsync();
-
 
             if (IsAdmin)
             {
@@ -142,12 +139,9 @@ public sealed class PassKeyHub
                 await HubConnection.InvokeAsync("JoinAdmin", Token);
             }
 
-
-
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            System.Diagnostics.Debug.WriteLine("Error HUB Account: " + ex);
         }
 
     }
@@ -160,8 +154,6 @@ public sealed class PassKeyHub
     {
         try
         {
-            //intent.Application ??= new();
-            //intent.Application.Key = AppKey;
             await HubConnection!.InvokeAsync("JoinIntent", intent);
         }
         catch

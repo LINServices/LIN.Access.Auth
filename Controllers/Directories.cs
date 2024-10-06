@@ -1,9 +1,7 @@
 ﻿namespace LIN.Access.Auth.Controllers;
 
-
 public class Directories
 {
-
 
     /// <summary>
     /// Obtener los directorios base asociados.
@@ -28,7 +26,6 @@ public class Directories
     }
 
 
-
     /// <summary>
     /// Obtener los integrantes de un directorio.
     /// </summary>
@@ -49,11 +46,5 @@ public class Directories
         return response;
 
     }
-
-
-
-
-
-
 
 }

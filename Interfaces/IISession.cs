@@ -11,12 +11,10 @@ public interface IISession
     public AccountModel Account { get; }
 
 
-
     /// <summary>
     /// Token.
     /// </summary>
     public string AccountToken { get; set; }
-
 
 
     /// <summary>

@@ -1,9 +1,7 @@
 ﻿namespace LIN.Access.Auth.Controllers;
 
-
 public class GroupsMembers
 {
-
 
     /// <summary>
     /// Nuevo integrante.
@@ -25,7 +23,6 @@ public class GroupsMembers
         return response;
 
     }
-
 
 
     /// <summary>
@@ -52,7 +49,6 @@ public class GroupsMembers
     }
 
 
-
     /// <summary>
     /// Obtener los integrantes de un grupo.
     /// </summary>
@@ -75,7 +71,6 @@ public class GroupsMembers
         return response;
 
     }
-
 
 
     /// <summary>

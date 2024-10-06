@@ -1,9 +1,7 @@
 ﻿namespace LIN.Access.Auth.Controllers;
 
-
 public static class Account
 {
-
 
     /// <summary>
     /// Crear una cuenta.
@@ -22,7 +20,6 @@ public static class Account
         return Content;
 
     }
-
 
 
     /// <summary>
@@ -51,10 +48,6 @@ public static class Account
     }
 
 
-
-
-
-
     /// <summary>
     /// Obtiene una cuenta según el Id.
     /// </summary>
@@ -80,7 +73,6 @@ public static class Account
     }
 
 
-
     /// <summary>
     /// Obtiene una cuenta según el Id.
     /// </summary>
@@ -101,7 +93,6 @@ public static class Account
         return Content;
 
     }
-
 
 
     /// <summary>
@@ -129,7 +120,6 @@ public static class Account
     }
 
 
-
     /// <summary>
     /// Obtiene una lista de cuentas según los Id.
     /// </summary>
@@ -150,7 +140,6 @@ public static class Account
         return Content;
 
     }
-
 
 
     /// <summary>
@@ -178,10 +167,6 @@ public static class Account
     }
 
 
-
-
-
-
     /// <summary>
     /// Obtiene los datos de una cuenta especifica.
     /// </summary>
@@ -205,7 +190,6 @@ public static class Account
     }
 
 
-
     /// <summary>
     /// Actualiza el genero de una cuenta.
     /// </summary>
@@ -226,30 +210,6 @@ public static class Account
         return response;
 
     }
-
-
-
-    /// <summary>
-    /// Actualiza la visibilidad de una cuenta.
-    /// </summary>
-    /// <param name="token">Token de acceso</param>
-    /// <param name="visibility">Nueva visibilidad</param>
-    //public static async Task<ResponseBase> UpdateVisibility(string token, AccountVisibility visibility)
-    //{
-
-    //    // Cliente.
-    //    Client client = Service.GetClient("account/update/visibility");
-
-    //    // Headers.
-    //    client.AddHeader("token", $"{token}");
-    //    client.AddHeader("visibility", $"{(int)visibility}");
-
-    //    var response = await client.Patch<ResponseBase>();
-
-    //    return response;
-
-    //}
-
 
 
     /// <summary>
@@ -278,7 +238,6 @@ public static class Account
     }
 
 
-
     /// <summary>
     /// Eliminar (Desactivar) una cuenta.
     /// </summary>
@@ -298,284 +257,5 @@ public static class Account
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //======================== NO MAPEADOS ==========================//
-
-
-
-
-
-
-
-
-
-
-
-    /// <summary>
-    /// Desactiva una cuenta
-    /// </summary>
-    /// <param name="id">Id de la cuenta</param>
-
-    //public static async Task<ResponseBase> Disable(int id, string password)
-    //{
-
-    //    // Variables
-    //    var client = new HttpClient();
-
-    //    var url = Service.PathURL("account/disable");
-    //    var json = JsonSerializer.Serialize(new AccountModel()
-    //    {
-    //        Id = id,
-    //        Contraseña = password
-    //    });
-
-    //    try
-    //    {
-    //        // Contenido
-    //        StringContent content = new(json, Encoding.UTF8, "application/json");
-
-    //        // Envía la solicitud
-    //        var response = await client.PatchAsync(url, content);
-
-    //        // Lee la respuesta del servidor
-    //        var responseContent = await response.Content.ReadAsStringAsync();
-
-    //        var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
-
-    //        return obj ?? new();
-
-    //    }
-    //    catch
-    //    {
-    //    }
-
-    //    return new();
-
-    //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //public static async Task<ResponseBase> ResetPassword(string key, UpdatePasswordModel modelo)
-    //{
-
-    //    // Variables
-    //    var client = new HttpClient();
-    //    client.DefaultRequestHeaders.Add("key", key);
-
-    //    var url = Service.PathURL("security/password/reset");
-    //    var json = JsonSerializer.Serialize(modelo);
-
-    //    try
-    //    {
-    //        // Contenido
-    //        StringContent content = new(json, Encoding.UTF8, "application/json");
-
-    //        // Envía la solicitud
-    //        var response = await client.PatchAsync(url, content);
-
-    //        // Lee la respuesta del servidor
-    //        var responseContent = await response.Content.ReadAsStringAsync();
-
-    //        var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
-
-    //        return obj ?? new();
-
-    //    }
-    //    catch
-    //    {
-    //    }
-
-    //    return new();
-
-    //}
-
-
-
-
-
-    ///// <summary>
-    ///// Actualiza la informacion de un usuario
-    ///// </summary>
-    //[Obsolete]
-    //public static async Task<ReadOneResponse<EmailModel>> ForgetPassword(string user)
-    //{
-
-    //    // Variables
-    //    var client = new HttpClient();
-
-    //    var url = Service.PathURL("security/password/forget");
-
-    //    url = Web.AddParameters(url, new()
-    //    {
-    //        {
-    //"user", user
-    //        }
-    //    });
-
-    //    try
-    //    {
-    //        HttpRequestMessage ms = new(HttpMethod.Post, url);
-
-    //        // Envía la solicitud
-    //        var response = await client.SendAsync(ms);
-
-    //        // Lee la respuesta del servidor
-    //        var responseContent = await response.Content.ReadAsStringAsync();
-
-    //        var obj = JsonSerializer.Deserialize<ReadOneResponse<EmailModel>>(responseContent);
-
-    //        return obj ?? new();
-
-    //    }
-    //    catch
-    //    {
-    //    }
-
-    //    return new();
-
-    //}
-
-
-
-
-
-
-
-
-
-
-
-
-    //[Obsolete]
-    //public static async Task<ResponseBase> Verficate(string key)
-    //{
-
-    //    // Variables
-    //    var client = new HttpClient();
-    //    client.DefaultRequestHeaders.Add("key", key);
-
-    //    var url = Service.PathURL("security/mails/verify");
-
-    //    try
-    //    {
-    //        // Contenido
-    //        StringContent content = new("", Encoding.UTF8, "application/json");
-
-    //        // Envía la solicitud
-    //        var response = await client.PostAsync(url, content);
-
-    //        // Lee la respuesta del servidor
-    //        var responseContent = await response.Content.ReadAsStringAsync();
-
-    //        var obj = JsonSerializer.Deserialize<ResponseBase>(responseContent);
-
-    //        return obj ?? new();
-
-    //    }
-    //    catch
-    //    {
-    //    }
-
-    //    return new();
-
-    //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 }
-
