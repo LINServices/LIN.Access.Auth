@@ -2,10 +2,8 @@
 
 namespace LIN.Access.Auth.Areas.Organizations;
 
-
 public class Members
 {
-
 
     /// <summary>
     /// Crea un integrante en una organización.
@@ -31,7 +29,6 @@ public class Members
     }
 
 
-
     /// <summary>
     /// Obtiene los integrantes asociados a su organización.
     /// </summary>
@@ -51,7 +48,5 @@ public class Members
         return response;
 
     }
-
-
 
 }

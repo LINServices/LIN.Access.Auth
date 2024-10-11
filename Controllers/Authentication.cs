@@ -38,37 +38,17 @@ public class Authentication
     public static async Task<ReadOneResponse<AccountModel>> Login(string token)
     {
 
-        // Crear HttpClient
-        using var httpClient = new HttpClient();
+        // Cliente.
+        Client client = Service.GetClient("authentication/LoginWithToken");
 
-        // ApiServer de la solicitud GET
-        var url = Service._Service.PathURL("authentication/LoginWithToken");
+        client.TimeOut = 20;
 
-        // Crear HttpRequestMessage y agregar el encabezado
-        var request = new HttpRequestMessage(HttpMethod.Get, url);
+        // Headers.
+        client.AddHeader("token", $"{token}");
 
-        request.Headers.Add("token", $"{token}");
+        var response = await client.Get<ReadOneResponse<AccountModel>>();
 
-        try
-        {
-
-            // Hacer la solicitud GET
-            var response = await httpClient.SendAsync(request);
-
-            // Leer la respuesta como una cadena
-            var responseBody = await response.Content.ReadAsStringAsync();
-
-            var obj = JsonSerializer.Deserialize<ReadOneResponse<AccountModel>>(responseBody);
-
-            return obj ?? new();
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine($"Error al hacer la solicitud GET: {e.Message}");
-        }
-
-        return new();
+        return response;
 
     }
 

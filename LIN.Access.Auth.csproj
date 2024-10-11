@@ -11,8 +11,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Global.Http" Version="2.4.0" />
-        <PackageReference Include="LIN.Types.Cloud.Identity" Version="1.1.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+        <PackageReference Include="LIN.Types.Cloud.Identity" Version="1.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.10" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>

@@ -1,9 +1,7 @@
 ﻿namespace LIN.Access.Auth.Areas.Organizations;
 
-
 public static class Organizations
 {
-
 
     /// <summary>
     /// Crear organización.
@@ -20,7 +18,6 @@ public static class Organizations
         return response;
 
     }
-
 
 
     /// <summary>
@@ -47,7 +44,6 @@ public static class Organizations
     }
 
 
-
     /// <summary>
     /// Obtener las organizaciones donde un usuario pertenece.
     /// </summary>
@@ -66,7 +62,5 @@ public static class Organizations
         return response;
 
     }
-
-
 
 }
