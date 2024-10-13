@@ -5,6 +5,27 @@ namespace LIN.Access.Auth.Areas.Organizations;
 public class Members
 {
 
+    public static async Task<CreateResponse> Invites(string token, int organization, List<int> ids)
+    {
+
+        // Cliente.
+        Client client = Service.GetClient("orgs/members/invite");
+
+        // Headers.
+        client.AddHeader("token", token);
+        client.AddParameter("organization", organization.ToString());
+
+        // Respuesta.
+        var response = await client.Post<CreateResponse>(ids);
+
+        return response;
+
+    }
+
+
+
+
+
     /// <summary>
     /// Crea un integrante en una organización.
     /// </summary>
