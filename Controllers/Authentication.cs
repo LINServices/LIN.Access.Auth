@@ -52,4 +52,26 @@ public class Authentication
 
     }
 
+
+
+    public static async Task<ReadOneResponse<AccountModel>> OnPolicy(string user, string password, string policy)
+    {
+
+        // Cliente.
+        Client client = Service.GetClient("authentication/validate/policy");
+
+        client.TimeOut = 20;
+
+        // Headers.
+        client.AddHeader("policy", $"{policy}");
+
+        client.AddParameter("user", $"{user}");
+        client.AddParameter("password", $"{password}");
+
+        var response = await client.Get<ReadOneResponse<AccountModel>>();
+
+        return response;
+
+    }
+
 }
