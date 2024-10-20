@@ -1,10 +1,14 @@
 ﻿namespace LIN.Access.Auth.Controllers;
 
-
 public class Roles
 {
 
-
+    /// <summary>
+    /// Obtener los roles de un una identidad asociados a una organización.
+    /// </summary>
+    /// <param name="identity">Id de la identidad.</param>
+    /// <param name="organization">Id de la organización.</param>
+    /// <param name="token">Token de acceso.</param>
     public static async Task<ReadAllResponse<IdentityRolesModel>> ReadAll(int identity, int organization, string token)
     {
 
@@ -22,7 +26,4 @@ public class Roles
         return response;
 
     }
-
-
-
 }

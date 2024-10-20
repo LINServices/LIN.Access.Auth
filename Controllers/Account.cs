@@ -39,12 +39,8 @@ public static class Account
         // Parámetros.
         client.AddParameter("id", id);
 
-
         // Get.
-        var content = await client.Get<ReadOneResponse<AccountModel>>();
-
-        return content;
-
+        return await client.Get<ReadOneResponse<AccountModel>>();
     }
 
 
@@ -66,10 +62,7 @@ public static class Account
         client.AddParameter("id", id);
 
         // Get.
-        var content = await client.Get<ReadOneResponse<AccountModel>>();
-
-        return content;
-
+        return await client.Get<ReadOneResponse<AccountModel>>();
     }
 
 
