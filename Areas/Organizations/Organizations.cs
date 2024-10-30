@@ -11,7 +11,7 @@ public static class Organizations
     {
 
         // Obtiene el cliente http.
-        Client client = Service.GetClient("organizations/create");
+        Client client = Service.GetClient("organizations");
 
         var response = await client.Post<CreateResponse>(organization);
 
