@@ -1,9 +1,7 @@
 ﻿namespace LIN.Access.Auth.Controllers;
 
-
 public class Identity
 {
-
 
     /// <summary>
     /// Nuevo integrante.
@@ -27,7 +25,6 @@ public class Identity
     }
 
 
-
     /// <summary>
     /// Eliminar rol.
     /// </summary>
@@ -49,6 +46,5 @@ public class Identity
         return response;
 
     }
-
 
 }

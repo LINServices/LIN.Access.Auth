@@ -55,7 +55,7 @@ public class Policies
 
 
 
-  
+
     public static async Task<ReadOneResponse<PolicyModel>> Read(string id, string token)
     {
 

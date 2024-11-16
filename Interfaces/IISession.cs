@@ -1,9 +1,7 @@
 ﻿namespace LIN.Access.Auth.Interfaces;
 
-
 public interface IISession
 {
-
 
     /// <summary>
     /// Modelo de la cuenta.
@@ -15,12 +13,5 @@ public interface IISession
     /// Token.
     /// </summary>
     public string AccountToken { get; set; }
-
-
-    /// <summary>
-    /// Si la sesión es activa
-    /// </summary>
-    public static bool IsOpen { get; }
-
 
 }

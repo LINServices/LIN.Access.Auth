@@ -53,7 +53,12 @@ public class Authentication
     }
 
 
-
+    /// <summary>
+    /// Validar cuenta con usuario, contraseña y política.
+    /// </summary>
+    /// <param name="user">Usuario.</param>
+    /// <param name="password">Contraseña.</param>
+    /// <param name="policy">Política.</param>
     public static async Task<ReadOneResponse<AccountModel>> OnPolicy(string user, string password, string policy)
     {
 
@@ -65,6 +70,7 @@ public class Authentication
         // Headers.
         client.AddHeader("policy", $"{policy}");
 
+        // Parametros.
         client.AddParameter("user", $"{user}");
         client.AddParameter("password", $"{password}");
 

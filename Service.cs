@@ -13,6 +13,6 @@ internal class Service
     /// <summary>
     /// Obtener un cliente.
     /// </summary>
-    public static Global.Http.Services.Client GetClient(string url) => _Service.GetClient(url);
+    public static Client GetClient(string url) => _Service.GetClient(url);
 
 }

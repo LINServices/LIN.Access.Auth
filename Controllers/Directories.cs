@@ -3,7 +3,6 @@
 public class Directories
 {
 
-   
     /// <summary>
     /// Obtener los directorios base asociados.
     /// </summary>
