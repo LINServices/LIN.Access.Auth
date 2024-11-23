@@ -16,7 +16,6 @@ public static class Organizations
         var response = await client.Post<CreateResponse>(organization);
 
         return response;
-
     }
 
 
@@ -34,7 +33,7 @@ public static class Organizations
         // Headers.
         client.AddHeader("token", token);
 
-        // Consultas.
+        // Parámetros.
         client.AddParameter("id", id.ToString());
 
         var response = await client.Get<ReadOneResponse<OrganizationModel>>();

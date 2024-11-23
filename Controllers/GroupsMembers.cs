@@ -98,8 +98,12 @@ public class GroupsMembers
     }
 
 
-
-
+    /// <summary>
+    /// Eliminar un integrante de un grupo.
+    /// </summary>
+    /// <param name="token">Token de acceso.</param>
+    /// <param name="group">Id del grupo.</param>
+    /// <param name="identity">Identidad a eliminar.</param>
     public static async Task<ResponseBase> Remove(string token, int group, int identity)
     {
         // Cliente.

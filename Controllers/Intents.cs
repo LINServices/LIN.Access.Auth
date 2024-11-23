@@ -1,9 +1,7 @@
 ﻿namespace LIN.Access.Auth.Controllers;
 
-
 public static class Intents
 {
-
 
     /// <summary>
     /// Obtiene la lista de intentos passkey.
@@ -25,7 +23,6 @@ public static class Intents
     }
 
 
-
     /// <summary>
     /// Obtiene la lista de intentos passkey.
     /// </summary>
@@ -44,6 +41,5 @@ public static class Intents
 
         return response;
     }
-
 
 }

@@ -31,31 +31,6 @@ public class Policies
 
 
 
-    ///// <summary>
-    ///// Valida el acceso a un permiso (Política de permisos) de una identidad.
-    ///// </summary>
-    ///// <param name="identity">Id de la identidad.</param>
-    ///// <param name="policy">Id de la política</param>
-    //public static async Task<ReadOneResponse<bool>> Validate(int identity, int policy)
-    //{
-
-    //    // Cliente.
-    //    Client client = Service.GetClient("policies/access");
-
-    //    // Headers.
-    //    client.AddParameter("identity", identity.ToString());
-    //    client.AddParameter("policy", policy.ToString());
-
-    //    // Respuesta
-    //    var response = await client.Get<ReadOneResponse<bool>>();
-
-    //    return response;
-
-    //}
-
-
-
-
     public static async Task<ReadOneResponse<PolicyModel>> Read(string id, string token)
     {
 

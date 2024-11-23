@@ -1,10 +1,14 @@
-﻿using LIN.Types.Cloud.Identity.Abstracts;
-
-namespace LIN.Access.Auth.Areas.Organizations;
+﻿namespace LIN.Access.Auth.Areas.Organizations;
 
 public class Members
 {
 
+    /// <summary>
+    /// Invitar a un integrante a una organización.
+    /// </summary>
+    /// <param name="token">Token de acceso.</param>
+    /// <param name="organization">Id de la organización.</param>
+    /// <param name="ids">Id de los usuarios a invitar.</param>
     public static async Task<CreateResponse> Invites(string token, int organization, List<int> ids)
     {
 
@@ -21,9 +25,6 @@ public class Members
         return response;
 
     }
-
-
-
 
 
     /// <summary>
