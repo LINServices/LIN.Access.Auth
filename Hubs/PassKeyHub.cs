@@ -109,7 +109,6 @@ public sealed class PassKeyHub
         try
         {
 
-            var s = Service._Service.PathURL("realTime/auth/passkey");
             // Crea la conexión al HUB
             HubConnection = new HubConnectionBuilder()
                 .WithUrl(Service._Service.PathURL("realTime/auth/passkey"))
