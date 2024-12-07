@@ -4,7 +4,7 @@ public class GroupsMembers
 {
 
     /// <summary>
-    /// Nuevo integrante.
+    /// Nuevo integrante en un grupo.
     /// </summary>
     /// <param name="model">Modelo</param>
     /// <param name="token">Token</param>
@@ -26,7 +26,7 @@ public class GroupsMembers
 
 
     /// <summary>
-    /// Nuevos integrantes.
+    /// Agregar integrantes a un grupo.
     /// </summary>
     /// <param name="identities">Identidades</param>
     /// <param name="group">Grupo</param>
@@ -121,8 +121,6 @@ public class GroupsMembers
         return response;
 
     }
-
-
 
 
 

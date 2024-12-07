@@ -4,30 +4,6 @@ public class Members
 {
 
     /// <summary>
-    /// Invitar a un integrante a una organización.
-    /// </summary>
-    /// <param name="token">Token de acceso.</param>
-    /// <param name="organization">Id de la organización.</param>
-    /// <param name="ids">Id de los usuarios a invitar.</param>
-    public static async Task<CreateResponse> Invites(string token, int organization, List<int> ids)
-    {
-
-        // Cliente.
-        Client client = Service.GetClient("orgs/members/invite");
-
-        // Headers.
-        client.AddHeader("token", token);
-        client.AddParameter("organization", organization.ToString());
-
-        // Respuesta.
-        var response = await client.Post<CreateResponse>(ids);
-
-        return response;
-
-    }
-
-
-    /// <summary>
     /// Crea un integrante en una organización.
     /// </summary>
     /// <param name="modelo">Modelo del integrante</param>
@@ -45,6 +21,30 @@ public class Members
 
         // Respuesta.
         var response = await client.Post<CreateResponse>(modelo);
+
+        return response;
+
+    }
+
+
+    /// <summary>
+    /// Invitar a un integrante a una organización.
+    /// </summary>
+    /// <param name="token">Token de acceso.</param>
+    /// <param name="organization">Id de la organización.</param>
+    /// <param name="ids">Id de los usuarios a invitar.</param>
+    public static async Task<CreateResponse> Invites(string token, int organization, List<int> ids)
+    {
+
+        // Cliente.
+        Client client = Service.GetClient("orgs/members/invite");
+
+        // Headers.
+        client.AddHeader("token", token);
+        client.AddParameter("organization", organization.ToString());
+
+        // Respuesta.
+        var response = await client.Post<CreateResponse>(ids);
 
         return response;
 

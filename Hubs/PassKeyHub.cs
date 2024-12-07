@@ -1,15 +1,15 @@
 ﻿namespace LIN.Access.Auth.Hubs;
 
-public sealed class PassKeyHub
+/// <summary>
+/// Constructor de un HUB
+/// </summary>
+public sealed class PassKeyHub(string account, string appKey, string token, bool isAdmin = false)
 {
-
-    //======== Eventos ========//
 
     /// <summary>
     /// Recibe un intento (Admin).
     /// </summary>
     public event EventHandler<PassKeyModel>? OnReceiveIntent;
-
 
 
     /// <summary>
@@ -18,15 +18,10 @@ public sealed class PassKeyHub
     public event EventHandler<PassKeyModel>? OnReceiveResponse;
 
 
-
-    //======== Propiedades ========//
-
-
     /// <summary>
     /// Conexión del Hub
     /// </summary>
     private HubConnection? HubConnection { get; set; }
-
 
 
     /// <summary>
@@ -38,38 +33,25 @@ public sealed class PassKeyHub
     /// <summary>
     /// Usuario 
     /// </summary>
-    public string Account { get; set; }
+    public string Account { get; set; } = account;
 
 
     /// <summary>
     /// Si es una sesión de Admin
     /// </summary>
-    public bool IsAdmin { get; set; }
+    public bool IsAdmin { get; set; } = isAdmin;
 
 
     /// <summary>
     /// Llave de la aplicación.
     /// </summary>
-    private string AppKey { get; set; } = string.Empty;
-
+    private string AppKey { get; set; } = appKey;
 
 
     /// <summary>
     /// Llave de la aplicación.
     /// </summary>
-    private string Token { get; set; } = string.Empty;
-
-
-    /// <summary>
-    /// Constructor de un HUB
-    /// </summary>
-    public PassKeyHub(string account, string appKey, string token, bool isAdmin = false)
-    {
-        Account = account;
-        IsAdmin = isAdmin;
-        AppKey = appKey;
-        Token = token;
-    }
+    private string Token { get; set; } = token;
 
 
     /// <summary>
@@ -81,7 +63,6 @@ public sealed class PassKeyHub
     }
 
 
-
     /// <summary>
     /// Cierra la conexión.
     /// </summary>
@@ -91,14 +72,12 @@ public sealed class PassKeyHub
         {
             if (HubConnection is not null)
                 await HubConnection.StopAsync();
-
         }
         catch
         {
         }
 
     }
-
 
 
     /// <summary>
@@ -114,7 +93,6 @@ public sealed class PassKeyHub
                 .WithUrl(Service._Service.PathURL("realTime/auth/passkey"))
                 .WithAutomaticReconnect()
                 .Build();
-
 
             // Recibe un intento Admin
             HubConnection.On<PassKeyModel>("#attempts", (pass) =>
@@ -145,9 +123,10 @@ public sealed class PassKeyHub
     }
 
 
-
-
-
+    /// <summary>
+    /// Enviar intento.
+    /// </summary>
+    /// <param name="intent">Modelo.</param>
     public async void SendIntent(PassKeyModel intent)
     {
         try
@@ -160,6 +139,10 @@ public sealed class PassKeyHub
     }
 
 
+    /// <summary>
+    /// Enviar nuevo estado.
+    /// </summary>
+    /// <param name="intent">Id del estado.</param>
     public async void SendStatus(PassKeyModel intent)
     {
         try
@@ -170,4 +153,5 @@ public sealed class PassKeyHub
         {
         }
     }
+
 }

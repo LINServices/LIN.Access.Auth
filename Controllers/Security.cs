@@ -2,6 +2,12 @@
 
 public class Security
 {
+
+    /// <summary>
+    /// Agregar correo.
+    /// </summary>
+    /// <param name="mail">Correo.</param>
+    /// <param name="token">Token de acceso.</param>
     public static async Task<CreateResponse> AddMail(string mail, string token)
     {
 
@@ -20,6 +26,11 @@ public class Security
     }
 
 
+    /// <summary>
+    /// Validar correo.
+    /// </summary>
+    /// <param name="mail">Correo.</param>
+    /// <param name="otp">Código OTP.</param>
     public static async Task<CreateResponse> ValidateMail(string mail, string otp)
     {
 
@@ -38,6 +49,10 @@ public class Security
     }
 
 
+    /// <summary>
+    /// Olvidar la contraseña.
+    /// </summary>
+    /// <param name="user">Usuario.</param>
     public static async Task<CreateResponse> ForgetPassword(string user)
     {
 
@@ -54,6 +69,13 @@ public class Security
 
     }
 
+
+    /// <summary>
+    /// Resetear contraseña.
+    /// </summary>
+    /// <param name="user">Usuario.</param>
+    /// <param name="code">Código OTP.</param>
+    /// <param name="newPassword">Nueva contraseña.</param>
     public static async Task<CreateResponse> ResetPassword(string user, string code, string newPassword)
     {
 
@@ -71,6 +93,5 @@ public class Security
         return Content;
 
     }
-
 
 }

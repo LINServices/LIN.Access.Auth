@@ -32,7 +32,7 @@ public class Authentication
 
 
     /// <summary>
-    /// Inicia una sesión
+    /// Iniciar sesión.
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     public static async Task<ReadOneResponse<AccountModel>> Login(string token)

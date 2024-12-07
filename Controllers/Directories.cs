@@ -4,7 +4,7 @@ public class Directories
 {
 
     /// <summary>
-    /// Obtener los directorios base asociados.
+    /// Obtener los directorios a los que una identidad esta asociada.
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     /// <param name="organization">Id de la organización.</param>

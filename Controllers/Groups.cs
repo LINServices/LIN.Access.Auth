@@ -4,7 +4,7 @@ public class Groups
 {
 
     /// <summary>
-    /// Crear grupo.
+    /// Crear un grupo en una organización.
     /// </summary>
     /// <param name="group">Modelo</param>
     /// <param name="token">Token de acceso.</param>
@@ -27,7 +27,7 @@ public class Groups
     /// <summary>
     /// Obtener un grupo.
     /// </summary>
-    /// <param name="id">Id del directorio.</param>
+    /// <param name="id">Id del grupo.</param>
     /// <param name="token">Token de acceso.</param>
     public static async Task<ReadOneResponse<GroupModel>> Read(int id, string token)
     {
@@ -49,7 +49,7 @@ public class Groups
     /// <summary>
     /// Obtener un grupo.
     /// </summary>
-    /// <param name="id">Id del directorio.</param>
+    /// <param name="id">Id de la identidad del grupo.</param>
     /// <param name="token">Token de acceso.</param>
     public static async Task<ReadOneResponse<GroupModel>> ReadByIdentity(int id, string token)
     {

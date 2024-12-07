@@ -30,7 +30,11 @@ public class Policies
     }
 
 
-
+    /// <summary>
+    /// Obtener una política.
+    /// </summary>
+    /// <param name="id">Id de la política.</param>
+    /// <param name="token">Token de acceso.</param>
     public static async Task<ReadOneResponse<PolicyModel>> Read(string id, string token)
     {
 
@@ -47,8 +51,6 @@ public class Policies
         return response;
 
     }
-
-
 
 
     /// <summary>

@@ -4,7 +4,7 @@ public static class Organizations
 {
 
     /// <summary>
-    /// Crear organización.
+    /// Crear una organización.
     /// </summary>
     /// <param name="organization">Modelo.</param>
     public static async Task<CreateResponse> Create(OrganizationModel organization)

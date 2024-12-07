@@ -5,6 +5,9 @@ namespace LIN.Access.Auth;
 public static class Build
 {
 
+    /// <summary>
+    /// Autenticación de la aplicación.
+    /// </summary>
     internal static string Application { get; set; } = string.Empty;
 
 
