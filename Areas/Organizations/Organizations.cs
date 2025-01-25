@@ -34,12 +34,11 @@ public static class Organizations
         client.AddHeader("token", token);
 
         // Parámetros.
-        client.AddParameter("id", id.ToString());
+        client.AddParameter("id", id);
 
         var response = await client.Get<ReadOneResponse<OrganizationModel>>();
 
         return response;
-
     }
 
 

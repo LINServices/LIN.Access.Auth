@@ -4,11 +4,11 @@ public class Members
 {
 
     /// <summary>
-    /// Crea un integrante en una organización.
+    /// Crear un nuevo integrante en una organización.
     /// </summary>
-    /// <param name="modelo">Modelo del integrante</param>
-    /// <param name="token">Token del administrador</param>
-    /// <param name="rol">Rol del nuevo integrante</param>
+    /// <param name="modelo">Modelo de la cuenta.</param>
+    /// <param name="token">Token de acceso.</param>
+    /// <param name="organization">Id de la organización.</param>
     public static async Task<CreateResponse> Create(AccountModel modelo, string token, int organization)
     {
 
@@ -23,7 +23,6 @@ public class Members
         var response = await client.Post<CreateResponse>(modelo);
 
         return response;
-
     }
 
 
@@ -47,14 +46,14 @@ public class Members
         var response = await client.Post<CreateResponse>(ids);
 
         return response;
-
     }
 
 
     /// <summary>
-    /// Obtiene los integrantes asociados a su organización.
+    /// Obtener los integrantes asociados a una organización.
     /// </summary>
-    /// <param name="token">Token de acceso</param>
+    /// <param name="token">Token de acceso.</param>
+    /// <param name="organization">Id de la organización.</param>
     public static async Task<ReadAllResponse<SessionModel<GroupMember>>> ReadAll(string token, int organization)
     {
         // Cliente.

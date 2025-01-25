@@ -18,7 +18,6 @@ public static class Account
 
         // Retornar.
         return Content;
-
     }
 
 
