@@ -9,7 +9,7 @@ public class Authentication
     /// <param name="cuenta">Usuario.</param>
     /// <param name="password">Contraseña.</param>
     /// <param name="app">Aplicación.</param>
-    public static async Task<ReadOneResponse<AccountModel>> Login(string cuenta, string password, string? app = null)
+    public static async Task<ReadOneResponse<AccountModel>> Login(string cuenta, string password)
     {
 
         // Cliente.
@@ -18,7 +18,7 @@ public class Authentication
         client.TimeOut = 20;
 
         // Headers.
-        client.AddHeader("application", $"{app ?? Build.Application}");
+        client.AddHeader("application", $"{Build.Application}");
 
         // Parámetros
         client.AddParameter("user", cuenta);
