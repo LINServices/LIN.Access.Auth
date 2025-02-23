@@ -70,7 +70,7 @@ public class Authentication
         // Headers.
         client.AddHeader("policy", $"{policy}");
 
-        // Parametros.
+        // Parámetros.
         client.AddParameter("user", $"{user}");
         client.AddParameter("password", $"{password}");
 
