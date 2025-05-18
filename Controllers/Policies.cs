@@ -35,14 +35,14 @@ public class Policies
     /// </summary>
     /// <param name="id">Id de la política.</param>
     /// <param name="token">Token de acceso.</param>
-    public static async Task<ReadOneResponse<PolicyModel>> Read(string id, string token)
+    public static async Task<ReadOneResponse<PolicyModel>> Read(int id, string token)
     {
 
         // Cliente.
         Client client = Service.GetClient("policies");
 
         // Headers.
-        client.AddParameter("policy", id);
+        client.AddHeader("policyId", id);
         client.AddHeader("token", token);
 
         // Respuesta
@@ -62,7 +62,7 @@ public class Policies
     {
 
         // Cliente.
-        Client client = Service.GetClient("policies/organization/all");
+        Client client = Service.GetClient("policies/all");
 
         // Headers.
         client.AddHeader("token", token);
@@ -85,7 +85,7 @@ public class Policies
     {
 
         // Cliente.
-        Client client = Service.GetClient("policies/complacent/applicable");
+        Client client = Service.GetClient("PoliciesIdentity/all");
 
         // Headers.
         client.AddHeader("token", token);

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <LangVersion>13</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -11,8 +11,8 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Global.Http" Version="3.9.0" />
-        <PackageReference Include="LIN.Types.Cloud.Identity" Version="3.2.0-pre" />
-        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.4" />
+        <PackageReference Include="LIN.Types.Cloud.Identity" Version="4.0.5-pre" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.5" />
     </ItemGroup>
 </Project>
 
