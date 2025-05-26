@@ -76,6 +76,24 @@ public class Policies
     }
 
 
+    public static async Task<ReadAllResponse<PolicyModel>> Search(int organization, string token, string query)
+    {
+
+        // Cliente.
+        Client client = Service.GetClient("policies/search");
+
+        // Headers.
+        client.AddHeader("token", token);
+        client.AddHeader("organization", organization);
+        client.AddParameter("query", query);
+
+        // Respuesta
+        var response = await client.Get<ReadAllResponse<PolicyModel>>();
+
+        return response;
+
+    }
+
     /// <summary>
     /// Obtener políticas aplicables de una identidad.
     /// </summary>
