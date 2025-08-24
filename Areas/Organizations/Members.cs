@@ -54,10 +54,10 @@ public class Members
     /// </summary>
     /// <param name="token">Token de acceso.</param>
     /// <param name="organization">Id de la organización.</param>
-    public static async Task<ReadAllResponse<SessionModel<GroupMember>>> ReadAll(string token, int organization)
+    public static async Task<ReadAllResponse<SessionModel<GroupMember>>> ReadAccounts(string token, int organization)
     {
         // Cliente.
-        Client client = Service.GetClient("orgs/members");
+        Client client = Service.GetClient("orgs/members/accounts");
 
         // Headers
         client.AddHeader("token", token);

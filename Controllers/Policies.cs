@@ -35,14 +35,14 @@ public class Policies
     /// </summary>
     /// <param name="id">Id de la política.</param>
     /// <param name="token">Token de acceso.</param>
-    public static async Task<ReadOneResponse<PolicyModel>> Read(string id, string token)
+    public static async Task<ReadOneResponse<PolicyModel>> Read(int id, string token)
     {
 
         // Cliente.
         Client client = Service.GetClient("policies");
 
         // Headers.
-        client.AddParameter("policy", id);
+        client.AddHeader("policyId", id);
         client.AddHeader("token", token);
 
         // Respuesta
@@ -62,7 +62,7 @@ public class Policies
     {
 
         // Cliente.
-        Client client = Service.GetClient("policies/organization/all");
+        Client client = Service.GetClient("policies/all");
 
         // Headers.
         client.AddHeader("token", token);
@@ -76,6 +76,24 @@ public class Policies
     }
 
 
+    public static async Task<ReadAllResponse<PolicyModel>> Search(int organization, string token, string query)
+    {
+
+        // Cliente.
+        Client client = Service.GetClient("policies/search");
+
+        // Headers.
+        client.AddHeader("token", token);
+        client.AddHeader("organization", organization);
+        client.AddParameter("query", query);
+
+        // Respuesta
+        var response = await client.Get<ReadAllResponse<PolicyModel>>();
+
+        return response;
+
+    }
+
     /// <summary>
     /// Obtener políticas aplicables de una identidad.
     /// </summary>
@@ -85,7 +103,7 @@ public class Policies
     {
 
         // Cliente.
-        Client client = Service.GetClient("policies/complacent/applicable");
+        Client client = Service.GetClient("PoliciesIdentity/all");
 
         // Headers.
         client.AddHeader("token", token);

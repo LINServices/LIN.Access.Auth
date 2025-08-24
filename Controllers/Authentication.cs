@@ -8,10 +8,8 @@ public class Authentication
     /// </summary>
     /// <param name="cuenta">Usuario.</param>
     /// <param name="password">Contraseña.</param>
-    /// <param name="app">Aplicación.</param>
     public static async Task<ReadOneResponse<AccountModel>> Login(string cuenta, string password)
     {
-
         // Cliente.
         Client client = Service.GetClient("authentication/login");
 
@@ -27,7 +25,33 @@ public class Authentication
         var response = await client.Get<ReadOneResponse<AccountModel>>();
 
         return response;
+    }
 
+
+    /// <summary>
+    /// Iniciar sesión.
+    /// </summary>
+    /// <param name="cuenta">Usuario.</param>
+    /// <param name="password">Contraseña.</param>
+    /// <param name="app">Aplicación.</param>
+    public static async Task<ReadOneResponse<AccountModel>> LoginV4(string cuenta, string password, string token)
+    {
+
+        // Cliente.
+        Client client = Service.GetClient("v4/authenticationV4/login");
+
+        client.TimeOut = 20;
+
+        // Headers.
+        client.AddHeader("token", token);
+
+        // Parámetros
+        client.AddParameter("user", cuenta);
+        client.AddParameter("password", password);
+
+        var response = await client.Get<ReadOneResponse<AccountModel>>();
+
+        return response;
     }
 
 

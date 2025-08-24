@@ -8,7 +8,6 @@ public interface IISession
     /// </summary>
     public AccountModel Account { get; }
 
-
     /// <summary>
     /// Token.
     /// </summary>

@@ -1,7 +1,7 @@
 ﻿namespace LIN.Access.Auth.Hubs;
 
 /// <summary>
-/// Constructor de un HUB
+/// Constructor de un HUB.
 /// </summary>
 public sealed class PassKeyHub(string account, string appKey, string token, bool isAdmin = false)
 {
