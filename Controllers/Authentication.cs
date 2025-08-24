@@ -8,10 +8,8 @@ public class Authentication
     /// </summary>
     /// <param name="cuenta">Usuario.</param>
     /// <param name="password">Contraseña.</param>
-    /// <param name="app">Aplicación.</param>
     public static async Task<ReadOneResponse<AccountModel>> Login(string cuenta, string password)
     {
-
         // Cliente.
         Client client = Service.GetClient("authentication/login");
 
@@ -27,7 +25,6 @@ public class Authentication
         var response = await client.Get<ReadOneResponse<AccountModel>>();
 
         return response;
-
     }
 
 
@@ -55,7 +52,6 @@ public class Authentication
         var response = await client.Get<ReadOneResponse<AccountModel>>();
 
         return response;
-
     }
 
 

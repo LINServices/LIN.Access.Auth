@@ -19,9 +19,8 @@ public static class Build
     public static IServiceCollection AddAuthenticationService(this IServiceCollection service, string? url = null, string? app = null)
     {
         Service._Service = new();
-        Service._Service.SetDefault(url ?? "https://identity.api.linplatform.com/");
+        Service._Service.SetDefault(url ?? "https://api.linplatform.com/Identity/");
         Application = app ?? "default";
         return service;
     }
-
 }
