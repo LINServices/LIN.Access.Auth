@@ -1,4 +1,7 @@
-﻿namespace LIN.Access.Auth.Controllers;
+﻿using LIN.Types.Cloud.Identity.Models.Policies;
+using MongoDB.Bson;
+
+namespace LIN.Access.Auth.Controllers;
 
 public class Policies
 {
@@ -10,9 +13,9 @@ public class Policies
     /// <param name="token">Token de acceso.</param>
     /// <param name="organization">Id de la organización, en caso de quererla asignar a una.</param>
     /// <param name="assign">Si se asignara la política a la identidad.</param>
-    public static async Task<CreateResponse> Create(PolicyModel policy, string token, int? organization = null, bool assign = false)
+    public static async Task<CreateResponse> Create(AccessPolicyModel policy, string token, int? organization = null, bool assign = false)
     {
-
+        policy.Id = default;
         // Cliente.
         Client client = Service.GetClient("policies");
 
@@ -35,18 +38,18 @@ public class Policies
     /// </summary>
     /// <param name="id">Id de la política.</param>
     /// <param name="token">Token de acceso.</param>
-    public static async Task<ReadOneResponse<PolicyModel>> Read(int id, string token)
+    public static async Task<ReadOneResponse<AccessPolicyModel>> Read(string id, string token)
     {
 
         // Cliente.
         Client client = Service.GetClient("policies");
 
         // Headers.
-        client.AddHeader("policyId", id);
+        client.AddParameter("policyId", id);
         client.AddHeader("token", token);
 
         // Respuesta
-        var response = await client.Get<ReadOneResponse<PolicyModel>>();
+        var response = await client.Get<ReadOneResponse<AccessPolicyModel>>();
 
         return response;
 
@@ -58,7 +61,7 @@ public class Policies
     /// </summary>
     /// <param name="organization">Id de la organización.</param>
     /// <param name="token">Token de acceso.</param>
-    public static async Task<ReadAllResponse<PolicyModel>> ReadAll(int organization, string token)
+    public static async Task<ReadAllResponse<AccessPolicyModel>> ReadAll(int organization, string token)
     {
 
         // Cliente.
@@ -69,14 +72,14 @@ public class Policies
         client.AddHeader("organization", organization);
 
         // Respuesta
-        var response = await client.Get<ReadAllResponse<PolicyModel>>();
+        var response = await client.Get<ReadAllResponse<AccessPolicyModel>>();
 
         return response;
 
     }
 
 
-    public static async Task<ReadAllResponse<PolicyModel>> Search(int organization, string token, string query)
+    public static async Task<ReadAllResponse<AccessPolicyModel>> Search(int organization, string token, string query)
     {
 
         // Cliente.
@@ -88,7 +91,7 @@ public class Policies
         client.AddParameter("query", query);
 
         // Respuesta
-        var response = await client.Get<ReadAllResponse<PolicyModel>>();
+        var response = await client.Get<ReadAllResponse<AccessPolicyModel>>();
 
         return response;
 
@@ -99,7 +102,7 @@ public class Policies
     /// </summary>
     /// <param name="identity">Id de la identidad.</param>
     /// <param name="token">Token de acceso.</param>
-    public static async Task<ReadAllResponse<PolicyModel>> Aplicable(int identity, string token)
+    public static async Task<ReadAllResponse<AccessPolicyModel>> Aplicable(int identity, string token)
     {
 
         // Cliente.
@@ -110,7 +113,7 @@ public class Policies
         client.AddHeader("identity", identity);
 
         // Respuesta
-        var response = await client.Get<ReadAllResponse<PolicyModel>>();
+        var response = await client.Get<ReadAllResponse<AccessPolicyModel>>();
 
         return response;
 
