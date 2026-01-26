@@ -1,5 +1,4 @@
 ﻿using LIN.Types.Cloud.Identity.Models.Policies;
-using MongoDB.Bson;
 
 namespace LIN.Access.Auth.Controllers;
 
@@ -118,5 +117,55 @@ public class Policies
         return response;
 
     }
+
+    public static async Task<ResponseBase> Delete(string policy, string token)
+    {
+        // Cliente.
+        Client client = Service.GetClient("Policies");
+
+        // Headers.
+        client.AddHeader("token", token);
+        client.AddHeader("id", policy);
+
+        // Respuesta
+        var response = await client.Delete<ResponseBase>();
+
+        return response;
+    }
+
+
+    public static async Task<CreateResponse> Aplicate(int identity, string policy, string token)
+    {
+        // Cliente.
+        Client client = Service.GetClient("PoliciesIdentity");
+
+        // Headers.
+        client.AddHeader("token", token);
+
+        client.AddParameter("identity", identity);
+        client.AddParameter("policy", policy);
+
+        // Respuesta
+        var response = await client.Post<CreateResponse>();
+
+        return response;
+    }
+
+    public static async Task<ResponseBase> DeleteAplicate(string policy, int identity, string token)
+    {
+        // Cliente.
+        Client client = Service.GetClient("PoliciesIdentity");
+
+        // Headers.
+        client.AddHeader("token", token);
+        client.AddHeader("identity", identity);
+        client.AddParameter("policy", policy);
+
+        // Respuesta
+        var response = await client.Delete<ResponseBase>();
+
+        return response;
+    }
+
 
 }
