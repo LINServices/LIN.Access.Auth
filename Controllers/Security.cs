@@ -53,7 +53,7 @@ public class Security
     /// Olvidar la contraseña.
     /// </summary>
     /// <param name="user">Usuario.</param>
-    public static async Task<CreateResponse> ForgetPassword(string user)
+    public static async Task<ReadOneStringResponse> ForgetPassword(string user)
     {
 
         // Cliente HTTP.
@@ -62,7 +62,7 @@ public class Security
         client.AddParameter("user", user);
 
         // Resultado.
-        var Content = await client.Post<CreateResponse>();
+        var Content = await client.Post<ReadOneStringResponse>();
 
         // Retornar.
         return Content;
