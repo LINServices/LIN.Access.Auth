@@ -30,13 +30,10 @@ public static class Account
     {
 
         // Cliente HTTP.
-        Client client = Service.GetClient("account/read/id");
+        Client client = Service.GetClient($"account/{id}");
 
         // Headers.
         client.AddHeader("token", token);
-
-        // Parámetros.
-        client.AddParameter("id", id);
 
         // Get.
         return await client.Get<ReadOneResponse<AccountModel>>();
@@ -52,13 +49,10 @@ public static class Account
     {
 
         // Cliente HTTP.
-        Client client = Service.GetClient("account/read/identity");
+        Client client = Service.GetClient($"account/identity/{id}");
 
         // Headers.
         client.AddHeader("token", token);
-
-        // Parámetros.
-        client.AddParameter("id", id);
 
         // Get.
         return await client.Get<ReadOneResponse<AccountModel>>();
@@ -74,7 +68,7 @@ public static class Account
     {
 
         // Cliente HTTP.
-        Client client = Service.GetClient("account/read/identity");
+        Client client = Service.GetClient("account/identity");
 
         // Headers.
         client.AddHeader("token", token);
@@ -96,13 +90,10 @@ public static class Account
     {
 
         // Cliente HTTP.
-        Client client = Service.GetClient("account/read/user");
+        Client client = Service.GetClient($"account/user/{Uri.EscapeDataString(cuenta)}");
 
         // Headers.
         client.AddHeader("token", token);
-
-        // Parámetros.
-        client.AddParameter("user", cuenta);
 
         // Get.
         var content = await client.Get<ReadOneResponse<AccountModel>>();
@@ -121,7 +112,7 @@ public static class Account
     {
 
         // Cliente HTTP.
-        Client client = Service.GetClient("account/findAll");
+        Client client = Service.GetClient("account/batch");
 
         // Headers.
         client.AddHeader("token", token);

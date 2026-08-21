@@ -33,9 +33,8 @@ public class Groups
     {
 
         // Cliente.
-        Client client = Service.GetClient("groups");
+        Client client = Service.GetClient($"groups/{id}");
 
-        client.AddHeader("id", id.ToString());
         client.AddHeader("token", token);
 
         // Respuesta.
@@ -55,9 +54,8 @@ public class Groups
     {
 
         // Cliente.
-        Client client = Service.GetClient("groups/identity");
+        Client client = Service.GetClient($"groups/identity/{id}");
 
-        client.AddHeader("id", id.ToString());
         client.AddHeader("token", token);
 
         // Respuesta.
@@ -76,11 +74,13 @@ public class Groups
     {
 
         // Cliente.
-        Client client = Service.GetClient("groups/all");
+        Client client = Service.GetClient("groups");
 
         // Headers.
         client.AddHeader("token", token);
-        client.AddHeader("organization", organization.ToString());
+
+        // Parámetros.
+        client.AddParameter("organization", organization);
 
         // Respuesta.
         var response = await client.Get<ReadAllResponse<GroupModel>>();
